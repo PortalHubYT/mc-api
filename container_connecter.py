@@ -43,7 +43,6 @@ class ConnectServerInstance():
         server = MinecraftServer("localhost", self.port)
 
         for n in range(timeout):
-            time.sleep(1)
             logging.debug(f'Trying to ping localhost:{self.port}')
             try:
                 status = server.status()
@@ -51,6 +50,7 @@ class ConnectServerInstance():
                 return
             except:
                 logging.debug(f"Failed status ping {n}")
+            time.sleep(1)
         
         logging.warning(f"Coulnd't reach server after {timeout}s")
         logging.info(f"Triggering stop")
