@@ -6,7 +6,7 @@ import time
 import docker
 from mcstatus import MinecraftServer
 
-class ServerInstance():
+class CreateServerInstance():
     def __init__(self, port=25565, container_name='mcpython', wait=True):
         self.name = container_name
         self.port = port

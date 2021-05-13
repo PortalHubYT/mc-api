@@ -11,7 +11,7 @@ import docker
 from mcstatus import MinecraftServer
 
 # docker run --name template -it -p 25565:25565 -e EULA=TRUE ghcr.io/portalhubyt/template_server:latest
-class ServerInstance():
+class ConnectServerInstance():
     def __init__(self, port=25565, wait=True):
         self.client = docker.APIClient()
         self.port = port
