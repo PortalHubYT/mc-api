@@ -1,2 +1,5 @@
 .vscode
 *__pycache__
+server.jar
+generated
+logs
