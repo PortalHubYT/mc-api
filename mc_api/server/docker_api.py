@@ -47,7 +47,7 @@ class ServerInstanceHandler:
 class Run(ServerInstanceHandler):
     def __init__(self, 
                 port=25565,
-                container_name='mcpython',
+                name='mcpython',
                 wait=True,
                 image='ghcr.io/portalhubyt/template_server:latest'):
         
