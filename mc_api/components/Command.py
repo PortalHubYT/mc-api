@@ -1,10 +1,14 @@
-class Command:
-    def __init__(self, name, args=None):
-        self.name = name
-        self.args = args
+from .utils import flatten
 
+class Command:
+    def __init__(self, command, *args):
+        self.command = command
+        self.args = args
+        
     def to_str(self):
-        if self.args:
-            return(f'{self.name} {" ".join([arg.to_str() for arg in self.args])}')
-        else:
-            return(f'{self.name}')
+        buff = self.command + ' '
+        for a in self.args[:-1]:
+            buff += flatten(a)
+            buff += ' '
+        buff += flatten(self.args[-1])
+        return buff
