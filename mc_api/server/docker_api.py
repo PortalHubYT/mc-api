@@ -5,6 +5,8 @@ import time
 import docker
 from mcstatus import MinecraftServer
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 class ServerInstanceHandler:
     def __init__(self):
