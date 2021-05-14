@@ -1,7 +1,7 @@
 class BlockState:
-    def __init__(self):
-        self.property = None
-        self.value = None
+    def __init__(self, property=None, value=None):
+        self.property = property
+        self.value = value
 
     def to_str(self):
         if self.property and self.value:
