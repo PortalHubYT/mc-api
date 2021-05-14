@@ -20,7 +20,6 @@ class ServerInstanceHandler:
             logging.debug(f'sending: {cmd}')
             cmd += "\n"
             self.socket._sock.send(cmd.encode('utf-8'))
-            print('test')
         else:
             logging.warning(f'cmd must be a str, got: {cmd}')
             

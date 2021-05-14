@@ -5,6 +5,6 @@ class BlockState:
 
     def to_str(self):
         if self.property and self.value:
-            return(f'[{self.property}={self.value}]')
+            return(f'{self.property}={self.value}')
         else:
             return(f'')
