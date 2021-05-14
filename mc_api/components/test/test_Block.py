@@ -1,5 +1,5 @@
 import unittest
-from components.Block import Block
+from mc_api.components.Block import Block
 
 class TestBlock(unittest.TestCase):
 

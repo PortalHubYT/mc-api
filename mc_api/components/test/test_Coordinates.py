@@ -1,5 +1,5 @@
 import unittest
-from components.Coordinates import Coordinates
+from mc_api.components.Coordinates import Coordinates
 
 class TestCoordinates(unittest.TestCase):
 
