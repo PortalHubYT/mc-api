@@ -5,6 +5,8 @@ import time
 import docker
 from mcstatus import MinecraftServer
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 class ServerInstanceHandler:
     def __init__(self):
@@ -47,7 +49,7 @@ class ServerInstanceHandler:
 class Run(ServerInstanceHandler):
     def __init__(self, 
                 port=25565,
-                container_name='mcpython',
+                name='mcpython',
                 wait=True,
                 image='ghcr.io/portalhubyt/template_server:latest'):
         
