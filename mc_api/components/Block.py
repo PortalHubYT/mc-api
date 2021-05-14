@@ -23,9 +23,4 @@ class Block():
                 buff += flatten(self.blockstate)
             buff += ']'
         
-        print(buff)
-        return buff
-
-        buff += flatten(self.blockstate)
-        buff += flatten(self.metadata)
         return buff
