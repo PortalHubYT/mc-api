@@ -1,6 +1,10 @@
 class BlockState:
-    def __init__(self, type):
-        self.type = type
+    def __init__(self):
+        self.property = None
+        self.value = None
 
     def to_str(self):
-        return(f'{self.type}')
+        if self.property and self.value:
+            return(f'[{self.property}={self.value}]')
+        else:
+            return(f'')

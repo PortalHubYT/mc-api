@@ -36,7 +36,8 @@ class TestBlockHandler(unittest.TestCase):
         diff = BlockHandler('outline').to_str()
         test = "outline"
         self.assertEqual(diff, test)
-
+    
+    # This tests that BlockHandler correctly throws an exception on wrong BlockHandler type
     def test_abritrary_handler(self):
         passed = False
         try:

@@ -1,6 +1,6 @@
 class Metadata:
-    def __init__(self, type):
-        self.type = type
+    def __init__(self, value):
+        self.value = value
 
     def to_str(self):
-        return(f'{self.type}')
+        return(f'{self.value}')
