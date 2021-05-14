@@ -20,6 +20,7 @@ class ServerInstanceHandler:
             logging.debug(f'sending: {cmd}')
             cmd += "\n"
             self.socket._sock.send(cmd.encode('utf-8'))
+            print('test')
         else:
             logging.warning(f'cmd must be a str, got: {cmd}')
             
@@ -49,7 +50,7 @@ class ServerInstanceHandler:
 class Run(ServerInstanceHandler):
     def __init__(self, 
                 port=25565,
-                name='mcpython',
+                container_name='mcpython',
                 wait=True,
                 image='ghcr.io/portalhubyt/template_server:latest'):
         
