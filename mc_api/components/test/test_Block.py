@@ -13,7 +13,7 @@ class TestBlock(unittest.TestCase):
         block = Block("op_block", "mod")
         diff = block.to_str()
         test = "mod:op_block"
-        self.asserEqual(diff, test)
+        self.assertEqual(diff, test)
 
 if __name__ == '__main__':
     unittest.main()
