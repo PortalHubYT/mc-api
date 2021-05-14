@@ -1,1 +1,1 @@
-# minecraft_tetris
+# mc-api
