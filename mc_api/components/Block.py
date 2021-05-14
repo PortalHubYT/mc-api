@@ -1,12 +1,16 @@
-from mc_api.components import BlockState, Metadata
+from .utils import flatten
 
-class Block:
-    def __init__(self, id, namespace="minecraft"):
+class Block():
+    def __init__(self, id, namespace="minecraft", blockstate=None, metadata=None):
         self.namespace = namespace
         self.id = id
 
-        self.blockstate = BlockState.BlockState()
-        #self.metadata = Metadata.Metadata()
+        self.blockstate = blockstate
+        self.metadata = metadata
     
+
     def to_str(self):
-        return (f'{self.namespace}:{self.id}{self.blockstate.to_str()}{self.metadata.to_str()}')
+        buff = f'{self.namespace}:{self.id}'
+        buff+=(flatten(self.blockstate))
+        buff+=(flatten(self.metadata))
+        return buff
