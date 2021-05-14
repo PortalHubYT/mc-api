@@ -1,13 +1,11 @@
-from mcpi.minecraft import Minecraft
+from mcapy_lib import *
 
 import sys
 import time
 import random
 
 start_time = time.time()
-mc = Minecraft.create()
 
-mc.postToChat("start")
 
 mc_height = 70
 WIDTH,  HEIGHT = 50, 50
@@ -29,15 +27,18 @@ def new_food():
 
 def remove_tail():
     rem = snake.pop()
-    mc.setBlock(rem[0], mc_height, rem[1], 35, 0)
+
+    setblock(Coordinates(rem[0], mc_height, rem[1]), Block("white_wool"))
+    
 
 def draw_food():    
-    mc.setBlock(food[0], mc_height, food[1], 35, 15)
+    setblock(Coordinates(food[0], mc_height, food[1]), Block("black_wool"))
+    
 
 
 
 def get_direction():
-    vec = mc.player.getTilePos()
+    # vec = (mc.player.getTilePos())
     pos = (vec.x, vec.y, vec.z)
     global direction
     if pos[0] < WIDTH / 4 and direction != 2:
@@ -81,20 +82,18 @@ def move_snake():
         remove_tail()
         
     snake.insert(0, new)
-    mc.setBlock(new[0], mc_height, new[1], 35, 15)
-    
+    setblock(Coordinates(new[0], mc_height, new[1]), Block("black_wool"))
 
 def draw_snake():
     for x, y in snake:
         print(x, y)
-        
-        mc.setBlock(x, mc_height, y, 35, 15)
-
+        setblock(Coordinates(x, mc_height, y), Block("black_wool"))
 
 def minecraft_draw_grid():
     for y in range(HEIGHT):
         for x in range(WIDTH):
-            mc.setBlock(x, mc_height, y, 35, grid[y][x])
+            setblock(Coordinates(x, mc_height, y), Block("white_wool"))
+            
     
 
     
@@ -107,7 +106,7 @@ def render():
 
     
     
-    get_direction()
+    # get_direction()
     move_snake()
     draw_food()
 
