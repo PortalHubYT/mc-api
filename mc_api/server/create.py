@@ -19,9 +19,8 @@ class ServerInstanceHandler:
 
     def stop(self):
         raise NotImplementedError
-
-
-class Run(ServerInstanceHandler):
+        
+class DockerInstance(ServerInstanceHandler):
     def __init__(self, 
                 port=25565,
                 container_name='mcpython',
