@@ -1,3 +1,6 @@
+import signal
+import sys
+
 from mcrcon import MCRcon
 
 class Rcon():
@@ -7,7 +10,8 @@ class Rcon():
             self.mcr.connect()
         except Exception as e:
             raise e
-        
+        signal.signal(signal.SIGINT, self.signal_handler)
+
     def post(self, cmd):
         ret = self.mcr.command(cmd)
         return ret
@@ -17,5 +21,4 @@ class Rcon():
 
     def signal_handler(self, sig, frame):
         self.stop()
-
-
+        sys.exit()
