@@ -1,6 +1,6 @@
 .vscode
 *__pycache__
-dev_*
+draft*
 server.jar
 generated
 logs
