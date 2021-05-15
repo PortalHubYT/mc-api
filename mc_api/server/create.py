@@ -3,7 +3,7 @@ import signal
 
 import docker
 
-from . import ping
+from .ping import ping
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
