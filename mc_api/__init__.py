@@ -1,2 +1,1 @@
-from . import server
-from . import components
+from .server.connect import Rcon as connect
