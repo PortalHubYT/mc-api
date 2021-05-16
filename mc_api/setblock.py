@@ -1,15 +1,16 @@
 from mc_api.components import *
 
-def testblock(coordinates, interface=None):
+def setblock(coordinates, block, interface=None):
 
     if not interface:
         return interface
 
     if type(coordinates) is tuple:
         coordinates = Coordinates(*coordinates)
+    if type(block) is str:
+        block = Block(block)
 
-    # TODO: here
-    cmd = Command('execute', coordinates).to_str()
+    cmd = Command('setblock', coordinates, block).to_str()
     response = interface.post(cmd)
 
     return response

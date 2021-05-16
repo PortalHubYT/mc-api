@@ -1,13 +1,14 @@
 import signal
 import sys
 
-from .create import DockerInstance
-
 from mcrcon import MCRcon
 
 class Rcon():
-    def __init__(self, ip, password, rcon_port=25575):
-        self.mcr = MCRcon(ip, password, port=rcon_port)
+    def __init__(self, ip, password, port=25575):
+        self.ip = ip
+        self.password = password
+        self.port = port
+        self.mcr = MCRcon(self.ip, self.password, port=self.port)
 
         try:
             self.mcr.connect()
