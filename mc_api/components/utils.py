@@ -9,3 +9,11 @@ def flatten(component):
         return component
     else:
         return ''
+
+def execute_check(response):
+    if response == 'Test passed':
+        return True
+    elif response == 'Test failed':
+        return False
+    else:
+        return response
