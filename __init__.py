@@ -1,1 +1,1 @@
-from . import mcapi
+import mc_api
