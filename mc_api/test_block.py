@@ -1,6 +1,5 @@
 from mc_api.components import CustomFunction, Block, Subcommand, BlockCoordinates
 
-
 class TestBlock(CustomFunction):
     def __init__(self, block_coordinates: BlockCoordinates, block: Block, interface=None) -> bool:
         self.interface = self.check_interface(interface, __file__)

@@ -22,7 +22,7 @@ class CustomFunction:
     def format_arg(self, argument, component):
         if type(argument) is component:
             return argument
-
+            
         if type(argument) is str:
             return component(argument)
         elif type(argument) is tuple:
