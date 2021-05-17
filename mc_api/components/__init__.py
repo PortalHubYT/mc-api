@@ -4,9 +4,15 @@ from .BlockState import BlockState
 from .Command import Command
 from .Coordinates import Coordinates
 from .Metadata import Metadata
-from .utils import execute_check
+from .BlockCoordinates import BlockCoordinates
+from .Subcommand import Subcommand
 
-test = 2
+from .CustomFunction import CustomFunction
 
-__all__ = ['Block', 'BlockHandler', 'BlockState', 'Command',
-            'Coordinates', 'Metadata']
+components = ['Block', 'BlockHandler', 'BlockState', 'Command',
+                'Coordinates', 'Metadata', 'Subcommand', 
+                'BlockCoordinates', 'CustomFunction']
+
+functions = []
+
+__all__ = components + functions
