@@ -9,5 +9,7 @@ def flatten(component):
         return component
     else:
         return ''
-
+        
+def trim_file_name(file_name):
+    return file_name.split('/')[-1]
 

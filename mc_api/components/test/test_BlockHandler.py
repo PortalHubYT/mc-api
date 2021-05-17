@@ -1,6 +1,7 @@
 import unittest
 
 from mc_api.components.BlockHandler import BlockHandler, BlockHandlerWrongType
+from mc_api.components.Block import Block
 
 class TestBlockHandler(unittest.TestCase):
 
@@ -10,8 +11,9 @@ class TestBlockHandler(unittest.TestCase):
         self.assertEqual(diff, test)
     
     def test_handler_replace(self):
-        diff = BlockHandler('replace').to_str()
-        test = "replace"
+        block = Block('bedrock')
+        diff = BlockHandler('replace', block).to_str()
+        test = "replace minecraft:bedrock"
         self.assertEqual(diff, test)
     
     def test_handler_keep(self):

@@ -1,6 +1,7 @@
 import signal
 import sys
 
+from mc_api.server.interface import interface
 from mcrcon import MCRcon
 
 class Rcon():
@@ -16,9 +17,7 @@ class Rcon():
             raise e
         signal.signal(signal.SIGINT, self.signal_handler)
 
-    def post(self, cmd):
-        ret = self.mcr.command(cmd)
-        return ret
+        interface.add_interface(self.mcr.command)
 
     def stop(self):
         self.mcr.disconnect()     

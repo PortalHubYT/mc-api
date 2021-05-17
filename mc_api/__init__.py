@@ -7,6 +7,7 @@ from .components import *
 from .set_block import set_block
 from .test_block import test_block
 from .get_block import get_block
+from .say import say
 
 class NoInterfaceProvided(Exception):
     pass

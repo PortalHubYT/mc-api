@@ -1,4 +1,3 @@
-from mc_api.components.BlockHandler import BlockHandler
 from mc_api.components import CustomFunction, Block, BlockCoordinates
 
 class SetBlock(CustomFunction):
@@ -11,17 +10,15 @@ class SetBlock(CustomFunction):
     
         self.response = self.send('setblock', self.block_coordinates, self.block)
         self.status = self.execute_check(self.response)
-
+        
         if self.status is str:
             self.unexpected_status(__file__, self.status, self.command)
 
 
-def set_block(block_coordinates: BlockCoordinates or tuple, 
-                block: Block or str,
-                block_handler=BlockHandler or str,
-                block_handler_option=Block or str) -> bool:
-
-    command = SetBlock(block_coordinates, block)
+def set_block(pos1: BlockCoordinates or tuple,
+                pos2: BlockCoordinates or tuple,
+                block: Block or str) -> bool:
+    command = SetBlock(pos1, pos2, block)
     return command.status
 
 class UnexpectedReturn(Exception):

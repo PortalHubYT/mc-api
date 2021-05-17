@@ -9,17 +9,21 @@ class GetBlock(CustomFunction):
     """
     # TODO: Add a better implementation of fetching block id
     # TODO: Update this function to implement returning block_state and metadata from the block fetched
+    # TODO: (Not Important) Add depth to the loot function 
     
-    def __init__(self, block_coordinates: BlockCoordinates, interface=None) -> bool:
-        self.interface = self.check_interface(interface, __file__)
+    def __init__(self, block_coordinates: BlockCoordinates):
+        self.check_interface()
         self.block_coordinates = self.format_arg(block_coordinates, BlockCoordinates)
-    
-        self.response = self.send(f'loot spawn {self.block_coordinates.to_str()} mine {self.block_coordinates.to_str()}')
+
+        self.void_coordinates = BlockCoordinates(self.block_coordinates.x, -64, self.block_coordinates.y)
+
+        self.response = self.send(f'loot spawn {self.void_coordinates.to_str()} mine {self.block_coordinates.to_str()}')
         self.response = self.response.split('/')[-1]
 
 
-def get_block(block_coordinates: BlockCoordinates, interface=None): 
-    return GetBlock(block_coordinates, interface).response
+def get_block(block_coordinates: BlockCoordinates) -> str: 
+    command = GetBlock(block_coordinates)
+    return command.response
 
 class UnexpectedReturn(Exception):
     pass

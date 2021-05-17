@@ -1,4 +1,6 @@
+from mc_api.server.interface import interface
 from mc_api.components.Command import Command
+from mc_api.components.utils import trim_file_name
 
 class CustomFunction:
 
@@ -6,18 +8,18 @@ class CustomFunction:
         return Command(*args).to_str()
 
     def post(self, cmd: str):
-        return self.interface.post(cmd)
+        return interface.post(cmd)
 
     def send(self, *args):
         self.command = self.construct(*args)
         self.response = self.post(self.command)
         return self.response
 
-    def check_interface(self, interface, file_name: str):
-        if interface is None:
-            raise NoInterfaceProvided(f'No interface was provided for {file_name}')
-        else:
+    def check_interface(self):
+        if interface.check_status():
             return interface
+        else:
+            raise NoInterfaceProvided(f'No interface was initialized in the code')
     
     def format_arg(self, argument, component):
         if type(argument) is component:
@@ -46,8 +48,15 @@ class CustomFunction:
         else:
             return response
 
+    def unexpected_status(self, file_name, status, command):
+        raise UnexpectedReturn(f'The say command in {trim_file_name(file_name)} didn\'t properly function and returned: "{status}" with the command "{command}"')
+
+
 class InvalidArgumentType(Exception):
     pass
 
 class NoInterfaceProvided(Exception):
+    pass
+
+class UnexpectedReturn(Exception):
     pass

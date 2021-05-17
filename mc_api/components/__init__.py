@@ -6,12 +6,13 @@ from .Coordinates import Coordinates
 from .Metadata import Metadata
 from .BlockCoordinates import BlockCoordinates
 from .Subcommand import Subcommand
+from .Message import Message
 
 from .CustomFunction import CustomFunction
 
 components = ['Block', 'BlockHandler', 'BlockState', 'Command',
                 'Coordinates', 'Metadata', 'Subcommand', 
-                'BlockCoordinates', 'CustomFunction']
+                'BlockCoordinates', 'CustomFunction', 'Message']
 
 functions = []
 
