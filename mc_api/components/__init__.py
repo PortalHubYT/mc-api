@@ -7,13 +7,17 @@ from .Metadata import Metadata
 from .BlockCoordinates import BlockCoordinates
 from .Subcommand import Subcommand
 from .Message import Message
+from .SummonableEntity import SummonableEntity
+from .Entity import Entity
 
-from .CustomFunction import CustomFunction
+from .Zone import Zone
 
 components = ['Block', 'BlockHandler', 'BlockState', 'Command',
                 'Coordinates', 'Metadata', 'Subcommand', 
-                'BlockCoordinates', 'CustomFunction', 'Message']
+                'BlockCoordinates', 'Message']
+
+custom_components = ['Zone']
 
 functions = []
 
-__all__ = components + functions
+__all__ = components + custom_components + functions
