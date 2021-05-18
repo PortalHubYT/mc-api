@@ -1,7 +1,7 @@
 import signal
 import sys
 
-from mc_api.server.interface import interface
+from .singleton import singleton
 from mcrcon import MCRcon
 
 class Rcon():
@@ -17,7 +17,7 @@ class Rcon():
             raise e
         signal.signal(signal.SIGINT, self.signal_handler)
 
-        interface.add_interface(self.mcr.command)
+        singleton.add_output_channel(self.mcr.command)
 
     def stop(self):
         self.mcr.disconnect()     
