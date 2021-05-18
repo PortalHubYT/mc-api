@@ -14,7 +14,8 @@ from .Zone import Zone
 
 components = ['Block', 'BlockHandler', 'BlockState', 'Command',
                 'Coordinates', 'Metadata', 'Subcommand', 
-                'BlockCoordinates', 'Message']
+                'BlockCoordinates', 'Message', 'SummonableEntity',
+                'Entity']
 
 custom_components = ['Zone']
 

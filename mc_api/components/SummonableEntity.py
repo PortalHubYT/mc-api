@@ -1,6 +1,10 @@
 from .Entity import Entity
 
 class SummonableEntity:
+    """
+    Should Summonable be a property of Entity instead of being its own class?
+    """
+
     def __init__(self, entity: Entity):
         self.entity = entity
 
