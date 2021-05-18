@@ -3,7 +3,7 @@ class BlockState:
         self.property = property
         self.value = value
 
-    def to_str(self):
+    def __repr__(self):
         if self.property and self.value:
             return(f'{self.property}={self.value}')
         else:

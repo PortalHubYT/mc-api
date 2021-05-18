@@ -1,8 +1,8 @@
 class Coordinates:
-    def __init__(self, x=None, y=None, z=None):
+    def __init__(self, x: int, y: int, z: int):
         self.x = x
         self.y = y
         self.z = z
     
-    def to_str(self):
+    def __repr__(self):
         return (f'{self.x} {self.y} {self.z}')

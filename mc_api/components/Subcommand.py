@@ -16,7 +16,7 @@ class Subcommand:
             if self.condition not in conditions:
                 raise ConditionInvalid(f'The condition provided: \'{self.condition}\' is not valid option. Availables: [{" | ".join(conditions)}]')
 
-    def to_str(self):
+    def __repr__(self):
         if self.type not in options:
             raise SubcommandWrongType(f'The subcommand provided: \'{self.type}\' is not a valid option. Availables: [{" | ".join(options)}]')
         elif self.condition:

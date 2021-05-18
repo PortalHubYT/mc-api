@@ -3,20 +3,19 @@ from mc_api.components import Block
 options = ['destroy', 'hollow', 'keep', 'outline', 'replace']
 
 class BlockHandler:
-    def __init__(self, mode: str, option: Block=None):
+    def __init__(self, mode: str, option: Block = None):
         self.mode = mode
         self.option = option
 
+    def __repr__(self):
         if self.mode == 'replace':
             if type(self.option) is not Block:
                 raise BlockHandlerWrongType(f'The BlockHandler option provided: \'{self.option}\' is not a valid option for the block handler "replace".')
- 
-
-    def to_str(self):
+                
         if self.mode not in options:
             raise BlockHandlerWrongType(f'The BlockHandler provided: \'{self.mode}\' is not a valid option. Availables: [{" | ".join(options)}]')
         elif self.option:
-            return(f'{self.mode} {self.option.to_str()}')
+            return(f'{self.mode} {repr(self.option)}')
         else:
             return(f'{self.mode}')
 
@@ -25,8 +24,6 @@ class BlockHandlerWrongType(Exception):
 
 class BlockHandlerWrongOption(Exception):
     pass
-
-# DESTROY | HOLLOW | KEEP | OUTLINE | REPLACE
 
 """DESTROY: Replaces all blocks (including air) in the fill region with the specified block, 
 dropping the existing blocks (including those that are unchanged) and block contents 
