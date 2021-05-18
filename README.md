@@ -1,3 +1,2 @@
 # mc-api
-
-A simple interface to convert Python into minecraft commands
+Use Python to control Minecraft through commands.
