@@ -1,27 +1,26 @@
-from mc_api.components import CustomFunction, Block, Subcommand, BlockCoordinates
+from mc_api.components import Block, Subcommand, BlockCoordinates
+from .base_functions import *
 
-class TestBlock(CustomFunction):
-    def __init__(self, block_coordinates: BlockCoordinates, block: Block):
-        self.check_interface()
-        self.block_coordinates = self.format_arg(block_coordinates, BlockCoordinates)
-        self.block = self.format_arg(block, Block)
-        
-        self.subcommand = Subcommand('if', 'block')
+def _test_block(block_coordinates: BlockCoordinates, block: Block):
 
-        self.response = self.send('execute', self.subcommand, 
-                                    self.block_coordinates, self.block)
+    subcommand = Subcommand('if', 'block')
 
-        self.status = self.execute_check(self.response)
+    response = send('execute', subcommand, block_coordinates, block)
 
-        if self.status is str:
-            self.unexpected_status(__file__, self.status, self.command)
+    status = execute_check(response)
 
+    if status is str:
+        unexpected_status(__file__, status)
+
+    return status
 
 def test_block(block_coordinates: BlockCoordinates or tuple, 
                 block: Block or str) -> bool: 
+                
+    check_output_channel()
 
-    command = TestBlock(block_coordinates, block)
-    return command.status
-
-class UnexpectedReturn(Exception):
-    pass
+    block_coordinates = format_arg(block_coordinates, BlockCoordinates)
+    block = format_arg(block, Block)
+    
+    return _test_block(block_coordinates, block)
+    

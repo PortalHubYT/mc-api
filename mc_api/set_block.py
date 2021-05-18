@@ -1,28 +1,37 @@
-from mc_api.components.BlockHandler import BlockHandler
-from mc_api.components import CustomFunction, Block, BlockCoordinates
+from mc_api.components import Block, BlockCoordinates, BlockHandler
+from mc_api.base_functions import *
 
-class SetBlock(CustomFunction):
+def _set_block(block_coordinates: BlockCoordinates, 
+                block: Block,
+                block_handler: BlockHandler = None):
 
-    def __init__(self, block_coordinates: BlockCoordinates, block: Block):
-        self.check_interface()
+    if block_handler:
+        response = send('setblock', block_coordinates, block, block_handler)
+    else:
+        response = send('setblock', block_coordinates, block)
+        
+    status = execute_check(response)
 
-        self.block_coordinates = self.format_arg(block_coordinates, BlockCoordinates)
-        self.block = self.format_arg(block, Block)
-    
-        self.response = self.send('setblock', self.block_coordinates, self.block)
-        self.status = self.execute_check(self.response)
+    if status is str:
+        unexpected_status(__file__, status)
 
-        if self.status is str:
-            self.unexpected_status(__file__, self.status, self.command)
-
+    return status
 
 def set_block(block_coordinates: BlockCoordinates or tuple, 
                 block: Block or str,
-                block_handler=BlockHandler or str,
-                block_handler_option=Block or str) -> bool:
+                block_handler: BlockHandler or str = None,
+                block_handler_option: Block or str = None) -> bool:
+    
+    check_output_channel()
 
-    command = SetBlock(block_coordinates, block)
-    return command.status
+    block_coordinates = format_arg(block_coordinates, BlockCoordinates)
+    block = format_arg(block, Block)
 
-class UnexpectedReturn(Exception):
-    pass
+    if block_handler:
+        block_handler = format_arg(block_handler, BlockHandler)
+
+        if block_handler_option:
+            block_handler_option = format_arg(block_handler_option, Block)
+            block_handler.option = block_handler_option
+    
+    return _set_block(block_coordinates, block, block_handler)
