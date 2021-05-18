@@ -49,7 +49,7 @@ class Block():
                 for blockstate in self.blockstate[:-1]:
                     buff += repr(blockstate)
                     buff += ','
-                buff += flatten(self.blockstate[-1])
+                buff += repr(self.blockstate[-1])
             elif isinstance(self.blockstate, BlockState):
                 buff += repr(self.blockstate)
             buff += ']'
