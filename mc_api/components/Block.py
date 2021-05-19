@@ -35,8 +35,11 @@ class Block():
             default value (in this case, set to 'none').
     """
     def __init__(self, id, namespace="minecraft", blockstate=None, metadata=None):
+        if id:
+            self.id = id
+        else:
+            raise ValueError("id must be a non empty string")
         self.namespace = namespace
-        self.id = id
 
         self.blockstate = blockstate
         self.metadata = metadata
