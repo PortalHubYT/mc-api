@@ -24,3 +24,4 @@ def test_block(block_coordinates: BlockCoordinates or tuple,
     
     return _test_block(block_coordinates, block)
     
+meta_definition = "custom"

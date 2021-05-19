@@ -1,18 +1,18 @@
-from .Coordinates import Coordinates
+from .Coordinates import BlockCoordinates
 
 class Zone:
     """
     Custom component that is a set of two Coordinates(), representing
     a rectangular area
     """
-    def __init__(self, pos1: Coordinates or tuple, 
-                        pos2: Coordinates or tuple):
+    def __init__(self, pos1: BlockCoordinates or tuple, 
+                        pos2: BlockCoordinates or tuple):
 
         self.pos1 = pos1
         self.pos2 = pos2
 
         if type(pos1) is tuple:
-            self.pos1 = Coordinates(*pos1)
+            self.pos1 = BlockCoordinates(*pos1)
         else:
             self.pos1 = pos1
 

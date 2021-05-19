@@ -16,3 +16,16 @@ def say(message: Message or str) -> bool:
     message = format_arg(message, Message)
 
     return _say(message)
+
+meta_definition = {
+    "say": {
+      "type": "literal",
+      "children": {
+        "message": {
+          "type": "argument",
+          "parser": Message,
+          "executable": True
+        }
+      }
+    }
+}
