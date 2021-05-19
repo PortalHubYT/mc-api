@@ -1,3 +1,4 @@
+from mc_api.components.BlockState import BlockState
 from mc_api.components import Block, BlockCoordinates, BlockHandler
 from mc_api.base_functions import *
 
@@ -35,3 +36,36 @@ def set_block(block_coordinates: BlockCoordinates or tuple,
             block_handler.option = block_handler_option
     
     return _set_block(block_coordinates, block, block_handler)
+
+meta_definition = {
+    "setblock": {
+      "type": "literal",
+      "children": {
+        "pos": {
+          "type": "argument",
+          "parser": BlockCoordinates,
+          "children": {
+            "block": {
+              "type": "argument",
+              "parser": BlockState,
+              "children": {
+                "destroy": {
+                  "type": "literal",
+                  "executable": True
+                },
+                "keep": {
+                  "type": "literal",
+                  "executable": True
+                },
+                "replace": {
+                  "type": "literal",
+                  "executable": True
+                }
+              },
+              "executable": True
+            }
+          }
+        }
+      }
+    }
+}

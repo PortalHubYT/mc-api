@@ -25,3 +25,5 @@ def get_block(block_coordinates: BlockCoordinates or tuple) -> str:
     block_coordinates = format_arg(block_coordinates, BlockCoordinates)
 
     return _get_block(block_coordinates)
+
+meta_definition = "custom"
