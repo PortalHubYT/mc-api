@@ -12,6 +12,9 @@ class BlockState:
 
                 self.buff += f'{key}={properties[key]},'
 
+        else:
+            raise ValueError("BlockState arg must be a dictionnary")
+
     def flatten(self, arg):
         if type(arg) is int:
             return(str(arg))
