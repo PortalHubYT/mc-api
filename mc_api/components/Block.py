@@ -1,4 +1,5 @@
 from .BlockState import BlockState
+from .NBT import NBT
 
 class Block():
     """
@@ -34,24 +35,23 @@ class Block():
             If command sets 'redstone_wire[power=15]', it is set 'power' to 15, but 'north' is a
             default value (in this case, set to 'none').
     """
-    def __init__(self, id, namespace="minecraft", blockstate=None, metadata=None):
-        self.namespace = namespace
-        self.id = id
+    def __init__(self, 
+                    id: str,
+                    blockstate: BlockState = None,
+                    nbt: NBT = None):
 
-        self.blockstate = blockstate
-        self.metadata = metadata
-    
+        if ':' in id:
+            parsed = id.split(':')
+            self.namespace = parsed[0]
+            self.id = parsed[1]
+        else:
+            self.namespace = "minecraft"
+            self.id = id
+
+        self.blockstate = blockstate if type(blockstate) is BlockState else BlockState()
+        self.nbt = nbt if type(nbt) is NBT else NBT()
+
     def __repr__(self):
-        buff = f'{self.namespace}:{self.id}'
-        if self.blockstate:
-            buff += '['
-            if isinstance(self.blockstate, list):
-                for blockstate in self.blockstate[:-1]:
-                    buff += repr(blockstate)
-                    buff += ','
-                buff += repr(self.blockstate[-1])
-            elif isinstance(self.blockstate, BlockState):
-                buff += repr(self.blockstate)
-            buff += ']'
+        return(f'{self.namespace}:{self.id}{self.blockstate}{self.nbt}')
         
-        return buff
+
