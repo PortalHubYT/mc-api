@@ -39,7 +39,8 @@ class Block():
                     id: str,
                     blockstate: BlockState = None,
                     nbt: NBT = None):
-
+        if type(id) is not str or str == '':
+            raise ValueError("id must be a non empty string")
         if ':' in id:
             parsed = id.split(':')
             self.namespace = parsed[0]
