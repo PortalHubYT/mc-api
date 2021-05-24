@@ -12,7 +12,7 @@ class BlockState:
 
                 self.buff += f'{key}={properties[key]},'
 
-        else:
+        elif properties is not None:
             raise ValueError("BlockState arg must be a dictionnary")
 
     def flatten(self, arg):
