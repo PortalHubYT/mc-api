@@ -2,15 +2,9 @@ class BlockState:
 
     def __init__(self, properties: dict = None):
         
-        self.buff = ''
-
         if type(properties) is dict:
-
             for key in properties:
-            
-                properties[key] = self.flatten(properties[key])
-
-                self.buff += f'{key}={properties[key]},'
+                setattr(self, key, properties[key])
 
         elif properties is not None:
             raise ValueError("BlockState arg must be a dictionnary")
@@ -33,21 +27,23 @@ class BlockState:
 
     def __repr__(self):
         
+        buff = ''
+
         for key in dir(self):
             if key.startswith('__'):
                 continue
-            elif key in ['buff', 'flatten']:
+            elif key == 'flatten':
                 continue
         
             value = getattr(self, key)
             value = self.flatten(value)
 
-            self.buff += f'{key}={value},'
+            buff += f'{key}={value},'
 
-        if len(self.buff) > 1 and self.buff[-1] == ',':
-            self.buff = self.buff[:-1]
+        if len(buff) > 1 and buff[-1] == ',':
+            buff = buff[:-1]
 
-        return(f'[{self.buff}]')
+        return(f'[{buff}]')
 
 class UnexpectedBlockStatePropertyValueType(Exception):
     pass

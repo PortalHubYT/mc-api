@@ -48,7 +48,7 @@ class TestBlock(unittest.TestCase):
         bs = BlockState({"snowy": True, "facing": "north"})
 
         diff = repr(bs)
-        test = '[snowy=true,facing=north]'
+        test = '[facing=north,snowy=true]'
         self.assertEqual(diff, test)
 
     def test_blockstate_via_attr(self):
@@ -81,7 +81,7 @@ class TestBlock(unittest.TestCase):
         b = Block('dirt', blockstate=bs)
 
         diff = repr(b.blockstate)
-        test = '[snowy=true,facing=north]'
+        test = '[facing=north,snowy=true]'
         self.assertEqual(diff, test)
 
     def test_blockstate_via_attr_through_Block(self):
@@ -108,5 +108,5 @@ class TestBlock(unittest.TestCase):
         b.blockstate.facing = 'north'
 
         diff = repr(b.blockstate)
-        test = '[snowy=true,dancing=well,facing=north]'
+        test = '[dancing=well,facing=north,snowy=true]'
         self.assertEqual(diff, test)
