@@ -47,16 +47,10 @@ class TestBlockHandler(unittest.TestCase):
         test = "replace"
         self.assertEqual(diff, test)
 
-    # This tests that BlockHandler correctly throws an exception on wrong BlockHandler type
     def test_abritrary_handler(self):
-        passed = False
-        try:
-            bh = BlockHandler('imaginary')
+        bh = BlockHandler('imaginary')
+        with self.assertRaises(BlockHandlerWrongType): 
             repr(bh)
-            passed = False
-        except BlockHandlerWrongType:
-            passed = True
-        self.assertTrue(passed)
 
 
 if __name__ == '__main__':
