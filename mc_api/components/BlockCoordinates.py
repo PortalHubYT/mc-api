@@ -1,18 +1,51 @@
 import math
 
-class BlockCoordinates:
+from .Coordinates import Coordinates
+
+class BlockCoordinates(Coordinates):
     """
     The position of a block is actually the coordinates of the point at the lower northwest corner
     of the block, that is, the integer coordinates obtained by rounding down the coordinates 
     inside the block.
 
     In Minecraft, decimal coordinates usually needs to be converted into integer coordinates by rounding
-    down, which is called the block position of the coordinate. 
+    down, which is called the block position of the coordinate.
     """
-    def __init__(self, x: int, y: int, z: int):
-        self.x = math.floor(x)
-        self.y = math.floor(y)
-        self.z = math.floor(z)
     
+    def floor(self, coord):
+        """
+        Below is the worst bricolage in the history of bricolage
+        This is done to handle the flooring of floats within strings (e.g.: '^1.1' becomes '^1')
+        """
+        if type(coord) is str and '.' in coord:
+
+                if coord.startswith('^'):
+                    value = coord.split('^')[1]
+                    value = float(value)
+                    value = math.floor(value)
+                    coord = '^' + str(value)
+                    
+
+                elif coord.startswith('~'):
+                    value = coord.split('~')[1]
+                    value = float(value)
+                    value = math.floor(value)
+                    coord = '~' + str(value)
+
+                else:
+                    coord = math.floor(float(coord))
+
+        elif type(coord) is float:
+            coord = math.floor(coord)
+        
+        return coord
+
     def __repr__(self):
+        
+        self.check_validity()
+        
+        self.x = self.floor(self.x)
+        self.y = self.floor(self.y)
+        self.z = self.floor(self.z)
+
         return (f'{self.x} {self.y} {self.z}')
