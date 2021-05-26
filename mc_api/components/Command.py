@@ -1,5 +1,5 @@
 class Command:
-    def __init__(self, command, *args):
+    def __init__(self, command: str, *args):
         self.command = command
         self.args = args
     
