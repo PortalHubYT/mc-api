@@ -39,7 +39,7 @@ class Block():
                     id: str,
                     blockstate: BlockState = None,
                     nbt: NBT = None):
-        if type(id) is not str or str == '':
+        if type(id) is not str or id == '':
             raise ValueError("id must be a non empty string")
         if ':' in id:
             parsed = id.split(':')
@@ -49,7 +49,7 @@ class Block():
             self.namespace = "minecraft"
             self.id = id
 
-        self.blockstate = blockstate if type(blockstate) is BlockState else BlockState()
+        self.blockstate = blockstate if (type(blockstate) is BlockState) else BlockState()
         self.nbt = nbt if type(nbt) is NBT else NBT()
 
     def __repr__(self):

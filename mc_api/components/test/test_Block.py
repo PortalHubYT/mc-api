@@ -2,42 +2,72 @@ import unittest
 
 from mc_api.components.Block import Block
 from mc_api.components.BlockState import BlockState
+from mc_api.components.NBT import NBT
 
 class TestBlock(unittest.TestCase):
 
-    def test_bedrock(self):
-        diff = repr(Block("bedrock"))
-        test = "minecraft:bedrock"
+    def test_block_bedrock(self):
+        block = Block('bedrock')
+
+        diff = repr(block)
+        test = "minecraft:bedrock[]{}"
         self.assertEqual(diff, test)
 
-    def test_namespace(self):
-        diff = repr(Block("op_block", "mod"))
-        test = "mod:op_block"
+    def test_block_namespace(self):
+        block = Block('mod:op_block')
+
+        diff = repr(block)
+        test = "mod:op_block[]{}"
         self.assertEqual(diff, test)
     
-    def test_simple_blockstate(self):
-        b_state = BlockState('facing', 'north')
-        diff = repr(Block("op_block", "mod", b_state))
-        test = "mod:op_block[facing=north]"
+    def test_block_simple_blockstate(self):
+        block = Block('bedrock')
+        block.blockstate = BlockState({'facing': 'north'})
+
+        diff = repr(block)
+        test = "minecraft:bedrock[facing=north]{}"
         self.assertEqual(diff, test)
 
-    def test_double_blockstate(self):
-        bs_facing = BlockState('facing', 'north')
-        bs_half = BlockState('half', 'top')
+    def test_block_double_blockstate(self):
+        block = Block('bedrock')
+        block.blockstate = BlockState({'facing': 'north',
+                                        'half': 'top'})
 
-        diff = repr(Block("op_block", "mod", [bs_facing, bs_half]))
-        test = "mod:op_block[facing=north,half=top]"
-        self.assertEqual(diff, test)
-    
-    def test_empty_blockstate(self):
-
-        diff = repr(Block("op_block", "mod", blockstate=[]))
-        test = "mod:op_block"
+        diff = repr(block)
+        test = "minecraft:bedrock[facing=north,half=top]{}"
         self.assertEqual(diff, test)
     
+    def test_block_simple_nbt(self):
+        block = Block('bedrock')
+        block.nbt = NBT({'Fire': 4})
+
+        diff = repr(block)
+        test = "minecraft:bedrock[]{Fire:4}"
+        self.assertEqual(diff, test)
+    
+    def test_block_double_nbt(self):
+        block = Block('bedrock')
+        block.nbt = NBT({'Fire': 4,
+                        'Air': 0})
+
+        diff = repr(block)
+        test = "minecraft:bedrock[]{Air:0,Fire:4}"
+        self.assertEqual(diff, test)
+
+    def test_block_mixed(self):
+        block = Block('bedrock')
+        block.nbt = NBT({'Fire': 4,
+                        'Air': 0})
+        block.blockstate = BlockState({'facing': 'north',
+                                        'half': 'top'})
+
+        diff = repr(block)
+        test = "minecraft:bedrock[facing=north,half=top]{Air:0,Fire:4}"
+        self.assertEqual(diff, test)
+
     def test_empty(self):
         with self.assertRaises(ValueError):
-            a = Block("")
+            Block("")
 
 
 
