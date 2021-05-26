@@ -1,30 +1,74 @@
-from mc_api.components import BlockCoordinates
+from mc_api.components.Entity import Entity
+from mc_api.components import BlockCoordinates, AbstractOption, ResourceLocation
 from .base_functions import *
 
-def _advancement(block_coordinates: BlockCoordinates) -> str:
-    void_coordinates = BlockCoordinates(block_coordinates.x, -64, block_coordinates.y)
+def _advancement(action: AbstractOption,
+                entity: Entity,
+                option: AbstractOption,
+                advancement: ResourceLocation = None,
+                criterion: AbstractOption = None) -> str:
 
-    response = send(f'loot spawn {repr(void_coordinates)} mine {repr(block_coordinates)}')
-    response = response.split('/')[-1]
+    if repr(option) == 'everything':
+        response = send('advancement', action, entity, option)
+    elif repr(option) == 'only':
+        response = send('advancement', action, entity, option, advancement)
+        if criterion:
+            response = send('advancement', action, entity, option, advancement, criterion)
+    else:
+        response = send('advancement', action, entity, option, advancement)
 
     return response
 
-def advancement(block_coordinates: BlockCoordinates or tuple) -> str:
+def advancement(action: AbstractOption or str,
+                target: Entity or str,
+                option: AbstractOption or str,
+                advancement: ResourceLocation or str = None,
+                criterion: AbstractOption or str = None) -> str:
     """
-    with “/loot ... mine <x y z> diamond_pickaxe{Enchantments:[{id:silk_touch,lvl:1}]}”, 
-    grab the id from the dropped loot and you’re good to go. There are some blocks this 
-    doesn’t apply for, barriers, bedrock, structure/command blocks, end portal frame, 
-    but you’ll be able to hard code those your
-    """
-    # TODO: Add a better implementation of fetching block id
-    # TODO: Update this function to implement returning block_state and metadata from the block fetched
-    # TODO: (Not Important) Add arguments depth to the loot function
+    grant|revoke
 
+        Specifies whether to add or remove the 
+        to-be-specified advancement(s).
+
+    <targets>: entity
+
+        Must be a player name, a target selector or a UUID.
+        And the target selector must be of player type.
+        Specifies one player or more.
+
+    <advancement>: resource_location
+
+        Must be a namespaced ID.
+        Specifies a valid namespaced id of the advancement to
+        target.
+
+    <criterion>: string
+
+        Must be a string.
+        Specifies a valid criterion of the advancement to manipulate.
+        The command defaults to the entire advancement.
+        If specified, the command refers to merely the criterion 
+        and not the entire advancement.
+    """
     check_output_channel()
 
-    block_coordinates = format_arg(block_coordinates, BlockCoordinates)
+    action = format_arg(action, AbstractOption)
+    target = format_arg(target, Entity)
+    option = format_arg(option, AbstractOption)
 
-    return _advancement(block_coordinates)
+    if type(advancement) is str:
+        if ':' in advancement:
+            advancement = advancement.split(':')
+            advancement = ResourceLocation(advancement[1], namespace=advancement[0])
+        else:
+            advancement = format_arg(advancement, ResourceLocation)
+    
+    if repr(option) != 'only':
+        criterion = None
+    else:
+        criterion = format_arg(criterion, AbstractOption)
+        
+    return _advancement(action, target, option, advancement, criterion)
 
 meta_definition = {
     "advancement": {

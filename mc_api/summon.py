@@ -1,14 +1,14 @@
 from mc_api.components.Coordinates import Coordinates
-from mc_api.components import Entity, SummonableEntity, NBTTags
+from mc_api.components import Entity, SummonableEntity, NBT
 from .base_functions import *
 
 def _summon(entity: SummonableEntity,
             coords: Coordinates,
-            metadata: NBTTags) -> str:
+            nbt: NBT) -> str:
     
     if coords:
-        if metadata:
-            response = send('summon', entity, coords, metadata)
+        if nbt:
+            response = send('summon', entity, coords, nbt)
         else:
             response = send('summon', entity, coords)
     else:
@@ -18,7 +18,7 @@ def _summon(entity: SummonableEntity,
 
 def summon(entity: SummonableEntity or str,
             coords: Coordinates or tuple = None,
-            metadata: NBTTags or dict = None) -> str:
+            nbt: NBT or dict = None) -> str:
     """
     If no coords are provided, it defaults to spawning the entity at spawn.
     """
@@ -30,13 +30,13 @@ def summon(entity: SummonableEntity or str,
     if coords:
         coords = format_arg(coords, Coordinates)
 
-        if metadata:
-            metadata = format_arg(metadata)
+        if nbt:
+            nbt = format_arg(nbt)
     
     else:
-        metadata = None
+        nbt = None
 
-    return _summon(entity, coords, metadata)
+    return _summon(entity, coords, nbt)
     
 meta_definition = {
     "summon": {
@@ -52,7 +52,7 @@ meta_definition = {
               "children": {
                 "nbt": {
                   "type": "argument",
-                  "parser": NBTTags,
+                  "parser": NBT,
                   "executable": True
                 }
               },

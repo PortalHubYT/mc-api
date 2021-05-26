@@ -19,9 +19,7 @@ def _set_block(block_coordinates: BlockCoordinates,
     return status
 
 def set_block(block_coordinates: BlockCoordinates or tuple, 
-                block: Block or str,
-                block_handler: BlockHandler or str = None,
-                block_handler_option: Block or str = None) -> bool:
+                block: Block or str) -> bool:
     
     check_output_channel()
 
@@ -30,10 +28,6 @@ def set_block(block_coordinates: BlockCoordinates or tuple,
 
     if block_handler:
         block_handler = format_arg(block_handler, BlockHandler)
-
-        if block_handler_option:
-            block_handler_option = format_arg(block_handler_option, Block)
-            block_handler.option = block_handler_option
     
     return _set_block(block_coordinates, block, block_handler)
 
