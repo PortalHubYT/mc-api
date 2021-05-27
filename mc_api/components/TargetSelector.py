@@ -106,15 +106,12 @@ class TargetSelector:
                     )
 
                 if isinstance(self.arguments[key], list):
-
                     for element in self.arguments[key]:
                         buff += f"{key}={element},"
+                else:
+                    buff += f"{key}={self.arguments[key]},"
 
-                    continue
-
-                buff += f"{key}={self.arguments[key]},"
-
-            if len(buff) > 1 and buff[-1] == ",":
+            if buff != "":
                 buff = buff[:-1]
 
         return f"@{self.id}[{buff}]"
