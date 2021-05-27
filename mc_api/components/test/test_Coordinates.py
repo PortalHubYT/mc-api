@@ -45,6 +45,13 @@ class TestCoordinates(unittest.TestCase):
         with self.assertRaises(WrongCaretNotation):
             str(coords)
 
+    def test_coords_floats(self):
+        coords = Coordinates(1.5, "~0.1", 1)
+
+        diff = str(coords)
+        test = "1.5 ~0.1 1"
+        self.assertEqual(diff, test)
+
 
 if __name__ == "__main__":
     unittest.main()
