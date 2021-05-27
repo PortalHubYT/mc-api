@@ -1,6 +1,5 @@
 import unittest
 
-from mc_api.components.Command import Command
 from mc_api.components.Block import Block
 from mc_api.components.Coordinates import Coordinates
 from mc_api.components.BlockHandler import BlockHandler
@@ -9,9 +8,7 @@ from mc_api.components.BlockState import BlockState
 
 class TestBlockHandler(unittest.TestCase):
     def test_handler_real_case(self):
-        command = Command(
-            "setblock", Coordinates(0, 0, 0), Block("bedrock"), BlockHandler("destroy")
-        )
+        command = f'setblock {Coordinates(0, 0, 0)} {Block("bedrock")} {BlockHandler("destroy")}'
 
         diff = str(command)
         test = "setblock 0 0 0 minecraft:bedrock[]{} destroy"
@@ -23,7 +20,7 @@ class TestBlockHandler(unittest.TestCase):
         bs = BlockState({"facing": "north", "half": "top"})
         block = Block("oak_stairs", blockstate=bs)
 
-        command = Command("fill", pos1, pos2, block)
+        command = f"fill {pos1} {pos2} {block}"
 
         diff = str(command)
         expected = "fill 0 4 0 10 4 10 minecraft:oak_stairs[facing=north,half=top]{}"
