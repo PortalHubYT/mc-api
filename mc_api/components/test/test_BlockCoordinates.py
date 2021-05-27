@@ -1,55 +1,56 @@
 import unittest
 
-from mc_api.components.Coordinates import Coordinates, WrongCaretNotation
+from mc_api.components.Coordinates import WrongCaretNotation
+from mc_api.components.BlockCoordinates import BlockCoordinates
 
 
 class TestCoordinates(unittest.TestCase):
-    def test_coords_zeros(self):
-        coords = Coordinates(0, 0, 0)
+    def test_blockcoords_zeros(self):
+        coords = BlockCoordinates(0, 0, 0)
 
         diff = str(coords)
         test = "0 0 0"
         self.assertEqual(diff, test)
 
     def test_coords_tilde(self):
-        coords = Coordinates("~", "~", "~")
+        coords = BlockCoordinates("~", "~", "~")
 
         diff = str(coords)
         test = "~ ~ ~"
         self.assertEqual(diff, test)
 
     def test_coords_tilde_mixed(self):
-        coords = Coordinates("~5", 0, "~-10")
+        coords = BlockCoordinates("~5", 0, "~-10")
 
         diff = str(coords)
         test = "~5 0 ~-10"
         self.assertEqual(diff, test)
 
     def test_coords_caret(self):
-        coords = Coordinates("^", "^", "^")
+        coords = BlockCoordinates("^", "^", "^")
 
         diff = str(coords)
         test = "^ ^ ^"
         self.assertEqual(diff, test)
 
     def test_coords_caret_mixed(self):
-        coords = Coordinates("^5", "^-10", "^")
+        coords = BlockCoordinates("^5", "^-10", "^")
 
         diff = str(coords)
         test = "^5 ^-10 ^"
         self.assertEqual(diff, test)
 
     def test_coords_caret_wrong(self):
-        coords = Coordinates(5, "^", "^")
+        coords = BlockCoordinates(5, "^", "^")
 
         with self.assertRaises(WrongCaretNotation):
             str(coords)
 
     def test_coords_floats(self):
-        coords = Coordinates(1.5, "~0.1", 1)
+        coords = BlockCoordinates(1.5, "~0.1", 1)
 
         diff = str(coords)
-        test = "1.5 ~0.1 1"
+        test = "1 ~0 1"
         self.assertEqual(diff, test)
 
 

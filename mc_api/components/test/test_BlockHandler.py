@@ -3,45 +3,62 @@ import unittest
 from mc_api.components.BlockHandler import BlockHandler, BlockHandlerWrongType
 from mc_api.components.Block import Block
 
-class TestBlockHandler(unittest.TestCase):
 
+class TestBlockHandler(unittest.TestCase):
     def test_handler_destroy(self):
-        diff = BlockHandler('destroy').to_str()
+        bh = BlockHandler("destroy")
+
+        diff = str(bh)
         test = "destroy"
         self.assertEqual(diff, test)
-    
+
     def test_handler_replace(self):
-        block = Block('bedrock')
-        diff = BlockHandler('replace', block).to_str()
-        test = "replace minecraft:bedrock"
+        bh = BlockHandler("replace")
+
+        diff = str(bh)
+        test = "replace"
         self.assertEqual(diff, test)
-    
+
     def test_handler_keep(self):
-        diff = BlockHandler('keep').to_str()
+        bh = BlockHandler("keep")
+
+        diff = str(bh)
         test = "keep"
         self.assertEqual(diff, test)
-    
+
     def test_handler_hollow(self):
-        diff = BlockHandler('hollow').to_str()
+        bh = BlockHandler("hollow")
+
+        diff = str(bh)
         test = "hollow"
         self.assertEqual(diff, test)
 
     def test_handler_outline(self):
-        diff = BlockHandler('outline').to_str()
+        bh = BlockHandler("outline")
+
+        diff = str(bh)
         test = "outline"
         self.assertEqual(diff, test)
-    
-    # This tests that BlockHandler correctly throws an exception on wrong BlockHandler type
+
+    def test_handler_default(self):
+        bh = BlockHandler()
+
+        diff = str(bh)
+        test = "replace"
+        self.assertEqual(diff, test)
+
     def test_abritrary_handler(self):
-        passed = False
-        try:
-            BlockHandler('imaginary').to_str()
-            passed = False
-        except BlockHandlerWrongType:
-            passed = True
-        self.assertTrue(passed)
+        bh = BlockHandler("imaginary")
+
+        with self.assertRaises(BlockHandlerWrongType):
+            str(bh)
+
+    def test_wrong_handler_type(self):
+        bh = BlockHandler(1)
+
+        with self.assertRaises(BlockHandlerWrongType):
+            str(bh)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
-    
