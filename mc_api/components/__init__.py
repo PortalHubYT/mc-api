@@ -4,7 +4,6 @@ from .BlockHandler import BlockHandler
 from .BlockState import BlockState
 from .Coordinates import Coordinates
 from .Entity import Entity
-from .Message import Message
 from .NBT import NBT
 from .TargetSelector import TargetSelector
 
@@ -17,7 +16,6 @@ components = [
     "BlockState",
     "Coordinates",
     "Entity",
-    "Message",
     "NBT",
     "TargetSelector",
 ]
