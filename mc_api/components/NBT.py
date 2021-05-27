@@ -2,6 +2,18 @@ import re
 
 
 class NBT:
+    """
+    Every arguments or attributes given to NBT must be written
+    using the correct case provided by Minecraft.
+
+    E.G.:
+        -> AbsorptionAmount
+        -> CustomName
+        -> Fire
+
+    If the case is not respected, the tags won't be applied.
+    """
+
     def __init__(self, compound: dict = None):
 
         if isinstance(compound, dict):
@@ -11,15 +23,18 @@ class NBT:
     def flatten(self, arg):
         if isinstance(arg, dict):
             return str(NBT(arg))
-        elif isinstance(arg, str):
+
+        elif isinstance(arg, str):  # see test_NBT_with_args in test_NBT.py
             if '"' in arg:
                 return f"'{arg}'"
             else:
                 return f'"{arg}"'
+
         elif isinstance(arg, float):
             return f"{arg}d"
+
         else:
-            return arg
+            return str(arg)
 
     def __str__(self):
 
@@ -34,10 +49,9 @@ class NBT:
             value = getattr(self, key)
             value = self.flatten(value)
 
-            key = re.sub("([a-zA-Z])", lambda x: x.groups()[0].upper(), key, 1)
             buff += f"{key}:{value},"
 
-        if len(buff) > 1 and buff[-1] == ",":
+        if buff != "":
             buff = buff[:-1]
 
         return f"{{{buff}}}"

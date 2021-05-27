@@ -62,7 +62,7 @@ class TestBlock(unittest.TestCase):
 
     def test_NBT_via_attr(self):
         tags = NBT()
-        tags.fire = 4
+        tags.Fire = 4
 
         diff = str(tags)
         test = "{Fire:4}"
@@ -70,8 +70,8 @@ class TestBlock(unittest.TestCase):
 
     def test_NBT_via_attrs(self):
         tags = NBT()
-        tags.motion = [2.0, 2.0, 2.0]
-        tags.passengers = [{"id": "minecraft:area_effect_cloud"}]
+        tags.Motion = [2.0, 2.0, 2.0]
+        tags.Passengers = [{"id": "minecraft:area_effect_cloud"}]
 
         diff = str(tags)
         test = "{Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
@@ -83,6 +83,14 @@ class TestBlock(unittest.TestCase):
 
         diff = str(b.nbt)
         test = "{Fire:4}"
+        self.assertEqual(diff, test)
+
+    def test_NBT_with_args_overriden(self):
+        tags = NBT({"Fire": 4})
+        tags.Fire = 5
+
+        diff = str(tags)
+        test = "{Fire:5}"
         self.assertEqual(diff, test)
 
     def test_NBT_with_args_passed_to_Block(self):
@@ -104,7 +112,7 @@ class TestBlock(unittest.TestCase):
 
     def test_NBT_via_attr_through_Block(self):
         b = Block("dirt")
-        b.nbt.fire = 4
+        b.nbt.Fire = 4
 
         diff = str(b.nbt)
         test = "{Fire:4}"
@@ -112,8 +120,8 @@ class TestBlock(unittest.TestCase):
 
     def test_NBT_via_attrs_through_Block(self):
         b = Block("dirt")
-        b.nbt.motion = [2.0, 2.0, 2.0]
-        b.nbt.passengers = [{"id": "minecraft:area_effect_cloud"}]
+        b.nbt.Motion = [2.0, 2.0, 2.0]
+        b.nbt.Passengers = [{"id": "minecraft:area_effect_cloud"}]
 
         diff = str(b.nbt)
         test = "{Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
@@ -123,8 +131,8 @@ class TestBlock(unittest.TestCase):
         tags = NBT({"Fire": 4, "CustomName": '{"text":"test"}'})
         b = Block("dirt")
         b.nbt = tags
-        b.nbt.motion = [2.0, 2.0, 2.0]
-        b.nbt.passengers = [{"id": "minecraft:area_effect_cloud"}]
+        b.nbt.Motion = [2.0, 2.0, 2.0]
+        b.nbt.Passengers = [{"id": "minecraft:area_effect_cloud"}]
 
         diff = str(b.nbt)
         test = "{CustomName:'{\"text\":\"test\"}',Fire:4,Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
