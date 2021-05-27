@@ -49,6 +49,13 @@ class TestBlockHandler(unittest.TestCase):
 
     def test_abritrary_handler(self):
         bh = BlockHandler("imaginary")
+
+        with self.assertRaises(BlockHandlerWrongType):
+            str(bh)
+
+    def test_wrong_handler_type(self):
+        bh = BlockHandler(1)
+
         with self.assertRaises(BlockHandlerWrongType):
             str(bh)
 

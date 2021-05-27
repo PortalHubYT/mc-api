@@ -1,6 +1,3 @@
-options = ["destroy", "hollow", "keep", "outline", "replace"]
-
-
 class BlockHandler:
     """
     DESTROY: Replaces all blocks (including air) in the fill region with the specified block,
@@ -25,13 +22,15 @@ class BlockHandler:
     which blocks are replaced (see replaceTileName and replaceDataValue below)
     """
 
+    options = ["destroy", "hollow", "keep", "outline", "replace"]
+
     def __init__(self, option: str = "replace"):
         self.option = option
 
     def __str__(self):
-        if self.option not in options:
+        if self.option not in self.options:
             raise BlockHandlerWrongType(
-                f'The BlockHandler provided: \'{self.option}\' is not a valid option. Availables: [{" | ".join(options)}]'
+                f'The BlockHandler provided: \'{self.option}\' is not a valid option. Availables: [{" | ".join(self.options)}]'
             )
         else:
             return f"{self.option}"
