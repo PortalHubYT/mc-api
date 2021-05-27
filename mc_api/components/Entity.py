@@ -3,12 +3,13 @@ from typing import Union
 from .NBT import NBT
 from .TargetSelector import TargetSelector
 
+
 class Entity:
     """
     Must be a player name, a target selector or a UUID.
 
-    Each entity argument may place limits on the number of 
-    entities (single/multiple) selected or the type of entities 
+    Each entity argument may place limits on the number of
+    entities (single/multiple) selected or the type of entities
     (player/any entity) selected.
 
     e.g:
@@ -18,25 +19,31 @@ class Entity:
         - @e[type=foo]
         - dd12be42-52a9-4a91-a8a1-11c01849e498
 
-    An instance of this class represents an existing unique entity, or a group of unique entities. 
+    An instance of this class represents an existing unique entity, or a group of unique entities.
     """
 
-    def __init__(self, 
-                descriptor: Union[TargetSelector, str]):   
+    def __init__(self, descriptor: Union[TargetSelector, str]):
 
-        if type(descriptor) not in [TargetSelector, str]:
-            raise IncorrectEntityDescriptorType(f'The Entity descriptor must either be a TargetSelector instance or a string')
+        if not isinstance(descriptor, TargetSelector) and not isinstance(
+            descriptor, str
+        ):
+            raise IncorrectEntityDescriptorType(
+                f"The Entity descriptor must either be a TargetSelector instance or a string"
+            )
 
-        if type(descriptor) is not str:
-            self.descriptor = repr(descriptor)
+        if not isinstance(descriptor, str):
+            self.descriptor = str(descriptor)
         else:
             if descriptor:
                 self.descriptor = descriptor
             else:
-                raise ValueError(f'The descriptor provided to to TargetSelector was empty or invalid')
-        
-    def __repr__(self):
-        return (f'{self.descriptor}')
+                raise ValueError(
+                    f"The descriptor provided to to TargetSelector was empty or invalid"
+                )
+
+    def __str__(self):
+        return f"{self.descriptor}"
+
 
 class IncorrectEntityDescriptorType(Exception):
     pass

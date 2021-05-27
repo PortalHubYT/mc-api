@@ -1,10 +1,10 @@
 class TargetSelector:
     """
     In most commands where entities may be specified as an argument,
-    it is possible to "target" one or more entities satisfying 
-    certain conditions. To target entities by condition, 
-    choose a target selector variable and, optionally, 
-    one or more target selector arguments to modify the conditions 
+    it is possible to "target" one or more entities satisfying
+    certain conditions. To target entities by condition,
+    choose a target selector variable and, optionally,
+    one or more target selector arguments to modify the conditions
     to be satisfied.
 
     Available identifiers:
@@ -18,14 +18,14 @@ class TargetSelector:
 
         Selection by Position:
             Argument(s)	 |  Selection criteria   |  Example value
-            _____________________________________________________   
+            _____________________________________________________
 
-            x, y, z	     |  coordinate           |  (float, int) 7, +12.34, -0.1    
-            distance‌     |  distance	          |  (int, str) 8, 16, "8..16" (from 8 to 16)   
+            x, y, z	     |  coordinate           |  (float, int) 7, +12.34, -0.1
+            distance‌     |  distance	          |  (int, str) 8, 16, "8..16" (from 8 to 16)
             dx, dy, dz	 |  volume dimensions    |  (int) 1, 2, 0
 
         Selection by Scoreboard Values:
-            Argument(s)	 |  Selection criteria   |  Example value   
+            Argument(s)	 |  Selection criteria   |  Example value
             _____________________________________________________
 
             scores	     |  scores               |  (dict) {myscore=10}, {foo=..15}
@@ -37,11 +37,11 @@ class TargetSelector:
             _____________________________________________________
 
             limit,sort‌   |  limit                |  (str and int) sort=(nearest|furthest|random|arbitrary) limit= (int)
-            level‌        |  experience level     |  (int, str) 8, 16, "8..16" (from 8 to 16)  
+            level‌        |  experience level     |  (int, str) 8, 16, "8..16" (from 8 to 16)
             gamemode‌     |  game mode            |  (str) gamemode=(spectator‌|adventure|creative|survival), !survival
             name	     |  entity name          |  (str) Johnson, !Johnson
             x_rotation   |  vertical rotation    |  (int, str) 8, 16, "8..16" (from 8 to 16)
-            y_rotation   |  horizontal rotation  |  (int, str) 8, 16, "8..16" (from 8 to 16) 
+            y_rotation   |  horizontal rotation  |  (int, str) 8, 16, "8..16" (from 8 to 16)
             type	     |  entity type          |  (str) pig, mod:modded_mob, !pig
             nbt‌          |  nbt                  |  (dict, object) {OnGround:true}, [class] NBT()
             advancements‌ |  advancements         |  (dict) {story/follow_ender_eye=true}
@@ -53,55 +53,80 @@ class TargetSelector:
         https://minecraft.fandom.com/wiki/Commands#Target_selectors
     """
 
-    argument_list = ['x', 'y', 'z', 'dx', 'dy', 'dz', 'distance',
-    'scores', 'tag', 'team',
-    'limit', 'sort‌', 'level‌', 'gamemode‌', 'name', 
-    'x_rotation', 'y_rotation', 'type', 'nbt‌', 
-    'advancements‌', 'predicate']
+    argument_list = [
+        "x",
+        "y",
+        "z",
+        "dx",
+        "dy",
+        "dz",
+        "distance",
+        "scores",
+        "tag",
+        "team",
+        "limit",
+        "sort‌",
+        "level‌",
+        "gamemode‌",
+        "name",
+        "x_rotation",
+        "y_rotation",
+        "type",
+        "nbt‌",
+        "advancements‌",
+        "predicate",
+    ]
 
-    def __init__(self, 
-                identifier: str,
-                arguments: dict = None):
+    def __init__(self, identifier: str, arguments: dict = None):
 
-        if identifier not in ['p', 'a', 'r', 's', 'e']:
-            raise IncorrectTargetSelectorIdentifier(f'The TargetSelector identifier must be either P, A, R, S or E')
-        
+        if identifier not in ["p", "a", "r", "s", "e"]:
+            raise IncorrectTargetSelectorIdentifier(
+                f"The TargetSelector identifier must be either P, A, R, S or E"
+            )
+
         self.id = identifier
-        
-        if type(arguments) is not dict and arguments is not None:
-            raise IncorrectTargetSelectorArgumentsType(f'The TargetSelector arguments must be passed as a dictionnary')
-        
+
+        if not isinstance(arguments, dict) and arguments is not None:
+            raise IncorrectTargetSelectorArgumentsType(
+                f"The TargetSelector arguments must be passed as a dictionnary"
+            )
+
         self.arguments = arguments
 
-    def __repr__(self):
-        buff = ''
+    def __str__(self):
+        buff = ""
 
         if self.arguments is not None:
-    
+
             for key in self.arguments:
-                
+
                 if key not in self.argument_list:
-                    raise InvalidTargetSelectorArgumentKey(f'The key "{key}" is not a valid argument type for a selector')
-                
-                if type(self.arguments[key]) is list:
+                    raise InvalidTargetSelectorArgumentKey(
+                        f'The key "{key}" is not a valid argument type for a selector'
+                    )
+
+                if isinstance(self.arguments[key], list):
 
                     for element in self.arguments[key]:
-                        buff += f'{key}={element},'
+                        buff += f"{key}={element},"
 
                     continue
 
-                buff += f'{key}={self.arguments[key]},'
+                buff += f"{key}={self.arguments[key]},"
 
-            if len(buff) > 1 and buff[-1] == ',':
+            if len(buff) > 1 and buff[-1] == ",":
                 buff = buff[:-1]
 
-        return (f'@{self.id}[{buff}]')
+        return f"@{self.id}[{buff}]"
+
 
 class IncorrectTargetSelectorIdentifier(Exception):
     pass
 
+
 class IncorrectTargetSelectorArgumentsType(Exception):
     pass
+
 
 class InvalidTargetSelectorArgumentKey(Exception):
     pass
