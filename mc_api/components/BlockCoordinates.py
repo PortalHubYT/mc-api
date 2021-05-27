@@ -14,10 +14,9 @@ class BlockCoordinates(Coordinates):
     """
 
     def floor(self, coord):
-        """
-        Below is the worst bricolage in the history of bricolage
-        This is done to handle the flooring of floats within strings (e.g.: '^1.1' becomes '^1')
-        """
+        # Below is the worst bricolage in the history of bricolage
+        # '^1.1' becomes '^1'
+
         if isinstance(coord, str) and "." in coord:
 
             if coord.startswith("^"):
