@@ -1,14 +1,42 @@
-from .NBTTags import NBTTags
+from typing import Union
+
+from .NBT import NBT
+from .TargetSelector import TargetSelector
 
 class Entity:
-    def __init__(self, id: str, namespace: str = 'minecraft'):
-        self.id = id
-        self.namespace = namespace
+    """
+    Must be a player name, a target selector or a UUID.
 
-        self.tags = NBTTags()
+    Each entity argument may place limits on the number of 
+    entities (single/multiple) selected or the type of entities 
+    (player/any entity) selected.
 
-    def define(self, property, value):
-        self.tags.add(property, value)
-    
+    e.g:
+        - Player
+        - 0123
+        - @e
+        - @e[type=foo]
+        - dd12be42-52a9-4a91-a8a1-11c01849e498
+
+    An instance of this class represents an existing unique entity, or a group of unique entities. 
+    """
+
+    def __init__(self, 
+                descriptor: Union[TargetSelector, str]):   
+
+        if type(descriptor) not in [TargetSelector, str]:
+            raise IncorrectEntityDescriptorType(f'The Entity descriptor must either be a TargetSelector instance or a string')
+
+        if type(descriptor) is not str:
+            self.descriptor = repr(descriptor)
+        else:
+            if descriptor:
+                self.descriptor = descriptor
+            else:
+                raise ValueError(f'The descriptor provided to to TargetSelector was empty or invalid')
+        
     def __repr__(self):
-        return (f'{self.id}:{self.namespace}')
+        return (f'{self.descriptor}')
+
+class IncorrectEntityDescriptorType(Exception):
+    pass
