@@ -31,15 +31,12 @@ class Entity:
                 f"The Entity descriptor must either be a TargetSelector instance or a string"
             )
 
-        if not isinstance(descriptor, str):
-            self.descriptor = str(descriptor)
-        else:
-            if descriptor:
-                self.descriptor = descriptor
-            else:
-                raise ValueError(
-                    f"The descriptor provided to to TargetSelector was empty or invalid"
-                )
+        if not descriptor:
+            raise ValueError(
+                f"The descriptor provided to to TargetSelector was empty or invalid"
+            )
+
+        self.descriptor = str(descriptor)
 
     def __str__(self):
         return f"{self.descriptor}"
