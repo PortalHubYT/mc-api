@@ -39,10 +39,9 @@ class BlockState:
 
             value = getattr(self, key)
             value = self.flatten(value)
-
             buff += f"{key}={value},"
 
-        if len(buff) > 1 and buff[-1] == ",":
+        if buff != "":
             buff = buff[:-1]
 
         return f"[{buff}]"

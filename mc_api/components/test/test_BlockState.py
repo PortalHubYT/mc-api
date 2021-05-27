@@ -114,6 +114,16 @@ class TestBlock(unittest.TestCase):
         test = "[dancing=well,facing=north,snowy=true]"
         self.assertEqual(diff, test)
 
+    def test_blockstate_override_attr_through_Block(self):
+        bs = BlockState({"snowy": True})
+        b = Block("dirt")
+        b.blockstate = bs
+        b.blockstate.snowy = False
+
+        diff = str(b.blockstate)
+        test = "[snowy=false]"
+        self.assertEqual(diff, test)
+
     def test_blockstate_incorrect_argument_value_type(self):
         bs = BlockState({"snowy": ["test", "test1"]})
 
