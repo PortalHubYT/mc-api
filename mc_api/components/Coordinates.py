@@ -13,7 +13,7 @@ class Coordinates:
         self.y = y
         self.z = z
 
-    def check_validity(self):
+    def check_carets(self):
         coords = [self.x, self.y, self.z]
 
         if any(str(coord).startswith("^") for coord in coords):
@@ -23,7 +23,8 @@ class Coordinates:
                 )
 
     def __str__(self):
-        self.check_validity()
+        self.check_carets()
+
         return f"{self.x} {self.y} {self.z}"
 
 

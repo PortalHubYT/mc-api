@@ -41,7 +41,7 @@ class BlockCoordinates(Coordinates):
 
     def __str__(self):
 
-        self.check_validity()
+        self.check_carets()
 
         self.x = self.floor(self.x)
         self.y = self.floor(self.y)
