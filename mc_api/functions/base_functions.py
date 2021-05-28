@@ -1,11 +1,8 @@
-from .server import singleton
-from .components import Command
+from mc_api.server.singleton import singleton
 
 __all__ = [
     "check_output_channel",
-    "construct",
     "post",
-    "send",
     "default_check",
     "execute_check",
     "unexpected_status",
@@ -19,27 +16,14 @@ def check_output_channel():
     else:
         raise NoOutputChannelProvided(f"No output channel was initialized in the code")
 
-
-def construct(*args):
-    return str(Command(*args))
-
-
 def post(cmd: str):
     return singleton.post(cmd)
-
-
-def send(*args):
-    command = construct(*args)
-    response = post(command)
-    return response
-
 
 def default_check(response):
     if response == "":
         return True
     else:
         return response
-
 
 def execute_check(response):
     if response == "Test passed":
