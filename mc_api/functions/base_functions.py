@@ -16,14 +16,17 @@ def check_output_channel():
     else:
         raise NoOutputChannelProvided(f"No output channel was initialized in the code")
 
+
 def post(cmd: str):
     return singleton.post(cmd)
+
 
 def default_check(response):
     if response == "":
         return True
     else:
         return response
+
 
 def execute_check(response):
     if response == "Test passed":
