@@ -7,6 +7,9 @@ import mc_api as mc
 auth = tweepy.OAuthHandler(
     "tR6HE0QvWhu7t1uhJxmiQuNMi", "dRACvMmj4Qgf7sc1vYhdVpzdwt2t4g4EFSoktdvK6EImF8kFXY"
 )
+
+# TODO: REGENERATE THIS VALUE ABOVE !!!!!!!!!! I PUSHED IT ON THE PRIVATE REPO
+
 api = tweepy.API(auth)
 username = "FurryEboyVEVO"
 
