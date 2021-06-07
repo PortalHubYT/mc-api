@@ -16,7 +16,6 @@ from mc_api.functions.set_zone import _set_zone
 # TODO: Remove digit skip and encode them
 # TODO: handle '\n'
 # TODO: flatten scale for every number to usable (but translates to odd numbers)
-# TODO: Handle unknown characters (right now it would crash)
 
 
 def _set_text(
@@ -712,47 +711,47 @@ letters_dict = {
     "1": {
         "smallcaps": "000-310-010-313-000",
         "uppercase": "310-010-010-313-000",
-        "lowercase": "000-212-010-313-000",
+        "lowercase": "000-310-010-313-000",
     },
     "2": {
         "smallcaps": "000-425-047-413-000",
         "uppercase": "425-007-040-453-000",
-        "lowercase": "000-425-037-453-000",
+        "lowercase": "000-425-047-413-000",
     },
     "3": {
         "smallcaps": "000-425-025-637-000",
         "uppercase": "425-037-001-637-000",
-        "lowercase": "000-727-040-005-637",
+        "lowercase": "000-425-025-637-000",
     },
     "4": {
         "smallcaps": "000-401-131-001-000",
         "uppercase": "401-101-221-001-000",
-        "lowercase": "000-004-071-431-001",
+        "lowercase": "000-401-131-001-000",
     },
     "5": {
         "smallcaps": "000-122-225-637-000",
         "uppercase": "122-130-001-637-000",
-        "lowercase": "000-126-130-001-637",
+        "lowercase": "000-122-225-637-000",
     },
     "6": {
         "smallcaps": "000-425-123-637-000",
         "uppercase": "425-130-101-637-000",
-        "lowercase": "032-450-101-637-000",
+        "lowercase": "000-425-123-637-000",
     },
     "7": {
         "smallcaps": "000-221-047-010-000",
         "uppercase": "221-007-040-010-000",
-        "lowercase": "000-721-007-040-010",
+        "lowercase": "000-221-047-010-000",
     },
     "8": {
         "smallcaps": "000-425-425-637-000",
         "uppercase": "425-637-101-637-000",
-        "lowercase": "425-637-706-637-000",
+        "lowercase": "000-425-425-637-000",
     },
     "9": {
         "smallcaps": "000-425-231-637-000",
         "uppercase": "425-101-021-637-000",
-        "lowercase": "000-425-101-067-320",
+        "lowercase": "000-425-231-637-000",
     },
     "0": {
         "smallcaps": "000-425-141-637-000",
