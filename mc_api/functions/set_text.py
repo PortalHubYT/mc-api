@@ -143,7 +143,7 @@ def _set_text(
     else:
         y = representation.count("-")
 
-    new_coords.y += y
+    new_coords.y -= y
     instructions["zone"] = Zone(coords, new_coords)
 
     # The functions returns the "instructions" dictionary
