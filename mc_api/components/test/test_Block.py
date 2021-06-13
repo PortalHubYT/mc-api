@@ -10,14 +10,14 @@ class TestBlock(unittest.TestCase):
         block = Block("bedrock")
 
         diff = str(block)
-        test = "minecraft:bedrock[]{}"
+        test = "minecraft:bedrock"
         self.assertEqual(diff, test)
 
     def test_block_namespace(self):
         block = Block("mod:op_block")
 
         diff = str(block)
-        test = "mod:op_block[]{}"
+        test = "mod:op_block"
         self.assertEqual(diff, test)
 
     def test_block_simple_blockstate(self):
@@ -25,7 +25,7 @@ class TestBlock(unittest.TestCase):
         block.blockstate = BlockState({"facing": "north"})
 
         diff = str(block)
-        test = "minecraft:bedrock[facing=north]{}"
+        test = "minecraft:bedrock[facing=north]"
         self.assertEqual(diff, test)
 
     def test_block_double_blockstate(self):
@@ -33,7 +33,7 @@ class TestBlock(unittest.TestCase):
         block.blockstate = BlockState({"facing": "north", "half": "top"})
 
         diff = str(block)
-        test = "minecraft:bedrock[facing=north,half=top]{}"
+        test = "minecraft:bedrock[facing=north,half=top]"
         self.assertEqual(diff, test)
 
     def test_block_simple_nbt(self):
@@ -41,7 +41,7 @@ class TestBlock(unittest.TestCase):
         block.nbt = NBT({"Fire": 4})
 
         diff = str(block)
-        test = "minecraft:bedrock[]{Fire:4}"
+        test = "minecraft:bedrock{Fire:4}"
         self.assertEqual(diff, test)
 
     def test_block_double_nbt(self):
@@ -49,7 +49,7 @@ class TestBlock(unittest.TestCase):
         block.nbt = NBT({"Fire": 4, "Air": 0})
 
         diff = str(block)
-        test = "minecraft:bedrock[]{Air:0,Fire:4}"
+        test = "minecraft:bedrock{Air:0,Fire:4}"
         self.assertEqual(diff, test)
 
     def test_block_mixed(self):

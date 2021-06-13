@@ -9,14 +9,14 @@ class TestBlock(unittest.TestCase):
         tags = NBT()
 
         diff = str(tags)
-        test = "{}"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_NBT_without_attrs(self):
         b = Block("dirt")
 
         diff = str(b.nbt)
-        test = "{}"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_NBT_without_args_passed_to_Block(self):
@@ -24,7 +24,7 @@ class TestBlock(unittest.TestCase):
         b = Block("dirt", nbt=tags)
 
         diff = str(b.nbt)
-        test = "{}"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_NBT_without_args_attributed_to_Block(self):
@@ -34,7 +34,7 @@ class TestBlock(unittest.TestCase):
         b.nbt = tags
 
         diff = str(b.nbt)
-        test = "{}"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_NBT_with_arg(self):
