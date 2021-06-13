@@ -6,7 +6,7 @@ from mctools import RCONClient
 
 
 class RconClient:
-    def __init__(self, ip, password, port=25575, mute: bool = True):
+    def __init__(self, ip, password, port=25575):
         self.ip = ip
         self.password = password
         self.port = port
@@ -16,13 +16,5 @@ class RconClient:
             self.mcr.login(self.password)
         except Exception as e:
             raise e
-        signal.signal(signal.SIGINT, self.signal_handler)
 
         singleton.add_output_channel(self.mcr.command)
-
-    def stop(self):
-        self.mcr.disconnect()
-
-    def signal_handler(self, sig, frame):
-        self.stop()
-        sys.exit()
