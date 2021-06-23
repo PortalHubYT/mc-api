@@ -11,7 +11,7 @@ class TestBlockHandler(unittest.TestCase):
         command = f'setblock {Coordinates(0, 0, 0)} {Block("bedrock")} {BlockHandler("destroy")}'
 
         diff = str(command)
-        test = "setblock 0 0 0 minecraft:bedrock[]{} destroy"
+        test = "setblock 0 0 0 minecraft:bedrock destroy"
         self.assertEqual(diff, test)
 
     def test_fill_with_blockstate(self):
@@ -23,5 +23,5 @@ class TestBlockHandler(unittest.TestCase):
         command = f"fill {pos1} {pos2} {block}"
 
         diff = str(command)
-        expected = "fill 0 4 0 10 4 10 minecraft:oak_stairs[facing=north,half=top]{}"
+        expected = "fill 0 4 0 10 4 10 minecraft:oak_stairs[facing=north,half=top]"
         self.assertEqual(diff, expected)
