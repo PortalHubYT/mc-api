@@ -1,4 +1,4 @@
-# mc_api
+# mc-api
 Use Python to control Minecraft through commands.
 
 # Usage
