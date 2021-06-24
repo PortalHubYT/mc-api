@@ -9,12 +9,16 @@ from mc_api.functions.base_functions import *
 
 def _set_zone(
     zone: Zone, block: Block, handler: BlockHandler, filter: Union[Block, None] = None
-) -> str:
+) -> dict:
+
+    instructions = {"list": []}
 
     if str(handler) == "replace" and filter:
         handler = str(handler) + " " + str(filter)
 
-    return f"fill {zone} {block} {handler}"
+    instructions["list"].append(f"fill {zone} {block} {handler}")
+
+    return instructions
 
 
 def set_zone(
@@ -52,8 +56,9 @@ def set_zone(
     if filter != "":
         filter = format_arg(filter, Block)
 
-    cmd = _set_zone(zone, block, handler, filter)
+    instructions = _set_zone(zone, block, handler, filter)
 
-    status = post(cmd)
+    for line in instructions["list"]:
+        status = post(line)
 
     return default_check(status)

@@ -20,7 +20,7 @@ from mc_api.functions.set_block import _set_block, set_block
 
 def _set_image(
     file: str, coords: BlockCoordinates, orientation: str, player_name: str
-) -> list:
+) -> dict:
 
     image = Image.open(file)
     converted_image = image.convert("RGB")
@@ -29,7 +29,7 @@ def _set_image(
     width, height = converted_image.size
     pixels = [pixels[i * width : (i + 1) * width] for i in range(height)]
 
-    instructions = {"lines": [], "zone": None}
+    instructions = {"list": [], "zone": None}
 
     palette = get_palette(orientation)
 
@@ -46,7 +46,7 @@ def _set_image(
             if player_name is not None:
                 # TODO: Update with the TP method later on
                 cmd = f"tp {player_name} {x} {coords.y + 100} {z}"
-                instructions["lines"].append(cmd)
+                instructions["list"].append(cmd)
 
             new_coords = BlockCoordinates(coords.x + x, coords.y, coords.z + z)
 
@@ -64,7 +64,7 @@ def _set_image(
                 block,
                 BlockHandler("replace"),
             )
-            instructions["lines"].append(cmd)
+            instructions["list"].append(cmd)
 
             z += 1
     else:
@@ -122,7 +122,7 @@ def set_image(
 
     instructions = _set_image(file, coords, orientation, player_name)
 
-    for line in instructions["lines"]:
+    for line in instructions["list"]:
         post(line)
 
     """nest = nest_commands(instructions["lines"])

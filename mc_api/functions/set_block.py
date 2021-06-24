@@ -8,8 +8,10 @@ from mc_api.components.BlockHandler import BlockHandler
 from mc_api.functions.base_functions import *
 
 
-def _set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> str:
-    return f"setblock {coords} {block} {handler}"
+def _set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> dict:
+    instructions = {"list": []}
+    instructions["list"].append(f"setblock {coords} {block} {handler}")
+    return instructions
 
 
 def set_block(
@@ -36,9 +38,10 @@ def set_block(
     block = format_arg(block, Block)
     handler = format_arg(handler, BlockHandler)
 
-    cmd = _set_block(coords, block, handler)
+    instructions = _set_block(coords, block, handler)
 
-    status = post(cmd)
+    for line in instructions["list"]:
+        status = post(line)
 
     return True if status.startswith("Changed the block") else status
 
