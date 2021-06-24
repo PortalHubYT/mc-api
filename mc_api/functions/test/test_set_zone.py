@@ -18,7 +18,7 @@ class TestBlock(unittest.TestCase):
         handler = BlockHandler("hollow")
 
         diff = _set_zone(zone, block, handler, filter)
-        test = "fill 0 0 0 10 10 10 minecraft:bedrock[]{} hollow"
+        test = "fill 0 0 0 10 10 10 minecraft:bedrock hollow"
         self.assertEqual(diff, test)
 
     def test_set_zone_replace(self):
@@ -30,7 +30,7 @@ class TestBlock(unittest.TestCase):
         handler = BlockHandler("replace")
 
         diff = _set_zone(zone, block, handler, filter)
-        test = "fill 0 0 0 10 10 10 minecraft:bedrock[]{} replace minecraft:sponge[]{}"
+        test = "fill 0 0 0 10 10 10 minecraft:bedrock replace minecraft:sponge"
         self.assertEqual(diff, test)
 
     def test_set_zone_no_handler(self):
@@ -41,7 +41,7 @@ class TestBlock(unittest.TestCase):
         handler = BlockHandler()
 
         diff = _set_zone(zone, block, handler)
-        test = "fill 0 0 0 10 10 10 minecraft:bedrock[]{} replace"
+        test = "fill 0 0 0 10 10 10 minecraft:bedrock replace"
         self.assertEqual(diff, test)
 
 
