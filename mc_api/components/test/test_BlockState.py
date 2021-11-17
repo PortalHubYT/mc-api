@@ -12,14 +12,14 @@ class TestBlock(unittest.TestCase):
         bs = BlockState()
 
         diff = str(bs)
-        test = "[]"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_blockstate_without_attrs(self):
         b = Block("dirt")
 
         diff = str(b.blockstate)
-        test = "[]"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_blockstate_without_args_passed_to_Block(self):
@@ -27,7 +27,7 @@ class TestBlock(unittest.TestCase):
         b = Block("dirt", blockstate=bs)
 
         diff = str(b.blockstate)
-        test = "[]"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_blockstate_without_args_attributed_to_Block(self):
@@ -37,7 +37,7 @@ class TestBlock(unittest.TestCase):
         b.blockstate = bs
 
         diff = str(b.blockstate)
-        test = "[]"
+        test = ""
         self.assertEqual(diff, test)
 
     def test_blockstate_with_arg(self):

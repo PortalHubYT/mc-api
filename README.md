@@ -2,7 +2,7 @@
 Use Python to control Minecraft through commands.
 
 # Usage
-No pip install for now, just clone the repo and import mc_api
+Git clone then `pip install .`
 
 # How it works: 
 

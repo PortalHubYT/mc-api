@@ -1,78 +1,26 @@
-from mc_api.components.Coordinates import Coordinates
-from mc_api.components import BlockState, NBT
 from typing import Union
 
-# components
+# components 
 
-#class Vec3(): ...
-class BlockCoordinates(): ...
-class Coordinates(): ...
+class Block():              ... #ok + test
+class BlockState():         ... #ok + test
+class NBT():                ... #ok + test
 
+class BlockCoordinates():   ... #ok + test
+class Coordinates():        ... #ok + test
+class BlockHandler():       ... #ok + test
+class Zone():               ... #ok + test
 
-class Block():
-    """
-    A single '<block>' argument looks like this:
+class Command():            ... #ok + test
 
-        'stone'
-        'minecraft:redstone_wire[power=15,north=up,south=side]'
-        'minecraft:jukebox{RecordItem:{...}}'
-        'minecraft:furnace[facing=north]{BurnTime:200}'
+class Entity():             ... #ok + test
+class TargetSelector():     ... #ok + test
 
-    The format of '<block>' parameters is 'namespaced_ID[block_states]{data_tags}', in which 
-    block states and data tags can be omitted when they are not needed.
-
-        Namespaced ID is required (though if namespace isn't set it defaults to 'minecraft:').
-            In the context of "conditions"/testing for blocks, it can also be the namespace ID 
-            of block tag with the prefix of '#', such as '#minecraft:planks'.
-
-        Block states are inside '[]', comma-separated and must be properties/values supported 
-        by the blocks. They are optional.
-            'minecraft:stone[doesntexist=purpleberry]' is a syntax error, because 'stone' 
-            doesn't have 'doesntexist'.
-            'minecraft:redstone_wire[power=tuesday]' is a syntax error, because 'redstone_wire''s
-            'power' is a number between 0 and 15.
-
-        Data tags are inside '{}'. It's optional.
-
-        In the context of "conditions"/testing for blocks, only the states provided are tested.
-            If command tests 'redstone_wire[power=15]', it checks only power, but ignores other
-            states such as north.
-
-        In the context of setting blocks, any states provided are set, but anything omitted retain 
-        their default values, depending on the block.
-            If command sets 'redstone_wire[power=15]', it is set 'power' to 15, but 'north' is a
-            default value (in this case, set to 'none').
-    """
-    # dirt
-    # minecraft:dirt
-    # minecraft:dirt[snowy=true]
-    # minecraft:dirt[snowy=true]{onFire:1b, content: {text: "test"}}
-    def __init__(self, 
-                id: str,
-                blockstate: BlockState = BlockState(), 
-                nbt: NBT = NBT()):
-
-        # TODO: handle namespace
-        
-        self.blockstate = blockstate
-        self.nbt = nbt
-
-class Zone(): 
-    def __init__(self, 
-                    pos1: Union[BlockCoordinates, Coordinates, tuple],
-                    pos2: Union[BlockCoordinates, Coordinates, tuple]):
-        """
-        Represents a rectangular zone
-        """
-
-class Entity():
-    def update_nbt(self): ...
-class Player(Entity): ...
-class Mob(Entity): ...
-
-class Selector(): ...
+class Message():            ... #ok + test
 
 # top level functions:
+
+def set_text(): ...
 
 def set_block(coords: Union[BlockCoordinates, tuple], 
                 block: Union[Block, str], 
@@ -124,7 +72,7 @@ def get_blocks(zone: Zone) -> list:
     the zone represents
     """
 
-def get_player(selector: Union[Selector, str]) -> Player: 
+def get_player(selector: Union[TargetSelector, str]) -> Player: 
     """
     Fill an instance of the component Player with the 
     NBT tags fetched from the Selector component
@@ -133,7 +81,7 @@ def get_player(selector: Union[Selector, str]) -> Player:
     # TODO: Use /data get entity wrapped in an execute
     """
 
-def get_players(selector: Selector = '@a') -> list: 
+def get_players(selector: TargetSelector = '@a') -> list: 
     """
     Fill a list with the players currently
     connected on the server. The list will be populated
@@ -145,7 +93,7 @@ def get_players(selector: Selector = '@a') -> list:
     # TODO: Use /data get entity wrapped in an execute
     """
 
-def get_entity(selector: Selector) -> Entity:
+def get_entity(selector: TargetSelector) -> Entity:
     """
     Returns an Entity instance populated with the NBT
     tags fetched depending on the selector.
@@ -154,7 +102,7 @@ def get_entity(selector: Selector) -> Entity:
     # TODO: Use /data get entity wrapped in an execute
     """
 
-def get_entities(selector: Selector = None) -> list: ...
+def get_entities(selector: TargetSelector = None) -> list: ...
 
 def summon_entity(entity): ...
 def summom_particles(): ...
@@ -194,16 +142,5 @@ def gamerule(): ...
 ###############
 
 # def play_midi(): ... 
-
-
-
-
-
-
-
-
-
-
-
 
 #misc

@@ -1,3 +1,4 @@
 mcstatus
 docker
-mcrcon
+mctools
+pillow

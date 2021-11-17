@@ -43,8 +43,9 @@ class BlockState:
 
         if buff != "":
             buff = buff[:-1]
-
-        return f"[{buff}]"
+            return f"[{buff}]"
+        else:
+            return ""
 
 
 class UnexpectedBlockStatePropertyValueType(Exception):

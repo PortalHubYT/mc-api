@@ -53,5 +53,6 @@ class NBT:
 
         if buff != "":
             buff = buff[:-1]
-
-        return f"{{{buff}}}"
+            return f"{{{buff}}}"
+        else:
+            return ""

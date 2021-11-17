@@ -5,7 +5,7 @@ from .BlockCoordinates import BlockCoordinates
 
 class Zone:
     """
-    Custom component that is a set of two Coordinates(), representing
+    Custom component that is a set of two BlockCoordinates(), representing
     a rectangular area
     """
 
