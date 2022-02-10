@@ -1,7 +1,7 @@
 import unittest
 
 try:
-    from mc_api.setup.runner import Runner
+    from mcapi.setup.runner import Runner
 except ModuleNotFoundError:
     from runner import Runner
 

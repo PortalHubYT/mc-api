@@ -1,11 +1,11 @@
 import unittest
 
-from mc_api.components.Block import Block
-from mc_api.components.BlockState import BlockState
-from mc_api.components.BlockCoordinates import BlockCoordinates
-from mc_api.components.BlockHandler import BlockHandler
+from mcapi.components.Block import Block
+from mcapi.components.BlockState import BlockState
+from mcapi.components.BlockCoordinates import BlockCoordinates
+from mcapi.components.BlockHandler import BlockHandler
 
-from mc_api.functions.set_block import set_block, _set_block
+from mcapi.functions.set_block import set_block, _set_block
 
 
 class TestBlock(unittest.TestCase):

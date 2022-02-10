@@ -1,7 +1,7 @@
 import unittest
 
-from mc_api.components.BlockCoordinates import BlockCoordinates
-from mc_api.components.Zone import Zone, ZoneWrongCoordsType
+from mcapi.components.BlockCoordinates import BlockCoordinates
+from mcapi.components.Zone import Zone, ZoneWrongCoordsType
 
 
 class TestCoordinates(unittest.TestCase):

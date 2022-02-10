@@ -1,7 +1,7 @@
 import unittest
 
-from mc_api.components.TargetSelector import TargetSelector
-from mc_api.components.TargetSelector import (
+from mcapi.components.TargetSelector import TargetSelector
+from mcapi.components.TargetSelector import (
     IncorrectTargetSelectorIdentifier,
     IncorrectTargetSelectorArgumentsType,
     InvalidTargetSelectorArgumentKey,

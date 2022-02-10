@@ -1,11 +1,11 @@
 from typing import Union
 
-from mc_api.components.Block import Block
-from mc_api.components.BlockState import BlockState
-from mc_api.components.BlockCoordinates import BlockCoordinates
-from mc_api.components.BlockHandler import BlockHandler
+from mcapi.components.Block import Block
+from mcapi.components.BlockState import BlockState
+from mcapi.components.BlockCoordinates import BlockCoordinates
+from mcapi.components.BlockHandler import BlockHandler
 
-from mc_api.functions.base_functions import *
+from mcapi.functions.base_functions import *
 
 
 def _set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> dict:

@@ -1,7 +1,7 @@
 import unittest
 
-from mc_api.components.Coordinates import WrongCaretNotation
-from mc_api.components.BlockCoordinates import BlockCoordinates
+from mcapi.components.Coordinates import WrongCaretNotation
+from mcapi.components.BlockCoordinates import BlockCoordinates
 
 
 class TestCoordinates(unittest.TestCase):

@@ -1,11 +1,11 @@
 import unittest
 
-from mc_api.components.Block import Block
-from mc_api.components.Zone import Zone
-from mc_api.components.BlockCoordinates import BlockCoordinates
-from mc_api.components.BlockHandler import BlockHandler
+from mcapi.components.Block import Block
+from mcapi.components.Zone import Zone
+from mcapi.components.BlockCoordinates import BlockCoordinates
+from mcapi.components.BlockHandler import BlockHandler
 
-from mc_api.functions.set_zone import _set_zone
+from mcapi.functions.set_zone import _set_zone
 
 
 class TestBlock(unittest.TestCase):

@@ -1,5 +1,5 @@
-from mc_api.components.BlockCoordinates import BlockCoordinates
-from mc_api.server.singleton import singleton
+from mcapi.components.BlockCoordinates import BlockCoordinates
+from mcapi.server.singleton import singleton
 
 __all__ = [
     "check_output_channel",

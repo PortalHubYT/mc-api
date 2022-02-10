@@ -1,14 +1,14 @@
 from typing import Union
 
-from mc_api.components.Block import Block
-from mc_api.components.BlockCoordinates import BlockCoordinates
-from mc_api.components.BlockState import BlockState
-from mc_api.components.BlockHandler import BlockHandler
-from mc_api.components.Zone import Zone
+from mcapi.components.Block import Block
+from mcapi.components.BlockCoordinates import BlockCoordinates
+from mcapi.components.BlockState import BlockState
+from mcapi.components.BlockHandler import BlockHandler
+from mcapi.components.Zone import Zone
 
-from mc_api.functions.base_functions import *
-from mc_api.functions.set_block import _set_block
-from mc_api.functions.set_zone import _set_zone
+from mcapi.functions.base_functions import *
+from mcapi.functions.set_block import _set_block
+from mcapi.functions.set_zone import _set_zone
 
 # TODO: Make clear zone works with scaling
 # TODO: orientation

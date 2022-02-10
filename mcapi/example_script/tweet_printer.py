@@ -2,7 +2,7 @@ import time
 
 import tweepy
 
-import mc_api as mc
+import mcapi as mc
 
 auth = tweepy.OAuthHandler(
     "tR6HE0QvWhu7t1uhJxmiQuNMi", "dRACvMmj4Qgf7sc1vYhdVpzdwt2t4g4EFSoktdvK6EImF8kFXY"

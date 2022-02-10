@@ -1,10 +1,10 @@
 from typing import Union
 
-from mc_api.components.Block import Block
-from mc_api.components.Zone import Zone
-from mc_api.components.BlockHandler import BlockHandler
+from mcapi.components.Block import Block
+from mcapi.components.Zone import Zone
+from mcapi.components.BlockHandler import BlockHandler
 
-from mc_api.functions.base_functions import *
+from mcapi.functions.base_functions import *
 
 
 def _set_zone(

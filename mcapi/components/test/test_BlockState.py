@@ -1,10 +1,10 @@
 import unittest
 
-from mc_api.components.BlockState import (
+from mcapi.components.BlockState import (
     BlockState,
     UnexpectedBlockStatePropertyValueType,
 )
-from mc_api.components.Block import Block
+from mcapi.components.Block import Block
 
 
 class TestBlock(unittest.TestCase):

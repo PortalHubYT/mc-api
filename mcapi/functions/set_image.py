@@ -7,12 +7,12 @@ import os
 
 from PIL import Image
 
-from mc_api.components.BlockCoordinates import BlockCoordinates
-from mc_api.components.BlockHandler import BlockHandler
-from mc_api.components.Zone import Zone
+from mcapi.components.BlockCoordinates import BlockCoordinates
+from mcapi.components.BlockHandler import BlockHandler
+from mcapi.components.Zone import Zone
 
-from mc_api.functions.base_functions import *
-from mc_api.functions.set_block import _set_block, set_block
+from mcapi.functions.base_functions import *
+from mcapi.functions.set_block import _set_block, set_block
 
 # TODO: Handle image in memory rather than pull
 # TODO: Minecart method? -> https://www.youtube.com/watch?v=MEawKJm-t28
