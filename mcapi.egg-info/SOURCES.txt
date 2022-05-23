@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+./mcapi/__init__.py
+mcapi.egg-info/PKG-INFO
+mcapi.egg-info/SOURCES.txt
+mcapi.egg-info/dependency_links.txt
+mcapi.egg-info/not-zip-safe
+mcapi.egg-info/top_level.txt
