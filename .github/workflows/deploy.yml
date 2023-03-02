@@ -24,7 +24,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         # Increment the package version
-        bumpversion patch --allow-dirty
+        bumpversion patch --allow-dirty --new-version
         # Build the package
         python setup.py sdist bdist_wheel
         # Upload the package to PyPI
