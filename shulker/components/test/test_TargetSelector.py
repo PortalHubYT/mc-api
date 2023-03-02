@@ -1,7 +1,7 @@
 import unittest
 
-from mcapi.components.TargetSelector import TargetSelector
-from mcapi.components.TargetSelector import (
+from shulker.components.TargetSelector import TargetSelector
+from shulker.components.TargetSelector import (
     IncorrectTargetSelectorIdentifier,
     IncorrectTargetSelectorArgumentsType,
     InvalidTargetSelectorArgumentKey,

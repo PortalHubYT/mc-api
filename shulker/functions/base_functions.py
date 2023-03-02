@@ -1,5 +1,5 @@
-from mcapi.components.BlockCoordinates import BlockCoordinates
-from mcapi.server.singleton import singleton
+from shulker.components.BlockCoordinates import BlockCoordinates
+from shulker.server.singleton import singleton
 
 __all__ = [
     "check_output_channel",

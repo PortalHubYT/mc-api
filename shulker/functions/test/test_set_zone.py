@@ -1,11 +1,11 @@
 import unittest
 
-from mcapi.components.Block import Block
-from mcapi.components.Zone import Zone
-from mcapi.components.BlockCoordinates import BlockCoordinates
-from mcapi.components.BlockHandler import BlockHandler
+from shulker.components.Block import Block
+from shulker.components.Zone import Zone
+from shulker.components.BlockCoordinates import BlockCoordinates
+from shulker.components.BlockHandler import BlockHandler
 
-from mcapi.functions.set_zone import _set_zone
+from shulker.functions.set_zone import _set_zone
 
 
 class TestBlock(unittest.TestCase):

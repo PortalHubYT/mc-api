@@ -1,7 +1,7 @@
 import unittest
 
-from mcapi.components.NBT import NBT
-from mcapi.components.Block import Block
+from shulker.components.NBT import NBT
+from shulker.components.Block import Block
 
 
 class TestBlock(unittest.TestCase):

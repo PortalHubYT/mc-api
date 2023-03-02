@@ -1,7 +1,7 @@
 import unittest
 
-from mcapi.components.BlockHandler import BlockHandler, BlockHandlerWrongType
-from mcapi.components.Block import Block
+from shulker.components.BlockHandler import BlockHandler, BlockHandlerWrongType
+from shulker.components.Block import Block
 
 
 class TestBlockHandler(unittest.TestCase):

@@ -2,7 +2,7 @@ import time
 
 import tweepy
 
-import mcapi as mc
+import shulker as mc
 
 auth = tweepy.OAuthHandler(
     "tR6HE0QvWhu7t1uhJxmiQuNMi", "dRACvMmj4Qgf7sc1vYhdVpzdwt2t4g4EFSoktdvK6EImF8kFXY"

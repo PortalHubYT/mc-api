@@ -1,7 +1,7 @@
 import unittest
 
-from mcapi.components.Entity import Entity, IncorrectEntityDescriptorType
-from mcapi.components.TargetSelector import TargetSelector
+from shulker.components.Entity import Entity, IncorrectEntityDescriptorType
+from shulker.components.TargetSelector import TargetSelector
 
 
 class TestBlock(unittest.TestCase):

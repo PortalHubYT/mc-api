@@ -1,7 +1,7 @@
 import unittest
 
-from mcapi.components.Coordinates import WrongCaretNotation
-from mcapi.components.BlockCoordinates import BlockCoordinates
+from shulker.components.Coordinates import WrongCaretNotation
+from shulker.components.BlockCoordinates import BlockCoordinates
 
 
 class TestCoordinates(unittest.TestCase):

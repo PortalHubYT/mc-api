@@ -4,3 +4,6 @@ draft*
 server.jar
 generated
 logs
+dist
+build
+*.egg-info

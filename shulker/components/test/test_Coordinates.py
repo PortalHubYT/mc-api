@@ -1,6 +1,6 @@
 import unittest
 
-from mcapi.components.Coordinates import Coordinates, WrongCaretNotation
+from shulker.components.Coordinates import Coordinates, WrongCaretNotation
 
 
 class TestCoordinates(unittest.TestCase):

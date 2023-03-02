@@ -1,10 +1,10 @@
 from typing import Union
 
-from mcapi.components.Block import Block
-from mcapi.components.Zone import Zone
-from mcapi.components.BlockHandler import BlockHandler
+from shulker.components.Block import Block
+from shulker.components.Zone import Zone
+from shulker.components.BlockHandler import BlockHandler
 
-from mcapi.functions.base_functions import *
+from shulker.functions.base_functions import *
 
 
 def _set_zone(

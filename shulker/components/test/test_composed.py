@@ -1,9 +1,9 @@
 import unittest
 
-from mcapi.components.Block import Block
-from mcapi.components.Coordinates import Coordinates
-from mcapi.components.BlockHandler import BlockHandler
-from mcapi.components.BlockState import BlockState
+from shulker.components.Block import Block
+from shulker.components.Coordinates import Coordinates
+from shulker.components.BlockHandler import BlockHandler
+from shulker.components.BlockState import BlockState
 
 
 class TestBlockHandler(unittest.TestCase):
