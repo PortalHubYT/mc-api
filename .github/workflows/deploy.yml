@@ -17,11 +17,15 @@ jobs:
         python-version: 3.x
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools wheel twine
+        python -m pip install --upgrade pip setuptools wheel twine bumpversion
     - name: Build and deploy package
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        # Increment the package version
+        bumpversion patch --allow-dirty
+        # Build the package
         python setup.py sdist bdist_wheel
+        # Upload the package to PyPI
         twine upload dist/*
