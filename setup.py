@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='shulker',
-    version='0.3',
+    version='0.3.1',
     author='PortalHubYT',
     author_email='portalhub.business@gmail.com',
     description='A minecraft interface using RCON',
