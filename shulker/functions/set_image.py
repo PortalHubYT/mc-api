@@ -12,13 +12,13 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.components.Zone import Zone
 
 from shulker.functions.base_functions import *
-from shulker.functions.set_block import _set_block, set_block
+from shulker.functions.set_block import meta_set_block, set_block
 
 # TODO: Handle image in memory rather than pull
 # TODO: Minecart method? -> https://www.youtube.com/watch?v=MEawKJm-t28
 
 
-def _set_image(
+def meta_set_image(
     file: str, coords: BlockCoordinates, orientation: str, player_name: str
 ) -> dict:
 
@@ -120,7 +120,7 @@ def set_image(
             f"Orientation must either be side, top or bottom for set_image()"
         )
 
-    instructions = _set_image(file, coords, orientation, player_name)
+    instructions = meta_set_image(file, coords, orientation, player_name)
 
     for line in instructions["list"]:
         post(line)

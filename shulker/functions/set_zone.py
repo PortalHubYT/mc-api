@@ -7,7 +7,7 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.functions.base_functions import *
 
 
-def _set_zone(
+def meta_set_zone(
     zone: Zone, block: Block, handler: BlockHandler, filter: Union[Block, None] = None
 ) -> dict:
 
@@ -56,7 +56,7 @@ def set_zone(
     if filter != "":
         filter = format_arg(filter, Block)
 
-    instructions = _set_zone(zone, block, handler, filter)
+    instructions = meta_set_zone(zone, block, handler, filter)
 
     for line in instructions["list"]:
         status = post(line)

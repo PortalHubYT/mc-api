@@ -1,8 +1,6 @@
-from .connect import RconClient
+from .connect import RconClient as connect
 from .ping import ping
-from .create import DockerInstance
+from .create import DockerInstance as create
 from .singleton import singleton
 
-tools = ["Rcon", "ping", "DockerInstance", "singleton"]
-
-__all__ = tools
+post = singleton.post

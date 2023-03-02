@@ -7,8 +7,8 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.components.Zone import Zone
 
 from shulker.functions.base_functions import *
-from shulker.functions.set_block import _set_block
-from shulker.functions.set_zone import _set_zone
+from shulker.functions.set_block import meta_set_block
+from shulker.functions.set_zone import meta_set_zone
 
 # TODO: Make clear zone works with scaling
 # TODO: orientation
@@ -18,7 +18,7 @@ from shulker.functions.set_zone import _set_zone
 # TODO: flatten scale for every number to usable (but translates to odd numbers)
 
 
-def _set_text(
+def meta_set_text(
     message: str,
     coords: BlockCoordinates,
     palette: list,
@@ -214,7 +214,7 @@ def set_text(
     elif orientation != "west" and orientation != "north":
         raise ValueError(f"Orientation must be either north or west for set_text()")"""
 
-    instructions = _set_text(
+    instructions = meta_set_text(
         message, coords, palette, style, orientation, replace, scale, filler
     )
 

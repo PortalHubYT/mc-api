@@ -8,7 +8,7 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.functions.base_functions import *
 
 
-def _set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> dict:
+def meta_set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> dict:
     instructions = {"list": []}
     instructions["list"].append(f"setblock {coords} {block} {handler}")
     return instructions
@@ -38,7 +38,7 @@ def set_block(
     block = format_arg(block, Block)
     handler = format_arg(handler, BlockHandler)
 
-    instructions = _set_block(coords, block, handler)
+    instructions = meta_set_block(coords, block, handler)
 
     for line in instructions["list"]:
         status = post(line)

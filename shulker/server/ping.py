@@ -1,12 +1,12 @@
 import logging
 
-from mcstatus import MinecraftServer
+from mcstatus import JavaServer
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def ping(ip, port):
-    server = MinecraftServer(ip, port)
+    server = JavaServer(ip, port)
     try:
         status = server.status()
     except:
