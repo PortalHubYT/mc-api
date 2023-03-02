@@ -25,11 +25,15 @@ jobs:
         run: |
           # Determine the current version number
           CURRENT_VERSION=$(python setup.py --version)
+
           # Increment the patch version number
           NEW_VERSION=$(bumpversion --list patch --no-tag --no-commit --allow-dirty | grep current_version | cut -d= -f2)
+
           # Update the version number in setup.py
           sed -i "s/version='${CURRENT_VERSION}'/version='${NEW_VERSION}'/" setup.py
+
           # Build the package
           python setup.py sdist bdist_wheel
+          
           # Upload the package to PyPI
           twine upload dist/*
