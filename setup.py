@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='shulker',
@@ -7,6 +7,6 @@ setup(
     author_email='portalhub.business@gmail.com',
     description='A minecraft interface using RCON',
     url='https://github.com/PortalHubYT/mc_api',
-    packages=['shulker'],
+    packages=find_packages(),
     install_requires=['docker', 'mctools', 'pillow', 'mcstatus'], # add your package dependencies here
 )
