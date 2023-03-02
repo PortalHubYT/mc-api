@@ -10,20 +10,38 @@ class Runner():
         self.stderr = subprocess.DEVNULL if not self.verbose else 2
 
     def run(self):
+        print("Browsering minecraft versions...")
         latest_url = self.browse_mc_versions()
+        print("Getting latest version...")
         latest_version_info = self.get_jar_from_url(latest_url)
+        print("Downloading latest version...")
         self.download_jar_and_generate(latest_version_info)
+        print("Parsing jar...")
         self.parse_jar()
+        print("Moving blocks.json...")
+        self.move_blocks_json()
+        print("Cleaning up...")
         self.clean_up()
 
     def clean_up(self):
-        cmd = f'rm -rf {self.jar_name}'.split(" ")
+        instructions = [
+            f'rm -rf {self.jar_name}',
+            f'rm -rf logs',
+            f'rm -rf generated',
+            f'rm -rf libraries',
+            f'rm -rf test',
+            f'rm -rf versions'
+        ]
+        for instruction in instructions:
+            subprocess.run(instruction.split(" "), stdout=self.stdout, stderr=self.stdout)
+    
+    # create a function that moves 'blocks.json' into 'shulker/functions/block_list.json', replacing
+    def move_blocks_json(self):
+        cmd = 'mv ./generated/reports/blocks.json ../functions/block_list.json'.split(" ")
         subprocess.run(cmd, stdout=self.stdout, stderr=self.stdout)
-        cmd = 'rm -rf logs'.split(" ")
-        subprocess.run(cmd, stdout=self.stdout, stderr=self.stdout)
-
+        
     def parse_jar(self):
-        cmd = 'java -cp server.jar net.minecraft.data.Main --server --reports'.split(" ")
+        cmd = 'java -DbundlerMainClass=net.minecraft.data.Main -jar server.jar --all'.split(" ")
         subprocess.run(cmd, stdout=self.stdout, stderr=self.stdout)
 
     def download_jar_and_generate(self, url):

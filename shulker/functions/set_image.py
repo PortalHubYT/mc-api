@@ -261,6 +261,6 @@ def create_palette():
                     palette[orientation][str(i * 64 + j * 8 + k)] = block
 
     with open(f"{path}/palette.json", "w+") as f:
-        json.dump(palette, f)
+        json.dump(palette, f, indent=4)
 
     return palette
