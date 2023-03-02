@@ -1,6 +1,10 @@
 print("Initializing shulker")
 
-# Classes
+from shulker import server, components, functions
+
+__all__ = ["server", "components", "functions"]
+
+"""# Classes
 from .server.connect import RconClient as connect
 from .server.create import DockerInstance as create
 from .components import *
@@ -15,4 +19,4 @@ from .functions.set_image import set_image, _set_image, print_palette
 # Objects
 from .server.singleton import singleton
 
-post = singleton.post
+post = singleton.post"""
