@@ -5,7 +5,7 @@ from shulker.components.BlockState import BlockState
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockHandler import BlockHandler
 
-from shulker.functions.set_block import set_block, _set_block
+from shulker.functions.set_block import set_block, meta_set_block
 
 
 class TestBlock(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestBlock(unittest.TestCase):
         block = Block("bedrock")
         handler = BlockHandler("destroy")
 
-        diff = _set_block(coords, block, handler)
+        diff = meta_set_block(coords, block, handler)
         test = "setblock 0 0 0 minecraft:bedrock destroy"
         self.assertEqual(diff, test)
 

@@ -5,7 +5,7 @@ from shulker.components.Zone import Zone
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockHandler import BlockHandler
 
-from shulker.functions.set_zone import _set_zone
+from shulker.functions.set_zone import meta_set_zone
 
 
 class TestBlock(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestBlock(unittest.TestCase):
         filter = Block("sponge")
         handler = BlockHandler("hollow")
 
-        diff = _set_zone(zone, block, handler, filter)
+        diff = meta_set_zone(zone, block, handler, filter)
         test = "fill 0 0 0 10 10 10 minecraft:bedrock hollow"
         self.assertEqual(diff, test)
 
@@ -29,7 +29,7 @@ class TestBlock(unittest.TestCase):
         filter = Block("sponge")
         handler = BlockHandler("replace")
 
-        diff = _set_zone(zone, block, handler, filter)
+        diff = meta_set_zone(zone, block, handler, filter)
         test = "fill 0 0 0 10 10 10 minecraft:bedrock replace minecraft:sponge"
         self.assertEqual(diff, test)
 
@@ -40,7 +40,7 @@ class TestBlock(unittest.TestCase):
         block = Block("bedrock")
         handler = BlockHandler()
 
-        diff = _set_zone(zone, block, handler)
+        diff = meta_set_zone(zone, block, handler)
         test = "fill 0 0 0 10 10 10 minecraft:bedrock replace"
         self.assertEqual(diff, test)
 

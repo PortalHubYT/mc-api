@@ -104,7 +104,7 @@ def meta_set_text(
                 if scale == 0:
                     block = fetch_block(digit, orientation, palette[mod], filler)
 
-                    cmd = _set_block(new_coords, block, handler)
+                    cmd = meta_set_block(new_coords, block, handler)
                     instructions["list"].append(cmd)
 
                 # In case it was, it creates "zones" instead
@@ -126,7 +126,7 @@ def meta_set_text(
                                 temp_digit, orientation, palette[mod], filler
                             )
 
-                        cmd = _set_zone(zone["coords"], block, handler)
+                        cmd = meta_set_zone(zone["coords"], block, handler)
                         instructions["list"].append(cmd)
 
             # After a line has been printed, the Y level is increased

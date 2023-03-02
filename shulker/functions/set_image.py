@@ -59,7 +59,7 @@ def meta_set_image(
                 elif orientation == "top":
                     block.blockhandler.axis = "x"
 
-            cmd = _set_block(
+            cmd = meta_set_block(
                 new_coords,
                 block,
                 BlockHandler("replace"),
