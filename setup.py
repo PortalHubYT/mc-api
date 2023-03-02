@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='shulker',
-    version='0.3.4',
+    version='0.3.5',
     author='PortalHubYT',
     author_email='portalhub.business@gmail.com',
     description='A minecraft interface using RCON',
