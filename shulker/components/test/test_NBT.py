@@ -57,7 +57,7 @@ class TestBlock(unittest.TestCase):
         )
 
         diff = str(tags)
-        test = "{AbsorptionAmount:150.0d,Air:10,CustomName:'{\"text\":\"test\"}',Fire:4,Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
+        test = '{AbsorptionAmount:150.0d,Air:10,CustomName:\'{\"text\":\"test\"}\',Fire:4,Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
         self.assertEqual(diff, test)
 
     def test_NBT_via_attr(self):
@@ -74,7 +74,7 @@ class TestBlock(unittest.TestCase):
         tags.Passengers = [{"id": "minecraft:area_effect_cloud"}]
 
         diff = str(tags)
-        test = "{Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
+        test = '{Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
         self.assertEqual(diff, test)
 
     def test_NBT_with_arg_passed_to_Block(self):
@@ -107,7 +107,7 @@ class TestBlock(unittest.TestCase):
         b = Block("dirt", nbt=tags)
 
         diff = str(b.nbt)
-        test = "{AbsorptionAmount:150.0d,Air:10,CustomName:'{\"text\":\"test\"}',Fire:4,Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
+        test = '{AbsorptionAmount:150.0d,Air:10,CustomName:\'{\"text\":\"test\"}\',Fire:4,Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
         self.assertEqual(diff, test)
 
     def test_NBT_via_attr_through_Block(self):
@@ -124,7 +124,7 @@ class TestBlock(unittest.TestCase):
         b.nbt.Passengers = [{"id": "minecraft:area_effect_cloud"}]
 
         diff = str(b.nbt)
-        test = "{Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
+        test = '{Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
         self.assertEqual(diff, test)
 
     def test_NBT_mixed_attrs_and_args_through_Block(self):
@@ -135,5 +135,5 @@ class TestBlock(unittest.TestCase):
         b.nbt.Passengers = [{"id": "minecraft:area_effect_cloud"}]
 
         diff = str(b.nbt)
-        test = "{CustomName:'{\"text\":\"test\"}',Fire:4,Motion:[2.0, 2.0, 2.0],Passengers:[{'id': 'minecraft:area_effect_cloud'}]}"
+        test = '{CustomName:\'{\"text\":\"test\"}\',Fire:4,Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
         self.assertEqual(diff, test)

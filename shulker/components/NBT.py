@@ -18,7 +18,7 @@ class NBT:
         
         if nbt:
             for key in nbt:
-                setattr(self, key, nbt[key])
+                object.__setattr__(self, key, nbt[key])
             
     def flatten(self, arg):
         if type(arg) is Byte:
@@ -50,6 +50,10 @@ class NBT:
             if arg == {}:
                 return "{}"
             return str(NBT(arg))
+
+    def __setattr__(self, name, value):
+        value = parse_nbt(str(value))
+        super().__setattr__(name, value)
         
     def __str__(self):
 

@@ -6,7 +6,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='shulker',
-    version='0.3.10',
+    version='0.3.11',
     author='PortalHubYT',
     author_email='portalhub.business@gmail.com',
     description='A minecraft interface using RCON',
