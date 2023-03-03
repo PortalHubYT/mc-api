@@ -8,6 +8,10 @@ from shulker.components.NBT import NBT
 from shulker.functions.base_functions import *
 
 
+"""
+Doesn't get the actual pos? Seems to be off by one block diagonal
+"""
+
 def meta_get_player_info(pseudo: str) -> dict:
     instructions = {"list": []}
     instructions["list"].append(f"data get entity {pseudo}")
@@ -58,10 +62,16 @@ def get_player_pos(
         
     if status.startswith(f"{pseudo} has"):
         matches = re.findall(r"Pos: \[(.+?)\..+?, (.+?)\..+?, (.+?)\..+?\]", status)
-        if len(matches) == 3:
+        if len(matches) == 1:
+            coords = matches[0]
+            x = float(coords[0])
+            y = float(coords[1])
+            z = float(coords[2])
             if rounded:
-                return BlockCoordinates(*tuple(map(round, matches)))
+                return BlockCoordinates(x, y, z)
             else:
-                return Coordinates(*tuple(matches))
+                return Coordinates(x, y, z)
+        else:
+            return False
     else:
         return False
