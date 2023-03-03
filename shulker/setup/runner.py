@@ -18,8 +18,8 @@ class Runner():
         self.download_jar_and_generate(latest_version_info)
         print("Parsing jar...")
         self.parse_jar()
-        print("Moving blocks.json...")
-        self.move_blocks_json()
+        print("Moving .json...")
+        self.move_json()
         print("Cleaning up...")
         self.clean_up()
 
@@ -35,10 +35,14 @@ class Runner():
         for instruction in instructions:
             subprocess.run(instruction.split(" "), stdout=self.stdout, stderr=self.stdout)
     
-    # create a function that moves 'blocks.json' into 'shulker/functions/block_list.json', replacing
-    def move_blocks_json(self):
-        cmd = 'mv ./generated/reports/blocks.json ../functions/block_list.json'.split(" ")
-        subprocess.run(cmd, stdout=self.stdout, stderr=self.stdout)
+    def move_json(self):
+        instructions = [
+            f'mv ./generated/reports/blocks.json ../functions/mc_data/block_list.json',
+            f'mv ./generated/reports/commands.json ../functions/mc_data/commands.json',
+            f'mv ./generated/reports/registries.json ../functions/mc_data/registries.json',
+        ]
+        for instruction in instructions:
+            subprocess.run(instruction.split(" "), stdout=self.stdout, stderr=self.stdout)
         
     def parse_jar(self):
         cmd = 'java -DbundlerMainClass=net.minecraft.data.Main -jar server.jar --all'.split(" ")

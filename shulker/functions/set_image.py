@@ -135,7 +135,7 @@ def get_palette(orientation):
 
     try:
         path = os.path.dirname(os.path.abspath(__file__))
-        with open(f"{path}/palette.json") as f:
+        with open(f"{path}/mc_data/palette.json") as f:
             palette = json.load(f)
 
     except FileNotFoundError:
@@ -147,7 +147,7 @@ def get_palette(orientation):
 def get_closest_color(pixel, block_palette, orientation):
 
     path = os.path.dirname(os.path.abspath(__file__))
-    with open(f"{path}/block_list.json") as f:
+    with open(f"{path}/mc_data/block_list.json") as f:
         block_list = json.load(f)
 
     orientations = ["top", "bottom", "front"]
@@ -241,7 +241,7 @@ def create_palette():
     )
 
     path = os.path.dirname(os.path.abspath(__file__))
-    with open(f"{path}/blocks_color.json") as f:
+    with open(f"{path}/mc_data/blocks_color.json") as f:
         block_palette = json.load(f)
 
     palette = {"side": {}, "top": {}, "bottom": {}}
@@ -260,7 +260,7 @@ def create_palette():
 
                     palette[orientation][str(i * 64 + j * 8 + k)] = block
 
-    with open(f"{path}/palette.json", "w+") as f:
+    with open(f"{path}/mc_data/palette.json", "w+") as f:
         json.dump(palette, f, indent=4)
 
     return palette
