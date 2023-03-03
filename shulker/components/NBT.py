@@ -1,41 +1,56 @@
-import re
-
+from nbtlib import parse_nbt
+from nbtlib import Byte, Short, Int, Long, Float, Double, String, ByteArray, IntArray, LongArray, List, Compound
+from typing import Union
 
 class NBT:
-    """
-    Every arguments or attributes given to NBT must be written
-    using the correct case provided by Minecraft.
-
-    E.G.:
-        -> AbsorptionAmount
-        -> CustomName
-        -> Fire
-
-    If the case is not respected, the tags won't be applied.
-    """
-
-    def __init__(self, compound: dict = None):
-
-        if isinstance(compound, dict):
-            for key in compound:
-                setattr(self, key, compound[key])
-
-    def flatten(self, arg):
-        if isinstance(arg, dict):
-            return str(NBT(arg))
-
-        elif isinstance(arg, str):  # see test_NBT_with_args in test_NBT.py
-            if '"' in arg:
-                return f"'{arg}'"
-            else:
-                return f'"{arg}"'
-
-        elif isinstance(arg, float):
-            return f"{arg}d"
-
+    def __init__(self, compound: Union[dict, str, Compound] = "{}"):
+        
+        if compound in [None, "", "{}", {}]:
+            nbt = None
+        elif type(compound) is Compound:
+            nbt = compound
+        elif type(compound) is dict:
+            nbt = parse_nbt(str(compound))
+        elif isinstance(compound, str):
+            nbt = parse_nbt(compound)
         else:
-            return str(arg)
-
+            raise ValueError(f"Expected dict, str or Compound, got {type(compound)}")
+        
+        if nbt:
+            for key in nbt:
+                setattr(self, key, nbt[key])
+            
+    def flatten(self, arg):
+        if type(arg) is Byte:
+            return f'{int(arg)}b'
+        elif type(arg) is Short:
+            return f'{int(arg)}s'
+        elif type(arg) is Int:
+            return f'{int(arg)}'
+        elif type(arg) is Long:
+            return f'{int(arg)}L'
+        elif type(arg) is Float:
+            return f'{float(arg)}f'
+        elif type(arg) is Double:
+            return f'{float(arg)}d'
+        elif type(arg) is String: # refer to test_NBT_with_args in test_NBT.py
+            if '"' in arg:
+                return f"'{str(arg)}'"
+            else:
+                return f'"{str(arg)}"'
+        elif type(arg) is ByteArray:
+            return f'[{",".join([int(str(int(x))) for x in arg])}]b'
+        elif type(arg) is IntArray:
+            return f'[{",".join([str(int(x)) for x in arg])}]'
+        elif type(arg) is LongArray:
+            return f'[{",".join([str(int(x)) for x in arg])}]L'
+        elif isinstance(arg, List):
+            return f'[{",".join([self.flatten(x) for x in arg])}]'
+        elif type(arg) is Compound:
+            if arg == {}:
+                return "{}"
+            return str(NBT(arg))
+        
     def __str__(self):
 
         buff = ""

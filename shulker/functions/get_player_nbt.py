@@ -7,18 +7,13 @@ from shulker.components.NBT import NBT
 
 from shulker.functions.base_functions import *
 
-
-"""
-Doesn't get the actual pos? Seems to be off by one block diagonal
-"""
-
-def meta_get_player_info(pseudo: str) -> dict:
+def meta_get_player_nbt(pseudo: str) -> dict:
     instructions = {"list": []}
     instructions["list"].append(f"data get entity {pseudo}")
     return instructions
 
 
-def get_player_info(
+def get_player_nbt(
     pseudo: str,
 ) -> Union[bool, str]:
     """
@@ -30,13 +25,14 @@ def get_player_info(
     if type(pseudo) is not str:
         raise TypeError(f"Expected type str, got {type(pseudo)}")
 
-    instructions = meta_get_player_info(pseudo)
+    instructions = meta_get_player_nbt(pseudo)
 
     for line in instructions["list"]:
         status = post(line)
         
     if status.startswith(f"{pseudo} has"):
-        return NBT(status.split("data: ")[1])
+        data = status.split("data: ")[1][:-4]
+        return NBT(data)
     else:
         return False
     
@@ -52,26 +48,13 @@ def get_player_pos(
 
     check_output_channel()
     
-    if type(pseudo) is not str:
-        raise TypeError(f"Expected type str, got {type(pseudo)}")
-
-    instructions = meta_get_player_info(pseudo)
-
-    for line in instructions["list"]:
-        status = post(line)
-        
-    if status.startswith(f"{pseudo} has"):
-        matches = re.findall(r"Pos: \[(.+?)\..+?, (.+?)\..+?, (.+?)\..+?\]", status)
-        if len(matches) == 1:
-            coords = matches[0]
-            x = float(coords[0])
-            y = float(coords[1])
-            z = float(coords[2])
-            if rounded:
-                return BlockCoordinates(x, y, z)
-            else:
-                return Coordinates(x, y, z)
+    nbt = get_player_nbt(pseudo)
+    
+    if hasattr(nbt, "Pos"):
+        pos = nbt.Pos
+        if rounded:
+            return BlockCoordinates(pos[0], pos[1], pos[2])
         else:
-            return False
+            return Coordinates(float(pos[0]), float(pos[1]), float(pos[2]))
     else:
         return False

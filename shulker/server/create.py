@@ -45,7 +45,7 @@ class DockerInstance(ServerInstanceHandler):
         rcon_port: int = 25575,
         container_name: str = uuid.uuid4(),
         wait: bool = True,
-        image: str = "ghcr.io/portalhubyt/template_server:latest",
+        image: str = "ghcr.io/portalhubyt/template_server_1_19:latest",
         eula: bool = False,
         version: str = "latest",
     ):
