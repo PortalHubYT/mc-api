@@ -1,5 +1,7 @@
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.server.singleton import singleton
+import json
+import os
 
 __all__ = [
     "check_output_channel",
@@ -10,7 +12,20 @@ __all__ = [
     "format_arg",
     "nest_commands",
     "post_nest",
+    "entity_list"
 ]
+
+
+def entity_list():
+    path = os.path.dirname(os.path.abspath(__file__))
+    with open(f"{path}/mc_data/registries.json") as f:
+        registries = json.load(f)
+    
+    entities = []
+    for entity in registries["minecraft:entity_type"]["entries"].keys():
+        entities.append(entity.replace("minecraft:", ""))
+        
+    return entities
 
 
 def check_output_channel():

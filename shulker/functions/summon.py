@@ -31,18 +31,11 @@ def summon(
 
     check_output_channel()
     
-    # Get the list of entity from registries.json
-    path = os.path.dirname(os.path.abspath(__file__))
-    with open(f"{path}/mc_data/registries.json", "r") as f:
-        registries = json.load(f)
-        entities = registries["minecraft:entity_type"]["entries"]
-    
-    if not entity.startswith("minecraft:"):
-        entity = f"minecraft:{entity}"
+    entities = entity_list()
         
     if type(entity) is not str:
         raise TypeError(f"Expected type str, got {type(entity)}")
-    elif entity not in entities:
+    elif entity.replace("minecraft:", "") not in entities:
         raise ValueError(f"Entity {entity} is not a valid entity")
     
     if nbt_data is not None:

@@ -1,8 +1,12 @@
 from setuptools import setup, find_packages
 
+# install requires should pull the list from requirements.txt
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
 setup(
     name='shulker',
-    version='0.3.9',
+    version='0.3.10',
     author='PortalHubYT',
     author_email='portalhub.business@gmail.com',
     description='A minecraft interface using RCON',
@@ -11,5 +15,6 @@ setup(
     package_data={
         'shulker': ['functions/*.json', 'components/*.json', 'server/*.json']
     },
-    install_requires=['docker', 'mctools', 'pillow', 'mcstatus', 'nbtlib==1.12.1'], # add your package dependencies here
+    # install requires should pull the list from requirements.txt
+    install_requires=requirements
 )
