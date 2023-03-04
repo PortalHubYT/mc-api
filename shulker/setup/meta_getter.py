@@ -38,14 +38,19 @@ def print_commands():
 
 computed_commands = ["title", "bossbar", "setblock", "fill", "summon", "say",
                      "ban", "ban-ip", "banlist", "kick", "op", "deop", "seed",
-                     "difficulty", "weather"]
-excluded_commands = ["advancement"]
-complex_commands = []
+                     "difficulty", "weather", "msg", "gamemode", "time", "w", 
+                     "tell", "xp", "experience", "whitelist", "stop", "reload",
+                     "save-all", "save-off", "save-on", "help", "list", "pardon", 
+                     "pardon-ip", "setworldspawn"]
+excluded_commands = ["advancement", "perf", "me", "defaultgamemode", "jfr", 
+                     "debug", "spectate", "trigger", "tm", "teammsg"]
+complex_commands = ["worldborder", "execute", "tp", "particle", "gamerule", 
+                    "loot", "playsound", "team"]
 
 def print_todo_commands():
     commands = get_commands()     
     for command in commands["children"]:
-        if command not in computed_commands and command not in excluded_commands:
+        if command not in computed_commands and command not in excluded_commands and command not in complex_commands:
             print("--->", command)
             
 def print_done_commands():
