@@ -218,7 +218,8 @@ def set_text(
         message, coords, palette, style, orientation, replace, scale, filler
     )
 
-    for line in instructions["list"]:
+    for set in instructions["list"]:
+      for line in set['list']:
         post(line)
 
     return instructions["zone"]
