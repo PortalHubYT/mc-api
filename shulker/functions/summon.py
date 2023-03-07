@@ -10,23 +10,17 @@ from shulker.components.Coordinates import Coordinates
 from shulker.functions.base_functions import *
 
 
-def meta_summon(entity: str, coords: BlockCoordinates, nbt_data: NBT) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"summon {entity} {coords} {nbt_data}")
-    return instructions
+def meta_summon(entity: str, coords: BlockCoordinates, nbt_data: NBT) -> str:
+    return f"summon {entity} {coords} {nbt_data}"
 
 
 def summon(
     entity: str,
     coords: Union[BlockCoordinates, Coordinates, tuple],
     nbt_data: Union[NBT, dict, str, None] = None
-) -> Union[bool, str]:
+) -> str:
     """
-    Returns a bool that is set to True
-    if no message was sent back by the game or the
-    message itself if there was an issue
-
-    Summons an entity
+    Summons an entity at coords, can be provided nbt_data
     """
 
     check_output_channel()
@@ -45,10 +39,8 @@ def summon(
 
     coords = format_arg(coords, Coordinates)
         
-    instructions = meta_summon(entity, coords, nbt_data)
+    cmd = meta_summon(entity, coords, nbt_data)
 
-    for line in instructions["list"]:
-        status = post(line)
-        print(line)
-        
-    return True if status.startswith("") else status
+    status = post(cmd)
+    
+    return status

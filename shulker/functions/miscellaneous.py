@@ -5,484 +5,445 @@ import re
 
 ############ SAY ############
 
-def meta_say(text: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"say {text}")
-    return instructions
+def meta_say(text: str) -> str:
+    return "say {text}"
 
-def say(text: str) -> Union[bool, str]:
-    """This function sends a message in the chat"""
+def say(text: str) -> str:
+    """Sends a message in the chat"""
     check_output_channel()
     
-    instructions = meta_say(text)
+    cmd = meta_say(text)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
 
 ######## BAN & KICK ########
 
-def meta_ban(target: str, reason: str) -> dict:
-    instructions = {"list": []}
-    if reason is None:
-        reason = ""
-    instructions["list"].append(f"ban {target} {reason}")
-    return instructions
+def meta_ban(target: str, reason: str) -> str:
+    return f"ban {target} {reason}"
 
-def meta_banlist(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"banlist {option}")
-    return instructions
+def meta_banlist(option: str) -> str:
+    return f"banlist {option}"
 
-def ban(target: str, reason: Union[str, None]) -> Union[bool, str]:
+def ban(target: str, reason: Union[str, None]) -> str:
     """This function bans a player"""
     check_output_channel()
     
-    instructions = meta_ban(target, reason)
+    if reason is None:
+        reason = ""
+        
+    cmd = meta_ban(target, reason)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
  
-def ban_ip(target: str, reason: str) -> Union[bool, str]:
+def ban_ip(target: str, reason: str) -> str:
     """This function bans an IP"""
     check_output_channel()
     
-    instructions = meta_ban(target, reason)
+    cmd = meta_ban(target, reason)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def banlist(option: str) -> Union[bool, str]:
-    """This functions fetches the banlist"""
+def banlist(option: str) -> str:
+    """Fetches the banlist"""
     check_output_channel()
     
-    instructions = meta_banlist(option)
+    cmd = meta_banlist(option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
 
-def meta_kick(target: str, reason: str) -> dict:
-    instructions = {"list": []}
+def meta_kick(target: str, reason: str) -> str:
+    return f"kick {target} {reason}"
+
+def kick(target: str, reason: Union[str, None]) -> str:
+    """Kicks a player"""
+    check_output_channel()
+    
     if reason is None:
         reason = ""
-    instructions["list"].append(f"kick {target} {reason}")
-    return instructions
+        
+    cmd = meta_kick(target, reason)
+    
+    status = post(cmd)
+    
+    return status
 
-def kick(target: str, reason: Union[str, None]) -> Union[bool, str]:
-    """This function kicks a player"""
+def meta_pardon(target: str) -> str:
+    return f"pardon {target}"
+
+def meta_pardon_ip(target: str) -> str:
+    return f"pardon-ip {target}"
+
+def pardon(target: str) -> str:
+    """Unbans a player"""
     check_output_channel()
     
-    instructions = meta_kick(target, reason)
+    cmd = meta_pardon(target)
     
-    for line in instructions["list"]:
-        status = post(line)
-
-def meta_pardon(target: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"pardon {target}")
-    return instructions
-
-def meta_pardon_ip(target: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"pardon-ip {target}")
-    return instructions
-
-def pardon(target: str) -> Union[bool, str]:
-    """This function unbans a player"""
-    check_output_channel()
+    status = post(cmd)
     
-    instructions = meta_pardon(target)
-    
-    for line in instructions["list"]:
-        status = post(line)
+    return status
 
-def pardon_ip(target: str) -> Union[bool, str]:
+def pardon_ip(target: str) -> str:
     """This function unbans an IP"""
     check_output_channel()
     
-    instructions = meta_pardon_ip(target)
+    cmd = meta_pardon_ip(target)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
 
 ############ OP ############
 
-def meta_op(target: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"op {target}")
-    return instructions
+def meta_op(target: str) -> str:
+    return f"op {target}"
 
-def meta_deop(target: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"deop {target}")
-    return instructions
+def meta_deop(target: str) -> str:
+    return f"deop {target}"
 
-def op(target: str) -> Union[bool, str]:
-    """This function gives an operator status to a player"""
+def op(target: str) -> str:
+    """Gives an operator status to a player"""
     check_output_channel()
     
-    instructions = meta_op(target)
+    cmd = meta_op(target)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def deop(target: str) -> Union[bool, str]:
-    """This function removes an operator status from a player"""
+def deop(target: str) -> str:
+    """Removes an operator status from a player"""
     check_output_channel()
     
-    instructions = meta_deop(target)
+    cmd = meta_deop(target)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
 ############# SEED #############
 
-def meta_seed() -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"seed")
-    return instructions
+def meta_seed() -> str:
+    return f"seed"
 
-def seed() -> Union[bool, str]:
-    """This function fetches the seed of the world"""
+def seed() -> str:
+    """Fetches the seed of the world and return it as a string"""
     check_output_channel()
     
-    instructions = meta_seed()
+    cmd = meta_seed()
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
     
     seed = re.match(r"Seed: \[(-{0,1}(\d+))\]", status)
     return seed.group(1)
 
 ############# DIFFICULTY #############
 
-def meta_set_difficulty(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"difficulty {option}")
-    return instructions
+def meta_set_difficulty(option: str) -> str:
+    return f"difficulty {option}"
 
-def meta_get_difficulty() -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"difficulty")
-    return instructions
+def meta_get_difficulty() -> str:
+    return f"difficulty"
 
-def set_difficulty(option: str) -> Union[bool, str]:
-    """This function sets the difficulty of the world"""
+def set_difficulty(option: str) -> str:
+    """Sets the difficulty of the world"""
     check_output_channel()
     
-    instructions = meta_set_difficulty(option)
+    cmd = meta_set_difficulty(option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
 def get_difficulty() -> Union[bool, str]:
-    """This function fetches the difficulty of the world"""
+    """Fetches the difficulty of the world"""
     check_output_channel()
     
-    instructions = meta_get_difficulty()
+    cmd = meta_get_difficulty()
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
     
     difficulty = re.match(r"The difficulty is (\w+)", status)
     return difficulty.group(1)
 
-
 ########### WEATHER ###########
 
-def meta_weather(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"weather {option}")
-    return instructions
+def meta_weather(option: str) -> str:
+    return f"weather {option}"
 
-def weather(option: str) -> Union[bool, str]:
-    """This function sets the weather of the world
+def weather(option: str) -> str:
+    """Sets the weather of the world
     Options: clear, rain, thunder"""
     
     check_output_channel()
     
-    instructions = meta_weather(option)
+    cmd = meta_weather(option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
 ########### MSG ###########
 
-def meta_msg(target: str, message: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"msg {target} {message}")
-    return instructions
-
-def msg(target: str, message: str) -> Union[bool, str]:
-    """This function sends a private message to a player"""
+def meta_msg(target: str, message: str) -> str:
+    return f"msg {target} {message}"
+  
+def msg(target: str, message: str) -> str:
+    """Sends a private message to a player"""
     
     check_output_channel()
     
-    instructions = meta_msg(target, message)
+    cmd = meta_msg(target, message)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
 
 ########### GAMEMODE ###########
 
-def meta_default_gamemode(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"defaultgamemode {option}")
-    return instructions
+def meta_default_gamemode(option: str) -> str:
+    return f"defaultgamemode {option}"
 
-def meta_gamemode(target: str, option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"gamemode {option} {target}")
-    return instructions
+def meta_gamemode(target: str, option: str) -> str:
+    return f"gamemode {option} {target}"
 
-def gamemode(target: str, option: str) -> Union[bool, str]:
-    """This function sets the gamemode of a player
+def gamemode(target: str, option: str) -> str:
+    """Sets the gamemode of a player
     Available options: survival, creative, adventure, spectator"""
     
     check_output_channel()
     
-    instructions = meta_gamemode(target, option)
+    cmd = meta_gamemode(target, option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
 def default_gamemode(option: str) -> Union[bool, str]:
-    """This function sets the default gamemode of the world
+    """Sets the default gamemode of the world
     Available options: survival, creative, adventure, spectator"""
     
     check_output_channel()
     
-    instructions = meta_default_gamemode(option)
+    cmd = meta_default_gamemode(option)
     
-    for line in instructions["list"]:
-        status = post(line)
-
+    status = post(cmd)
+    
+    return status
+    
 ########### TIME ###########
 
-def meta_query_time(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"time query {option}")
-    return instructions
+def meta_query_time(option: str) -> str:
+    return f"time query {option}"
 
-def query_time(option: str = "day") -> Union[bool, str]:
-    """This function fetches the time of the world
+def query_time(option: str = "day") -> str:
+    """Fetches the time of the world and returns it as a string
     Available options: day, daytime, gametime"""
     
     check_output_channel()
     
-    instructions = meta_query_time(option)
+    cmd = meta_query_time(option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
         
     time = re.match(r"The time is (\d+)", status)
     return time.group(1)
 
-def meta_add_time(value: int, option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"time add {value}{option}")
-    return instructions
+def meta_add_time(value: str, option: str) -> str:
+    return f"time add {value}{option}"
 
-def add_time(value: int, option: str = "tick") -> Union[bool, str]:
-    """This function adds time to the world
+def add_time(value: int, option: str = "tick") -> str:
+    """Adds time to the world
     Available options: day, second, tick"""
     
     check_output_channel()
     
     option = option[0]
     
-    instructions = meta_add_time(value, option)
+    cmd = meta_add_time(value, option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def meta_set_time(value: int, option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"time set {value}{option}")
-    return instructions
+def meta_set_time(value: int, option: str) -> str:
+    return f"time set {value}{option}"
 
-def set_time(value: int, option: str = "tick") -> Union[bool, str]:
-    """This function sets the time of the world
+def set_time(value: int, option: str = "tick") -> str:
+    """Sets the time of the world
     Available options: day, second, tick"""
     
     check_output_channel()
     
     option = option[0]
     
-    instructions = meta_set_time(value, option)
+    cmd = meta_set_time(value, option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def meta_time(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"time set {option}")
-    return instructions
+def meta_time(option: str) -> str:
+    return f"time set {option}"
 
-def time(option: str) -> Union[bool, str]:
-    """This function sets the time of the world
+def time(option: str) -> str:
+    """Sets the time of the world
     Available options: day, midnight, night, noon"""
     
     check_output_channel()
     
-    instructions = meta_time(option)
+    cmd = meta_time(option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
 ########### EXPERIENCE ###########
 
-def meta_xp_query(target: str, option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"xp query {target} {option}")
-    return instructions
+def meta_xp_query(target: str, option: str) -> str:
+    return f"xp query {target} {option}"
 
-def xp_query(target: str, option: str) -> Union[bool, str]:
-    """This function fetches the experience of a player
+def xp_query(target: str, option: str) -> str:
+    """Fetches the experience of a player and return it as a string
     Available options: levels, points"""
     
     check_output_channel()
     
-    instructions = meta_xp_query(target, option)
+    cmd = meta_xp_query(target, option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
     
     xp = re.findall(r"(\d+) experience " + option, status)
     return xp[0]
 
 ########### WHITELIST ###########
 
-def meta_get_whitelist() -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"whitelist list")
-    return instructions
+def meta_get_whitelist() -> str:
+    return "whitelist list"
 
-def get_whitelist() -> Union[bool, str]:
-    """This function fetches the whitelist of the world"""
+def get_whitelist() -> list:
+    """Fetches the whitelist of the world and return as a list"""
     
     check_output_channel()
     
-    instructions = meta_get_whitelist()
+    cmd = meta_get_whitelist()
     
-    for line in instructions["list"]:
-        status = post(line)[:-4]
+    status = post(cmd)[:-4]
         
     whitelist = status.split("players: ")[1].split(", ")
     return whitelist
 
-def meta_toggle_whitelist(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"whitelist {option}")
-    return instructions
+def meta_toggle_whitelist(option: str) -> str:
+    return f"whitelist {option}"
 
-def toggle_whitelist(option: str) -> Union[bool, str]:
-    """This function toggles the whitelist of the world
+def toggle_whitelist(option: str) -> str:
+    """Toggles the whitelist of the world
     Available options: on, off"""
     
     check_output_channel()
     
-    instructions = meta_toggle_whitelist(option)
+    cmd = meta_toggle_whitelist(option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def meta_reload_whitelist() -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"whitelist reload")
-    return instructions
+def meta_reload_whitelist() -> str:
+    return f"whitelist reload"
 
-def reload_whitelist() -> Union[bool, str]:
-    """This function reloads the whitelist of the world"""
+def reload_whitelist() -> str:
+    """Reloads the whitelist of the world"""
     
     check_output_channel()
     
-    instructions = meta_reload_whitelist()
+    cmd = meta_reload_whitelist()
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def meta_update_whitelist(option: str, target: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"whitelist {option} {target}")
-    return instructions
+def meta_update_whitelist(option: str, target: str) -> str:
+    return f"whitelist {option} {target}"
 
-def update_whitelist(option: str, target: str) -> Union[bool, str]:
-    """This function updates the whitelist of the world
+def update_whitelist(option: str, target: str) -> str:
+    """Updates the whitelist of the world
     Available options: add, remove"""
     
     check_output_channel()
     
-    instructions = meta_update_whitelist(option, target)
+    cmd = meta_update_whitelist(option, target)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
 ############ ADMIN ############
 
-def meta_stop() -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"stop")
-    return instructions
+def meta_stop() -> str:
+    return "stop"
 
-def stop() -> Union[bool, str]:
-    """This function stops the server"""
+def stop() -> str:
+    """Stops the server"""
     
     check_output_channel()
     
-    instructions = meta_stop()
+    cmd = meta_stop()
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def meta_save_all() -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"save-all")
-    return instructions
+def meta_save_all() -> str:
+    return "save-all"
 
 def save_all() -> Union[bool, str]:
     """This function saves the world"""
     
     check_output_channel()
     
-    instructions = meta_save_all()
+    cmd = meta_save_all()
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
-def meta_toggle_save(option: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"save-{option}")
-    return instructions
+def meta_toggle_save(option: str) -> str:
+    return f"save-{option}"
 
-def toggle_save(option: str) -> Union[bool, str]:
-    """This function toggles the auto-save of the world
+def toggle_save(option: str) -> str:
+    """Toggles the auto-save of the world
     Available options: on, off"""
     
     check_output_channel()
     
-    instructions = meta_toggle_save(option)
+    cmd = meta_toggle_save(option)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
 ############# HELP #############
 
-def meta_help(value: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"help {value}")
-    return instructions
+def meta_help(value: str) -> str:
+    return f"help {value}"
 
 def parse_help(prepender = ""):
     
-    instructions = meta_help(prepender)
+    cmd = meta_help(prepender)
     
-    for line in instructions["list"]:
-        data = post(line)
+    data = post(cmd)
         
     # Remove all \x1b[.. color code from the status
     data = re.sub(r"\x1b\[[0-9;]*m", "", data)
     
-    print(data)
     # Find the number of help pages
     nb_pages = re.findall(r" \(\d+/(\d+)\)", data)
     
@@ -496,10 +457,9 @@ def parse_help(prepender = ""):
     help_cmds = {}
     for page in range(1, int(nb_pages) + 1):
                 
-        instructions = meta_help(prepender + str(page))
+        cmd = meta_help(prepender + str(page))
         
-        for line in instructions["list"]:
-            data = post(line)
+        data = post(cmd)
             
         data = re.sub(r"\x1b\[[0-9;]*m", "", data)
         lines = data.splitlines()[(1 if page > 1 else 2):]
@@ -514,8 +474,9 @@ def parse_help(prepender = ""):
     
     return help_cmds
 
-def help(value: str = "") -> Union[bool, dict]:
-    """This function fetches the help of the world"""
+def help(value: str = "") -> dict:
+    """Fetches the help of the world and return a dict of it
+    If a value is specified it will fetch the help of the value only"""
     
     check_output_channel()
 
@@ -528,69 +489,61 @@ def help(value: str = "") -> Union[bool, dict]:
 
 ############# LIST #############
 
-def meta_list_players(uuids: bool = False) -> dict:
-    instructions = {"list": []}
+def meta_list_players(uuids: bool = False) -> str:
     if uuids:
         uuids = "uuids"
     else:
         uuids = ""
-    instructions["list"].append(f"list {uuids}")
-    return instructions
+    return f"list {uuids}"
 
-def list_players(uuids: bool = False) -> Union[bool, str]:
-    """This function fetches the list of players in the world
+def list_players(uuids: bool = False) -> list:
+    """Fetches the list of players in the world
     If uuids is set to True it will be a list of uuids returned"""
     
     check_output_channel()
     
-    instructions = meta_list_players(uuids)
+    cmd = meta_list_players(uuids)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
     
     # Remove all \x1b[.. color code from the status
     status = re.sub(r"\x1b\[[0-9;]*m", "", status)
     
-    if uuids:
-        players = status
-    else:
-        players = status.split("players online: ")[1].split(", ")
+    players = status.split("players online: ")[1].split(", ")
         
     return players
 
 ############# SPECTATE #############
 
-def meta_spectate(target: str, player: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"spectate {target} {player}")
-    return instructions
+def meta_spectate(target: str, player: str) -> str:
+    return f"spectate {target} {player}"
 
-def spectate(target: str, player: str) -> Union[bool, str]:
-    """This function makes the target spectates a player"""
+def spectate(target: str, player: str) -> str:
+    """Makes the target spectates a player"""
     
     check_output_channel()
     
-    instructions = meta_spectate(target, player)
+    cmd = meta_spectate(target, player)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
         
         
 ############# SET WORLD SPAWN #############
 
-def meta_set_world_spawn(pos: Coordinates, yaw: int) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"setworldspawn {pos} {yaw}")
-    return instructions
+def meta_set_world_spawn(pos: Coordinates, yaw: int) -> str:
+    return f"setworldspawn {pos} {yaw}"
 
-def set_world_spawn(pos: Union[Coordinates, tuple], yaw: int = 0) -> Union[bool, str]:
+def set_world_spawn(pos: Union[Coordinates, tuple], yaw: int = 0) -> str:
     """This function sets the world spawn"""
     
     check_output_channel()
     
     pos = format_arg(pos, Coordinates)
 
-    instructions = meta_set_world_spawn(pos, yaw)
+    cmd = meta_set_world_spawn(pos, yaw)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status

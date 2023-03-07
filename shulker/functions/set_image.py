@@ -29,7 +29,7 @@ def meta_set_image(
     width, height = converted_image.size
     pixels = [pixels[i * width : (i + 1) * width] for i in range(height)]
 
-    instructions = {"list": [], "zone": None}
+    instructions = {"cmds": [], "zone": None}
 
     palette = get_palette(orientation)
 
@@ -46,7 +46,7 @@ def meta_set_image(
             if player_name is not None:
                 # TODO: Update with the TP method later on
                 cmd = f"tp {player_name} {x} {coords.y + 100} {z}"
-                instructions["list"].append(cmd)
+                instructions["cmds"].append(cmd)
 
             new_coords = BlockCoordinates(coords.x + x, coords.y, coords.z + z)
 
@@ -64,7 +64,7 @@ def meta_set_image(
                 block,
                 BlockHandler("replace"),
             )
-            instructions["list"].append(cmd)
+            instructions["cmds"].append(cmd)
 
             z += 1
     else:
@@ -122,13 +122,17 @@ def set_image(
 
     instructions = meta_set_image(file, coords, orientation, player_name)
 
-    for line in instructions["list"]:
-        post(line)
+    status = {
+      "cmd": [],
+      "zone": instructions["zone"]
+    }
+    
+    for cmd in instructions["cmds"]:
+        ret = post(cmd)
+        if ret and ret != '':
+          status['cmd'].append(ret)
 
-    """nest = nest_commands(instructions["lines"])
-    post_nest(coords, nest)"""
-
-    return instructions["zone"]
+    return status
 
 
 def get_palette(orientation):

@@ -32,7 +32,7 @@ def meta_set_text(
     handler = BlockHandler("replace" if replace else "keep")
 
     offset = 0
-    instructions = {"list": [], "zone": None}
+    instructions = {"cmds": [], "zone": None}
 
     # Can't use enumerate(message) because I don't want
     # to count spaces
@@ -105,7 +105,7 @@ def meta_set_text(
                     block = fetch_block(digit, orientation, palette[mod], filler)
 
                     cmd = meta_set_block(new_coords, block, handler)
-                    instructions["list"].append(cmd)
+                    instructions["cmds"].append(cmd)
 
                 # In case it was, it creates "zones" instead
                 # of placing blocks
@@ -127,7 +127,7 @@ def meta_set_text(
                             )
 
                         cmd = meta_set_zone(zone["coords"], block, handler)
-                        instructions["list"].append(cmd)
+                        instructions["cmds"].append(cmd)
 
             # After a line has been printed, the Y level is increased
             y += 1 + scale
@@ -166,7 +166,7 @@ def set_text(
     replace: bool = True,
     scale: int = 0,
     filler: Union[Block, str] = "air",
-) -> Zone:
+) -> dict:
 
     """
     Returns a Zone representing the area used by the text
@@ -218,11 +218,17 @@ def set_text(
         message, coords, palette, style, orientation, replace, scale, filler
     )
 
-    for set in instructions["list"]:
-      for line in set['list']:
-        post(line)
+    status = {
+      "cmd": [],
+      "zone": instructions["zone"]
+    }
+    
+    for cmd in instructions["cmds"]:
+        ret = post(cmd)
+        if ret and ret != '':
+          status['cmd'].append(ret)
 
-    return instructions["zone"]
+    return status
 
 
 def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:

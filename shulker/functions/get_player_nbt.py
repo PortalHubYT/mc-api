@@ -7,15 +7,13 @@ from shulker.components.NBT import NBT
 
 from shulker.functions.base_functions import *
 
-def meta_get_player_nbt(pseudo: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"data get entity {pseudo}")
-    return instructions
+def meta_get_player_nbt(pseudo: str) -> str:
+    return f"data get entity {pseudo}"
 
 
 def get_player_nbt(
     pseudo: str,
-) -> Union[bool, str]:
+) -> Union[NBT, str]:
     """
     Returns the NBT data of the player
     """
@@ -25,22 +23,21 @@ def get_player_nbt(
     if type(pseudo) is not str:
         raise TypeError(f"Expected type str, got {type(pseudo)}")
 
-    instructions = meta_get_player_nbt(pseudo)
+    cmd = meta_get_player_nbt(pseudo)
 
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
         
     if status.startswith(f"{pseudo} has"):
         data = status.split("data: ")[1][:-4]
         return NBT(data)
     else:
-        return False
+        return status
     
 
 def get_player_pos(
     pseudo: str,
     rounded: bool = True
-) -> Union[bool, str]:
+) -> Union[NBT, None, BlockCoordinates, Coordinates]:
     """
     Returns the coordinates of the player if it is found
     False if it wasn't found or there's an issue
@@ -57,4 +54,4 @@ def get_player_pos(
         else:
             return Coordinates(float(pos[0]), float(pos[1]), float(pos[2]))
     else:
-        return False
+        return nbt

@@ -8,17 +8,15 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.functions.base_functions import *
 
 
-def meta_set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"setblock {coords} {block} {handler}")
-    return instructions
+def meta_set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> str:
+    return f"setblock {coords} {block} {handler}"
 
 
 def set_block(
     coords: Union[BlockCoordinates, tuple],
     block: Union[Block, str],
     handler: Union[BlockHandler, str] = "replace",
-) -> Union[bool, str]:
+) -> str:
     """
     Returns a bool that is set to True
     if no message was sent back by the game or the
@@ -38,12 +36,11 @@ def set_block(
     block = format_arg(block, Block)
     handler = format_arg(handler, BlockHandler)
 
-    instructions = meta_set_block(coords, block, handler)
+    cmd = meta_set_block(coords, block, handler)
 
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
 
-    return True if status.startswith("Changed the block") else status
+    return status
 
 
 meta_definition = {

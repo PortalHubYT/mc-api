@@ -3,52 +3,39 @@ from shulker.functions.base_functions import *
 
 ############### BOSSBAR ###############
 
-def meta_add_bossbar(name: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"bossbar add {id} {{\"text\":\"\"}}")
-    return instructions
+def meta_add_bossbar(id: str) -> str: 
+  return f"bossbar add {id} {{\"text\":\"\"}}"
 
-def meta_create_bossbar(id: str, text:str, target: str, value: int, color: str, progress: str, max: int, visible: bool) -> dict:
-    instructions = {"list": []}
+def meta_create_bossbar(id: str, text:str, target: str, value: int, color: str, progress: str, max: int, visible: bool) -> list:
+    instructions = []
     
-    instructions["list"].append(f"bossbar set {id} value {value}")
-    instructions["list"].append(f"bossbar set {id} name {{\"text\":\"{text}\"}}")
-    instructions["list"].append(f"bossbar set {id} color {color}")
-    instructions["list"].append(f"bossbar set {id} players {target}")
-    instructions["list"].append(f"bossbar set {id} style {progress}")
-    instructions["list"].append(f"bossbar set {id} max {max}")
-    instructions["list"].append(f"bossbar set {id} visible {str(visible).lower()}")    
+    instructions.append(f"bossbar set {id} value {value}")
+    instructions.append(f"bossbar set {id} name {{\"text\":\"{text}\"}}")
+    instructions.append(f"bossbar set {id} color {color}")
+    instructions.append(f"bossbar set {id} players {target}")
+    instructions.append(f"bossbar set {id} style {progress}")
+    instructions.append(f"bossbar set {id} max {max}")
+    instructions.append(f"bossbar set {id} visible {str(visible).lower()}")    
     
     return instructions
 
-def meta_list_bossbar():
-    instructions = {"list": []}
-    instructions["list"].append("bossbar list")
-    return instructions
+def meta_list_bossbar() -> str: 
+  return "bossbar list"
 
-def meta_remove_bossbar():
-    instructions = {"list": []}
-    instructions["list"].append("bossbar remove")
-    return instructions
+def meta_remove_bossbar() -> str: 
+  return "bossbar remove"
 
-def meta_get_bossbar(id: str, option: str):
-    instructions = {"list": []}
-    instructions["list"].append(f"bossbar get {id} {option}")
-    return instructions
+def meta_get_bossbar(id: str, option: str) -> str: 
+  return f"bossbar get {id} {option}"
 
-def meta_set_bossbar(id: str, option: str, value: str):
-    instructions = {"list": []}
-    instructions["list"].append(f"bossbar set {id} {option} {value}")
-    return instructions
+def meta_set_bossbar(id: str, option: str, value: str) -> str: 
+  return f"bossbar set {id} {option} {value}"
 
-def add_bossbar(id: str) -> Union[bool, str]:
-
-    check_output_channel()
-    
-    instructions = meta_add_bossbar(id)
-    
-    for line in instructions["list"]:
-        status = post(line)
+def add_bossbar(id: str) -> str:
+    """Adds a bossbar with the given id"""
+    cmd = meta_add_bossbar(id)
+    status = post(cmd)
+    return status
  
 def create_bossbar(
     id: str,
@@ -59,7 +46,7 @@ def create_bossbar(
     style: str = "progress",
     max: int = 100,
     visible: bool = True,
-) -> Union[bool, str]:
+) -> list:
     """
     Available colors: ["pink", "blue", "red", "green", "yellow", "purple", "white"]
     If target is None, it will only add the bossbar, but not display it to anyone.
@@ -70,20 +57,21 @@ def create_bossbar(
     if target == None:
         target = ""
     
-    instructions = meta_add_bossbar(id)
-    instructions2 = meta_create_bossbar(id, text, target, value, color, style, max, visible)
-    instructions["list"].extend(instructions2["list"])
+    cmd = meta_add_bossbar(id)
+    cmd_2 = meta_create_bossbar(id, text, target, value, color, style, max, visible)
 
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    status_2 = post(cmd_2)
+    
+    return [status, status_2]
 
 def list_bossbar() -> list:
+    """Returns a list of all the bossbars"""
     check_output_channel()
     
-    instructions = meta_list_bossbar()
+    cmd = meta_list_bossbar()
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
         
     status = status[:-4]
     
@@ -95,35 +83,32 @@ def list_bossbar() -> list:
    
     return result
 
-def remove_bossbar(id: str) -> Union[bool, str]:
+def remove_bossbar(id: str) -> str:
     """
     Removes the bossbar with the given id
     """
-
+    
     check_output_channel()
     
-    instructions = meta_remove_bossbar()
+    cmd = meta_remove_bossbar()
     
-    for line in instructions["list"]:
-        status = post(line)
-        
-    if status.startswith("Removed"):
-        return True
-    else:
-        return False
+    status = post(cmd)
+    
+    return status
 
-def get_bossbar(id: str, option: str) -> Union[bool, int]:
+def get_bossbar(id: str, option: str) -> Union[list, int]:
     """
-    Returns a the values that were asked for corresponding to the bossbar id
-    'players' options returns a list
+    Returns the values of the 'option' that was asked for, 
+    of corresponding to the bossbar id.
+    
+    The 'players' options returns a list
     """
 
     check_output_channel()
     
-    instructions = meta_get_bossbar(id, option)
+    cmd = meta_get_bossbar(id, option)
     
-    for line in instructions["list"]:
-        status = post(line)[:-4]
+    status = post(cmd)[:-4]
     
     if "players" in option:
         value = status.split(": ")[1].split(", ")
@@ -135,7 +120,7 @@ def get_bossbar(id: str, option: str) -> Union[bool, int]:
     
     return value
 
-def set_bossbar(id: str, option: str, value: str) -> Union[bool, str]:
+def set_bossbar(id: str, option: str, value: str) -> str:
     """
     Sets the value of the bossbar with the given id
     Availables options: ["value", "max", "color", "style", "players", "name", "visible"]
@@ -143,34 +128,24 @@ def set_bossbar(id: str, option: str, value: str) -> Union[bool, str]:
 
     check_output_channel()
     
-    instructions = meta_set_bossbar(id, option, value)
+    cmd = meta_set_bossbar(id, option, value)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
         
-    if status.startswith("Set"):
-        return True
-    else:
-        return False
+    return status
 
 ############### TITLES ###############
 
 def meta_show_gui(type: str, text: str, target: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"title {target} {type} {{\"text\":\"{text}\"}}")
-    return instructions
+    return f"title {target} {type} {{\"text\":\"{text}\"}}"
 
 def meta_clear_gui(target: str) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"title {target} clear")
-    return instructions
+    return f"title {target} clear"
 
 def meta_set_gui_time(target: str, fade_in: int, stay: int, fade_out: int) -> dict:
-    instructions = {"list": []}
-    instructions["list"].append(f"title {target} times {fade_in} {stay} {fade_out}")
-    return instructions
+    return f"title {target} times {fade_in} {stay} {fade_out}"
 
-def show_gui(type: str, text: str, target: str = "@a") -> Union[bool, str]:
+def show_gui(type: str, text: str, target: str = "@a") -> str:
     """
     Shows a title or a subtitle or an actionbar to the given target
     Available types: ["title", "subtitle", "actionbar"]
@@ -178,30 +153,33 @@ def show_gui(type: str, text: str, target: str = "@a") -> Union[bool, str]:
 
     check_output_channel()
     
-    instructions = meta_show_gui(type, text, target)
+    cmd = meta_show_gui(type, text, target)
     
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
+    
+    return status
 
-def clear_gui(target: str = "@a") -> Union[bool, str]:
-
+def clear_gui(target: str = "@a") -> str:
+    """Clears the title, subtitle or actionbar for the target"""
+    
     check_output_channel()
     
-    instructions = {"list": []}
-    instructions["list"].append(f"title {target} {type} clear")
+    cmd = meta_clear_gui(target)
+
+    status = post(cmd)
     
-    for line in instructions["list"]:
-        status = post(line)
+    return status
         
-def set_gui_time(target: str = "@a", fade_in: int = 10, stay: int = 70, fade_out: int = 20) -> Union[bool, str]:
+def set_gui_time(target: str = "@a", fade_in: int = 10, stay: int = 70, fade_out: int = 20) -> str:
     """
-    Sets the time of the title, subtitle or actionbar for the target
+    Sets the fade in, stay and fade out time of the title, subtitle or actionbar for the target
     Providing no values defaults to default time values
     """
 
     check_output_channel()
     
-    instructions = meta_set_gui_time(target, fade_in, stay, fade_out)
+    cmd = meta_set_gui_time(target, fade_in, stay, fade_out)
+
+    status = post(cmd)
     
-    for line in instructions["list"]:
-        status = post(line)
+    return status

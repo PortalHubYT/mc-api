@@ -9,16 +9,12 @@ from shulker.functions.base_functions import *
 
 def meta_set_zone(
     zone: Zone, block: Block, handler: BlockHandler, filter: Union[Block, None] = None
-) -> dict:
-
-    instructions = {"list": []}
+) -> str:
 
     if str(handler) == "replace" and filter:
         handler = str(handler) + " " + str(filter)
 
-    instructions["list"].append(f"fill {zone} {block} {handler}")
-
-    return instructions
+    return f"fill {zone} {block} {handler}"
 
 
 def set_zone(
@@ -56,9 +52,8 @@ def set_zone(
     if filter != "":
         filter = format_arg(filter, Block)
 
-    instructions = meta_set_zone(zone, block, handler, filter)
+    cmd = meta_set_zone(zone, block, handler, filter)
 
-    for line in instructions["list"]:
-        status = post(line)
+    status = post(cmd)
 
-    return default_check(status)
+    return status
