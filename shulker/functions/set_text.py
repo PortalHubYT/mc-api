@@ -24,13 +24,17 @@ def meta_set_text(
     palette: list,
     style: str,
     orientation: str,
-    replace: BlockHandler,
+    replace: Union[bool, None],
     scale: int,
-    filler: Block,
+    filler: Union[Block, None],
+    namespace: bool,
 ) -> dict:
 
-    handler = BlockHandler("replace" if replace else "keep")
-
+    if replace is not None:
+      handler = BlockHandler("replace" if replace else "keep")
+    else:
+      handler = None
+    
     offset = 0
     instructions = {"cmds": [], "zone": None}
 
@@ -102,10 +106,16 @@ def meta_set_text(
                 # And finally, this is the part where the block is set
                 # depending on whether a scale was specified or not
                 if scale == 0:
+                      
                     block = fetch_block(digit, orientation, palette[mod], filler)
 
-                    cmd = meta_set_block(new_coords, block, handler)
-                    instructions["cmds"].append(cmd)
+                    if block:
+                      cmd = meta_set_block(new_coords, block, handler)
+                      
+                      if not namespace:
+                        cmd = cmd.replace("minecraft:", "")
+                        
+                      instructions["cmds"].append(cmd)
 
                 # In case it was, it creates "zones" instead
                 # of placing blocks
@@ -166,6 +176,7 @@ def set_text(
     replace: bool = True,
     scale: int = 0,
     filler: Union[Block, str] = "air",
+    namespace: bool = True,
 ) -> dict:
 
     """
@@ -215,7 +226,7 @@ def set_text(
         raise ValueError(f"Orientation must be either north or west for set_text()")"""
 
     instructions = meta_set_text(
-        message, coords, palette, style, orientation, replace, scale, filler
+        message, coords, palette, style, orientation, replace, scale, filler, namespace
     )
 
     status = {

@@ -6,7 +6,7 @@ import re
 ############ SAY ############
 
 def meta_say(text: str) -> str:
-    return "say {text}"
+    return f"say {text}"
 
 def say(text: str) -> str:
     """Sends a message in the chat"""

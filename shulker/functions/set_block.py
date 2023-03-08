@@ -8,8 +8,8 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.functions.base_functions import *
 
 
-def meta_set_block(coords: BlockCoordinates, block: Block, handler: BlockHandler) -> str:
-    return f"setblock {coords} {block} {handler}"
+def meta_set_block(coords: BlockCoordinates, block: Block, handler: Union[BlockHandler, None]) -> str:
+    return f"setblock {coords} {block}{(' ' + str(handler)) if handler else ''}"
 
 
 def set_block(

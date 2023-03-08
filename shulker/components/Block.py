@@ -1,7 +1,6 @@
 from .BlockState import BlockState
 from .NBT import NBT
 
-
 class Block:
     """
     A single '<block>' argument looks like this:
@@ -53,7 +52,7 @@ class Block:
         self.blockstate = (
             blockstate if isinstance(blockstate, BlockState) else BlockState()
         )
-        self.nbt = nbt if isinstance(nbt, NBT) else NBT()
+        self.nbt = nbt if isinstance(nbt, NBT) else NBT(nbt)
 
     def __str__(self):
         return f"{self.namespace}:{self.id}{self.blockstate}{self.nbt}"

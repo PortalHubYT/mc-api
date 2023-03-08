@@ -52,8 +52,23 @@ class NBT:
             return str(NBT(arg))
 
     def __setattr__(self, name, value):
-        value = parse_nbt(str(value))
-        super().__setattr__(name, value)
+        if isinstance(value, str):
+          value = f'"{value}"'
+          
+        elif type(value) is list:
+          new_value = "["
+          for things in value:
+            new_value += f"{things},"
+          value = new_value[:-1] + "]"
+          if value == "]":
+            value = []
+
+        if not isinstance(value, (List[Compound])):
+          nbt = f"{{{name}:{value}}}"
+          parsed_nbt = parse_nbt(nbt)
+          super().__setattr__(name, parsed_nbt[name])
+        else:
+          super().__setattr__(name, value)
         
     def __str__(self):
 

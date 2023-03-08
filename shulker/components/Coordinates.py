@@ -22,6 +22,13 @@ class Coordinates:
                     "When using caret notation, every coordinates must start with a caret"
                 )
 
+    def offset(self, x=0, y=0, z=0) -> "Coordinates":
+        """
+        Offsets the coordinates by the given tuple and returns a new BlockCoordinates object.
+        """
+        
+        return Coordinates(self.x + x, self.y + y, self.z + z)
+        
     def __str__(self):
         self.check_carets()
 

@@ -6,7 +6,7 @@ from mctools import RCONClient
 
 
 class RconClient:
-    def __init__(self, ip, password, port=25575):
+    def __init__(self, ip: str = 'localhost', password: str = 'test', port: int = 25575):
         self.ip = ip
         self.password = password
         self.port = port

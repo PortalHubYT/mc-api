@@ -22,7 +22,7 @@ class Entity:
     An instance of this class represents an existing unique entity, or a group of unique entities.
     """
 
-    def __init__(self, descriptor: Union[TargetSelector, str]):
+    def __init__(self, descriptor: Union[TargetSelector, str], nbt: NBT = None):
 
         if not isinstance(descriptor, TargetSelector) and not isinstance(
             descriptor, str
@@ -37,9 +37,13 @@ class Entity:
             )
 
         self.descriptor = str(descriptor)
+        self.nbt = NBT() if nbt == None else nbt
 
     def __str__(self):
-        return f"{self.descriptor}"
+        if hasattr(self, "nbt") and self.nbt not in [None, "", "{}"]:
+            return f"{self.descriptor}{self.nbt}"
+        else:
+            return f"{self.descriptor}"
 
 
 class IncorrectEntityDescriptorType(Exception):

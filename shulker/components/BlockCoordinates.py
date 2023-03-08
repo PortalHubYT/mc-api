@@ -39,6 +39,13 @@ class BlockCoordinates(Coordinates):
 
         return coord
 
+    def offset(self, x=0, y=0, z=0) -> "BlockCoordinates":
+        """
+        Offsets the coordinates by the given tuple and returns a new BlockCoordinates object.
+        """
+        
+        return BlockCoordinates(self.x + x, self.y + y, self.z + z)
+        
     def __str__(self):
 
         self.check_carets()
