@@ -2,9 +2,6 @@ from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.Block import Block
 from shulker.components.Zone import Zone
 from shulker.components.Entity import Entity
-from shulker.functions.set_block import meta_set_block
-from shulker.functions.set_zone import meta_set_zone
-from shulker.functions.summon import meta_summon
 from shulker.server.singleton import singleton
 import json
 import os
@@ -46,7 +43,10 @@ def post(cmd: str):
 
 
 def nesting_process(commands: list, base_coords: BlockCoordinates, set_plane: bool):
-  
+
+    from shulker.functions.set_block import meta_set_block
+    from shulker.functions.summon import meta_summon
+
     # The activator rail, first passenger, that will get powered
     # once its host the redstone block, has settled on the ground
     rail = Entity('falling_block')
@@ -149,6 +149,9 @@ def nest_commands(commands: list, base_coords: BlockCoordinates, set_plane):
 
 
 def place_nests(nests: list, base_coords: BlockCoordinates, set_plane, plane_block):
+  
+  from shulker.functions.set_zone import meta_set_zone
+
   # If set_plane is set to true, we fill a zone with a plane that will
   # be used to place the nests on top of it
   
