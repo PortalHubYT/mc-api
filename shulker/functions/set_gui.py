@@ -22,8 +22,8 @@ def meta_create_bossbar(id: str, text:str, target: str, value: int, color: str, 
 def meta_list_bossbar() -> str: 
   return "bossbar list"
 
-def meta_remove_bossbar() -> str: 
-  return "bossbar remove"
+def meta_remove_bossbar(id: str) -> str: 
+  return f"bossbar remove {id}"
 
 def meta_get_bossbar(id: str, option: str) -> str: 
   return f"bossbar get {id} {option}"
@@ -61,9 +61,14 @@ def create_bossbar(
     cmd_2 = meta_create_bossbar(id, text, target, value, color, style, max, visible)
 
     status = post(cmd)
-    status_2 = post(cmd_2)
     
-    return [status, status_2]
+    status_2 = []
+    for instruction in cmd_2:
+      status_2.append(post(instruction))
+    
+    status_2.extend(status)
+    
+    return status
 
 def list_bossbar() -> list:
     """Returns a list of all the bossbars"""
@@ -90,7 +95,7 @@ def remove_bossbar(id: str) -> str:
     
     check_output_channel()
     
-    cmd = meta_remove_bossbar()
+    cmd = meta_remove_bossbar(id)
     
     status = post(cmd)
     
