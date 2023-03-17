@@ -6,6 +6,10 @@ import sys
 import os
 
 from PIL import Image
+import PIL
+import requests
+from io import BytesIO
+import random
 
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockHandler import BlockHandler
@@ -14,42 +18,29 @@ from shulker.components.Zone import Zone
 from shulker.functions.base_functions import *
 from shulker.functions.set_block import meta_set_block, set_block
 
-# TODO: Handle image in memory rather than pull
 # TODO: Minecart method? -> https://www.youtube.com/watch?v=MEawKJm-t28
 
+def generate_instructions_random(pixels, palette, coords, orientation, display_mode = "vertical"):
+    instructions = generate_instructions(pixels, palette, coords, orientation, display_mode)
+    random.shuffle(instructions["cmds"])
+    return instructions
 
-def meta_set_image(
-    file: str, coords: BlockCoordinates, orientation: str, player_name: str
-) -> dict:
-
-    image = Image.open(file)
-    converted_image = image.convert("RGB")
-
-    pixels = list(converted_image.getdata())
-    width, height = converted_image.size
-    pixels = [pixels[i * width : (i + 1) * width] for i in range(height)]
-
+def generate_instructions(pixels, palette, coords, orientation, display_mode = "vertical"):
+    
     instructions = {"cmds": [], "zone": None}
-
-    palette = get_palette(orientation)
-
+    
     x = 0
 
     for line in pixels:
         x += 1
         z = 0
-
         for pixel in line:
-
             block = color_picker(pixel, palette)
-
-            if player_name is not None:
-                # TODO: Update with the TP method later on
-                cmd = f"tp {player_name} {x} {coords.y + 100} {z}"
-                instructions["cmds"].append(cmd)
-
-            new_coords = BlockCoordinates(coords.x + x, coords.y, coords.z + z)
-
+            if display_mode == "vertical":
+                new_coords = BlockCoordinates(coords.x, coords.y + x, coords.z + z)
+            else:
+                new_coords = BlockCoordinates(coords.x + x, coords.y, coords.z + z)
+            
             if orientation in block:
                 block = block.replace(f"_{orientation}", "")
 
@@ -65,22 +56,107 @@ def meta_set_image(
                 BlockHandler("replace"),
             )
             instructions["cmds"].append(cmd)
-
             z += 1
     else:
         instructions["zone"] = Zone(
             coords, BlockCoordinates(coords.x + x, coords.y, coords.z + z)
         )
+        
+    return instructions
+        
+def generate_instructions_spiral(pixels, palette, coords, orientation, display_mode = "vertical"):
+    
+    #TODO only handles vertical for now
+    def add_instruction(x, y):
+        block = color_picker(pixels[x][y], palette)
+        if display_mode == "horizontal":
+            relative_cursor = BlockCoordinates(coords.x + cursor[0], coords.y, coords.z + cursor[1])
+        elif display_mode == "vertical":
+            relative_cursor = BlockCoordinates(coords.x + cursor[0], coords.y + cursor[1], coords.z)
+        
+        cmd = meta_set_block(
+                relative_cursor,
+                block,
+                BlockHandler("replace"),
+            )
+        instructions["cmds"].append(cmd)
+        
+    instructions = {"cmds": [], "zone": None}
+    
+    width = len(pixels[0])
+    height = len(pixels)
+    
+    x_center = int(width / 2)
+    y_center = int(height / 2)
+    
+    cursor = (x_center, y_center)
+    add_instruction(cursor[0], cursor[1])
+    
+    
+    side = 1
+    mult = -1
+    while len(instructions["cmds"]) < (width * height - side):
+        
+        for _ in range(1, side + 1):
+            cursor = (cursor[0] + 1 * mult, cursor[1])
+            add_instruction(cursor[0], cursor[1])
+            
+            
+        for _ in range(1, side + 1):
+            cursor = (cursor[0], cursor[1] + 1 * mult)
+            add_instruction(cursor[0], cursor[1])
+            
+        mult = mult * -1
+        side += 1
+        
+    else:
+        for _ in range(1, side):
+            cursor = (cursor[0] + 1 * mult, cursor[1])
+            add_instruction(cursor[0], cursor[1])
+        instructions["zone"] = Zone(
+            coords, BlockCoordinates(coords.x + width, coords.y, coords.z + height)
+        )
 
+    return instructions
+
+def generate_instructions_reverse_spiral(pixels, palette, coords, orientation, display_mode = "vertical"):
+    instructions = generate_instructions_spiral(pixels, palette, coords, orientation, display_mode)
+    instructions["cmds"] = instructions["cmds"][::-1]
+    return instructions
+
+def meta_set_image(
+    image: Image, coords: BlockCoordinates, orientation: str, display_mode: str = "vertical", display_order = "normal"
+) -> dict:
+
+    
+    pixels = list(image.getdata())
+    
+    width, height = image.size
+    pixels = [pixels[i * width : (i + 1) * width] for i in range(height)]
+    palette = get_palette(orientation)
+
+    
+    if display_order == "normal":
+        instructions = generate_instructions(pixels, palette, coords, orientation, display_mode)
+    elif display_order == "random":
+        instructions = generate_instructions_random(pixels, palette, coords, orientation, display_mode)
+    elif display_order == "spiral":
+        instructions = generate_instructions_spiral(pixels, palette, coords, orientation, display_mode)
+    elif display_order == "reverse_spiral":
+        instructions = generate_instructions_reverse_spiral(pixels, palette, coords, orientation, display_mode)
+    else: 
+        instructions = {"cmds": [], "zone": None}
     return instructions
 
 
 def set_image(
-    file: str,
+    source: str,
     coords: Union[BlockCoordinates, tuple],
     orientation: str = "side",
     url: bool = False,
-    player_name: str = None,
+    resize = None,
+    display_mode: str = "vertical",
+    display_order: str = "normal",
 ) -> Zone:
     """
     This function takes the path to an image or an URL
@@ -97,21 +173,20 @@ def set_image(
 
     check_output_channel()
 
-    # TODO: Cleanup the file
     if url == True:
-        http = urllib3.PoolManager()
-        r = http.request("GET", file, preload_content=False)
-
-        filename = "image.jpg"
-        with open(filename, "wb") as out:
-            while True:
-                data = r.read(1024)
-                if not data:
-                    break
-                out.write(data)
-
-        r.release_conn()
-        file = filename
+        response = requests.get(source)
+        image = Image.open(BytesIO(response.content))
+    else: 
+        image = Image.open(source) 
+    
+    if resize:
+        image = image.convert("RGB").resize(resize)
+    
+    image = image.transpose(PIL.Image.FLIP_LEFT_RIGHT)
+    if display_mode == "vertical":
+        image = image.transpose(PIL.Image.FLIP_TOP_BOTTOM)
+    if display_order == "spiral" or display_order == "reverse_spiral":
+        image = image.rotate(90)
 
     coords = format_arg(coords, BlockCoordinates)
 
@@ -120,8 +195,7 @@ def set_image(
             f"Orientation must either be side, top or bottom for set_image()"
         )
 
-    instructions = meta_set_image(file, coords, orientation, player_name)
-
+    instructions = meta_set_image(image, coords, orientation, display_mode, display_order)
     status = {
       "cmd": [],
       "zone": instructions["zone"]
@@ -132,7 +206,7 @@ def set_image(
         if ret and ret != '':
           status['cmd'].append(ret)
 
-    return status
+    return True
 
 
 def get_palette(orientation):

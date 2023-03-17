@@ -215,6 +215,7 @@ def format_arg(argument, component):
     elif isinstance(argument, list):
         return component(*argument)
     else:
+        return argument
         raise InvalidArgumentType(
             f'Invalid argument type, could not parse "{argument}" as a valid component.'
         )
