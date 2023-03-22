@@ -1,4 +1,4 @@
-from nbtlib import parse_nbt
+from nbtlib import parse_nbt, serialize_tag
 from nbtlib import Byte, Short, Int, Long, Float, Double, String, ByteArray, IntArray, LongArray, List, Compound
 from typing import Union
 
@@ -38,11 +38,11 @@ class NBT:
                 return f"'{str(arg)}'"
             else:
                 return f'"{str(arg)}"'
-        elif type(arg) is ByteArray:
+        elif type(arg) is List[Byte]:
             return f'[{",".join([int(str(int(x))) for x in arg])}]b'
-        elif type(arg) is IntArray:
-            return f'[{",".join([str(int(x)) for x in arg])}]'
-        elif type(arg) is LongArray:
+        elif type(arg) is List[Int]:
+            return f'[I;{",".join([str(int(x)) for x in arg])}]'
+        elif type(arg) is List[Long]:
             return f'[{",".join([str(int(x)) for x in arg])}]L'
         elif isinstance(arg, List):
             return f'[{",".join([self.flatten(x) for x in arg])}]'
@@ -69,6 +69,12 @@ class NBT:
           super().__setattr__(name, parsed_nbt[name])
         else:
           super().__setattr__(name, value)
+    
+    def __getattr__(self, name):
+        if name in self.__dict__:
+            return self.flatten(self.__dict__[name])
+        else:
+            raise AttributeError(f"Attribute '{name}' does not exist")
         
     def __str__(self):
 

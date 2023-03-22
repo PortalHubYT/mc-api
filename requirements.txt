@@ -3,3 +3,5 @@ mctools
 pillow
 mcstatus
 nbtlib==1.12.1
+jsbeautifier
+selenium

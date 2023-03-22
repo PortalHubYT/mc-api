@@ -27,25 +27,11 @@ def summon(
     check_output_channel()
         
     if type(entity) is str:
-      entities = entity_list()
-    elif type(entity) is Entity:
-      if entity.nbt is not None and nbt_data == None:
-        nbt_data = entity.nbt
-        entity.nbt = ""
-        
-    if type(entity) is not str and type(entity) is not Entity:
-        raise TypeError(f"Expected type str or Entity, got {type(entity)}")
-    elif type(entity) is str and entity.replace("minecraft:", "") not in entities:
-        raise ValueError(f"Entity {entity} is not a valid entity")
-    
-    if nbt_data is not None:
-        nbt_data = format_arg(nbt_data, NBT)
-    else:
-        nbt_data = ""
+      entity = Entity(entity)
 
     coords = format_arg(coords, Coordinates)
         
-    cmd = meta_summon(entity, coords, nbt_data)
+    cmd = meta_summon(entity.descriptor, coords, entity.nbt)
 
     status = post(cmd)
     
