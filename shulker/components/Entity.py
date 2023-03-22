@@ -40,6 +40,8 @@ def generate_signed_32bit_integer_uuid_list():
 class Entity:
     def __init__(self, name: str, nbt: Union[NBT, dict, None] = None):
         
+        name = name.lower()
+        
         if name not in entities.keys():
             raise ValueError(f"Entity '{name}' does not exist")
         
