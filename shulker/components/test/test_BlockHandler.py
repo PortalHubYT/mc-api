@@ -55,17 +55,13 @@ class TestBlockHandler(unittest.TestCase):
 
     def test_abritrary_handler(self):
         """Test if an arbitrary option raises the BlockHandlerWrongType exception."""
-        bh = BlockHandler("imaginary")
-
         with self.assertRaises(BlockHandlerWrongType):
-            str(bh)
+            BlockHandler("imaginary")
 
     def test_wrong_handler_type(self):
         """Test if an incorrect option type (non-string) raises the BlockHandlerWrongType exception."""
-        bh = BlockHandler(1)
-
         with self.assertRaises(BlockHandlerWrongType):
-            str(bh)
+            BlockHandler(1)
 
 
 if __name__ == "__main__":
