@@ -7,85 +7,45 @@ from shulker.components.Entity import Entity, NBT, entities_nbt
 class TestEntity(unittest.TestCase):
 
     def test_invalid_entity(self):
-        """
-        This test checks whether the Entity class raises a ValueError
-        when trying to create an instance with an invalid entity name.
-        """
-        
+        """Test Entity class raises ValueError with invalid entity name."""
         with self.assertRaises(ValueError):
             Entity("invalid_entity")
 
     def test_valid_entity(self):
-        """
-        This test checks whether the Entity class can create a valid
-        instance with a valid entity name, and ensures the descriptor
-        is correctly assigned.
-        Additionally, it checks whether a mispell in the entity name
-        is correcter by the Entity class.
-        """
-        
+        """Test Entity class creates a valid instance with a valid entity name."""
         entity = Entity("Zombie")
         self.assertEqual(entity.descriptor, "zombie")
 
     def test_nbt_type(self):
-        """
-        This test checks whether the Entity class raises a ValueError
-        when trying to create an instance with an invalid nbt input type.
-        """
-        
+        """Test Entity class raises ValueError with invalid nbt input type."""
         with self.assertRaises(ValueError):
             Entity("zombie", nbt="invalid_nbt_type")
 
     def test_valid_nbt(self):
-        """
-        This test checks whether the Entity class can create a valid
-        instance with a valid NBT object input, and ensures that
-        the NBT values are correctly assigned.
-        """
-        
+        """Test Entity class creates a valid instance with a valid NBT object input."""
         entity = Entity("zombie", nbt=NBT({"CustomName": "zombie1"}))
         self.assertEqual(serialize_tag(entity.CustomName, compact=True), '"zombie1"')
 
     def test_dict_nbt(self):
-        """
-        This test checks whether the Entity class can create a valid
-        instance with a valid dictionary input for nbt, and ensures
-        that the NBT values are correctly assigned.
-        """
-        
+        """Test Entity class creates a valid instance with a valid dictionary input for nbt."""
         entity = Entity("zombie", nbt={"CustomName": "zombie2"})
         self.assertEqual(serialize_tag(entity.CustomName, compact=True), '"zombie2"')
 
     def test_set_nonexistent_attribute(self):
-        """
-        This test checks whether the Entity class
-        raises a ValueError when trying to set a nonexistent
-        attribute to an instance.
-        """
-        
+        """Test Entity class raises ValueError when trying to set a nonexistent attribute to an instance."""
         entity = Entity("zombie")
         with self.assertRaises(ValueError):
             entity.invalid_attribute = "value"
 
     def test_set_valid_attribute(self):
-        """
-        This test checks whether the Entity class can set a valid
-        attribute for an instance, and ensures that the attribute
-        value is correctly assigned.
-        """
-        
+        """Test Entity class sets a valid attribute for an instance."""
         entity = Entity("zombie")
         entity.Health = 20
         self.assertEqual(serialize_tag(entity.Health, compact=True), '20')
 
     def test_uuid_creation(self):
-        """
-        This test checks whether the Entity class generates a UUID
-        for each instance and ensures that the UUID is a list of
-        4 signed 32-bit integers.
-        """
+        """Test Entity class generates a UUID for each instance."""
         import re
-
         entity = Entity("zombie")
         uuid_str = entity.UUID
         uuid_list = [int(num) for num in re.findall(r'-?\d+', serialize_tag(uuid_str, compact=True))]
@@ -94,15 +54,12 @@ class TestEntity(unittest.TestCase):
             self.assertTrue(isinstance(i, int))
 
     def test_str_representation(self):
-        """
-        This test checks whether the __str__ method of the Entity class
-        returns a string representation of the entity.
-        """
-        
+        """Test __str__ method of the Entity class returns a string representation of the entity."""
         entity = Entity("zombie")
         self.assertTrue(isinstance(entity.__str__(), str))
-        
+
     def test_attributes_property(self):
+        """Test Entity class returns expected attributes for an entity."""
         entity = Entity("zombie")
         expected_attributes = entities_nbt["zombie"]
         self.assertEqual(entity.attributes, expected_attributes)
