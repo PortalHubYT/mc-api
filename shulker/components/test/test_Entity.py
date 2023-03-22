@@ -1,6 +1,8 @@
 import unittest
 
-from shulker.components.Entity import Entity, NBT, generate_signed_32bit_integer_uuid_list, entities_nbt
+from nbtlib import serialize_tag
+
+from shulker.components.Entity import Entity, NBT, entities_nbt
 
 class TestEntity(unittest.TestCase):
 
@@ -42,7 +44,7 @@ class TestEntity(unittest.TestCase):
         """
         
         entity = Entity("zombie", nbt=NBT({"CustomName": "zombie1"}))
-        self.assertEqual(entity.CustomName, '"zombie1"')
+        self.assertEqual(serialize_tag(entity.CustomName, compact=True), '"zombie1"')
 
     def test_dict_nbt(self):
         """
@@ -52,7 +54,7 @@ class TestEntity(unittest.TestCase):
         """
         
         entity = Entity("zombie", nbt={"CustomName": "zombie2"})
-        self.assertEqual(entity.CustomName, '"zombie2"')
+        self.assertEqual(serialize_tag(entity.CustomName, compact=True), '"zombie2"')
 
     def test_set_nonexistent_attribute(self):
         """
@@ -74,7 +76,7 @@ class TestEntity(unittest.TestCase):
         
         entity = Entity("zombie")
         entity.Health = 20
-        self.assertEqual(entity.Health, '20')
+        self.assertEqual(serialize_tag(entity.Health, compact=True), '20')
 
     def test_uuid_creation(self):
         """
@@ -86,7 +88,7 @@ class TestEntity(unittest.TestCase):
 
         entity = Entity("zombie")
         uuid_str = entity.UUID
-        uuid_list = [int(num) for num in re.findall(r'-?\d+', uuid_str)]
+        uuid_list = [int(num) for num in re.findall(r'-?\d+', serialize_tag(uuid_str, compact=True))]
         self.assertEqual(len(uuid_list), 4)
         for i in uuid_list:
             self.assertTrue(isinstance(i, int))

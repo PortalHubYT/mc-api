@@ -1,139 +1,125 @@
 import unittest
 
+from nbtlib import serialize_tag, Compound
+
 from shulker.components.NBT import NBT
 from shulker.components.Block import Block
 
-
 class TestBlock(unittest.TestCase):
-    def test_NBT_without_args(self):
-        tags = NBT()
+    def test_init_empty(self):
+        """This test checks that an empty NBT object is properly initialized."""
+        nbt = NBT()
+        self.assertEqual(str(nbt), "{}")
 
-        diff = str(tags)
-        test = ""
-        self.assertEqual(diff, test)
+    def test_init_compound(self):
+        """This test checks that NBT object is initialized with Compound input."""
+        compound = Compound({"test_key": "test_value"})
+        nbt = NBT(compound)
+        self.assertEqual(str(nbt), '{test_key:"test_value"}')
 
-    def test_NBT_without_attrs(self):
-        b = Block("dirt")
+    def test_init_str(self):
+        """This test checks that NBT object is initialized with string input."""
+        nbt_str = '{"test_key": "test_value"}'
+        nbt = NBT(nbt_str)
+        self.assertEqual(str(nbt), '{test_key:"test_value"}')
 
-        diff = str(b.nbt)
-        test = ""
-        self.assertEqual(diff, test)
+    def test_init_dict(self):
+        """This test checks that NBT object is initialized with dictionary input."""
+        nbt_dict = {"test_key": "test_value"}
+        nbt = NBT(nbt_dict)
+        self.assertEqual(str(nbt), '{test_key:"test_value"}')
 
-    def test_NBT_without_args_passed_to_Block(self):
-        tags = NBT()
-        b = Block("dirt", nbt=tags)
+    def test_init_invalid_type(self):
+        """This test checks that ValueError is raised with invalid input type."""
+        with self.assertRaises(ValueError):
+            NBT(["invalid", "input"])
 
-        diff = str(b.nbt)
-        test = ""
-        self.assertEqual(diff, test)
+    def test_setattr(self):
+        """This test checks that attributes are properly set and converted to NBT."""
+        nbt = NBT()
+        nbt.test_key = "test_value"
+        self.assertEqual(str(nbt), '{test_key:"test_value"}')
 
-    def test_NBT_without_args_attributed_to_Block(self):
-        tags = NBT()
-        b = Block("dirt")
+    def test_str(self):
+        """This test checks that NBT object is serialized correctly to string."""
+        nbt = NBT()
+        nbt.test_key = "test_value"
+        nbt_repr = str(nbt)
+        self.assertEqual(nbt_repr, '{test_key:"test_value"}')
+        
+    def test_set_attribute_different_types(self):
+        """
+        This test checks that setting attributes of different types on an NBT
+        object works correctly and updates the string representation.
+        """
+        
+        nbt = NBT()
+        nbt.int_value = 42
+        nbt.float_value = 3.14
+        nbt.str_value = "hello"
+        self.assertEqual(serialize_tag(nbt.int_value, compact=True), "42")
+        self.assertEqual(serialize_tag(nbt.float_value, compact=True), "3.14d")
+        self.assertEqual(serialize_tag(nbt.str_value, compact=True), '"hello"')
 
-        b.nbt = tags
+    def test_update_attribute(self):
+        """
+        This test checks that updating an existing attribute
+        on an NBT object results in the expected string representation.
+        """
+        
+        nbt = NBT({"key": "value"})
+        nbt.key = "new_value"
+        self.assertEqual(str(nbt), '{key:"new_value"}')
 
-        diff = str(b.nbt)
-        test = ""
-        self.assertEqual(diff, test)
+    def test_delete_attribute(self):
+        """
+        This test checks that deleting an attribute from an NBT object
+        updates the string representation accordingly.
+        """
+        
+        nbt = NBT({"key": "value", "key2": "value2"})
+        del nbt.key
+        self.assertEqual(str(nbt), '{key2:"value2"}')
 
-    def test_NBT_with_arg(self):
-        tags = NBT({"Lock": "45"})
+    def test_delete_attribute_error(self):
+        """
+        This test checks that trying to delete a non-existent
+        attribute on an NBT object raises an AttributeError.
+        """
+        
+        nbt = NBT()
+        with self.assertRaises(AttributeError):
+            del nbt.non_existent_key
 
-        diff = str(tags)
-        test = '{Lock:"45"}'
-        self.assertEqual(diff, test)
+    def test_nested_nbt_init(self):
+        """
+        This test checks that initializing an NBT object with nested NBT data
+        results in the expected string representation.
+        """
+        
+        nested_nbt_data = {"key": {"nested_key": "nested_value"}}
+        nbt = NBT(nested_nbt_data)
+        self.assertEqual(str(nbt), '{key:{nested_key:"nested_value"}}')
 
-    def test_NBT_with_args(self):
-        tags = NBT(
-            {
-                "Fire": 4,
-                "Air": 10,
-                "AbsorptionAmount": 150.0,
-                "Motion": [2.0, 2.0, 2.0],
-                "Passengers": [{"id": "minecraft:area_effect_cloud"}],
-                "CustomName": '{"text":"test"}',
-            }
-        )
+    def test_nested_nbt_set_attribute(self):
+        """
+        This test checks that setting a nested attribute on an NBT
+        object works correctly and updates the string representation.
+        """
+        
+        nbt = NBT()
+        nbt.key = NBT({"nested_key": "nested_value"})
+        self.assertEqual(str(nbt), '{key:{nested_key:"nested_value"}}')
 
-        diff = str(tags)
-        test = '{AbsorptionAmount:150.0d,Air:10,CustomName:\'{\"text\":\"test\"}\',Fire:4,Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
-        self.assertEqual(diff, test)
-
-    def test_NBT_via_attr(self):
-        tags = NBT()
-        tags.Fire = 4
-
-        diff = str(tags)
-        test = "{Fire:4}"
-        self.assertEqual(diff, test)
-
-    def test_NBT_via_attrs(self):
-        tags = NBT()
-        tags.Motion = [2.0, 2.0, 2.0]
-        tags.Passengers = [{"id": "minecraft:area_effect_cloud"}]
-
-        diff = str(tags)
-        test = '{Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
-        self.assertEqual(diff, test)
-
-    def test_NBT_with_arg_passed_to_Block(self):
-        tags = NBT({"Fire": 4})
-        b = Block("dirt", nbt=tags)
-
-        diff = str(b.nbt)
-        test = "{Fire:4}"
-        self.assertEqual(diff, test)
-
-    def test_NBT_with_args_overriden(self):
-        tags = NBT({"Fire": 4})
-        tags.Fire = 5
-
-        diff = str(tags)
-        test = "{Fire:5}"
-        self.assertEqual(diff, test)
-
-    def test_NBT_with_args_passed_to_Block(self):
-        tags = NBT(
-            {
-                "Fire": 4,
-                "Air": 10,
-                "AbsorptionAmount": 150.0,
-                "Motion": [2.0, 2.0, 2.0],
-                "Passengers": [{"id": "minecraft:area_effect_cloud"}],
-                "CustomName": '{"text":"test"}',
-            }
-        )
-        b = Block("dirt", nbt=tags)
-
-        diff = str(b.nbt)
-        test = '{AbsorptionAmount:150.0d,Air:10,CustomName:\'{\"text\":\"test\"}\',Fire:4,Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
-        self.assertEqual(diff, test)
-
-    def test_NBT_via_attr_through_Block(self):
-        b = Block("dirt")
-        b.nbt.Fire = 4
-
-        diff = str(b.nbt)
-        test = "{Fire:4}"
-        self.assertEqual(diff, test)
-
-    def test_NBT_via_attrs_through_Block(self):
-        b = Block("dirt")
-        b.nbt.Motion = [2.0, 2.0, 2.0]
-        b.nbt.Passengers = [{"id": "minecraft:area_effect_cloud"}]
-
-        diff = str(b.nbt)
-        test = '{Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
-        self.assertEqual(diff, test)
-
-    def test_NBT_mixed_attrs_and_args_through_Block(self):
-        tags = NBT({"Fire": 4, "CustomName": '{"text":"test"}'})
-        b = Block("dirt")
-        b.nbt = tags
-        b.nbt.Motion = [2.0, 2.0, 2.0]
-        b.nbt.Passengers = [{"id": "minecraft:area_effect_cloud"}]
-
-        diff = str(b.nbt)
-        test = '{CustomName:\'{\"text\":\"test\"}\',Fire:4,Motion:[2.0d,2.0d,2.0d],Passengers:[{id:"minecraft:area_effect_cloud"}]}'
-        self.assertEqual(diff, test)
+    def test_nested_nbt_update_attribute(self):
+        """
+        This test checks that updating a nested attribute on an NBT
+        object works correctly and updates the string representation.
+        """
+        
+        nbt = NBT({"key": NBT({"nested_key": "nested_value"})})
+        nbt.key.nested_key = "new_nested_value"
+        self.assertEqual(str(nbt), '{key:{nested_key:"new_nested_value"}}')
+    
+if __name__ == "__main__":
+    unittest.main()

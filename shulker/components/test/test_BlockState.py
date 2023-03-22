@@ -11,34 +11,25 @@ class TestBlock(unittest.TestCase):
     def test_blockstate_without_args(self):
         bs = BlockState()
 
-        diff = str(bs)
-        test = ""
-        self.assertEqual(diff, test)
+        self.assertEqual(str(bs), "[]")
 
     def test_blockstate_without_attrs(self):
         b = Block("dirt")
-
-        diff = str(b.blockstate)
-        test = ""
-        self.assertEqual(diff, test)
+        
+        self.assertEqual(str(b.blockstate), "[]")
 
     def test_blockstate_without_args_passed_to_Block(self):
         bs = BlockState()
         b = Block("dirt", blockstate=bs)
 
-        diff = str(b.blockstate)
-        test = ""
-        self.assertEqual(diff, test)
+        self.assertEqual(str(b.blockstate), "[]")
 
     def test_blockstate_without_args_attributed_to_Block(self):
         bs = BlockState()
         b = Block("dirt")
-
         b.blockstate = bs
 
-        diff = str(b.blockstate)
-        test = ""
-        self.assertEqual(diff, test)
+        self.assertEqual(str(b.blockstate), "[]")
 
     def test_blockstate_with_arg(self):
         bs = BlockState({"snowy": True})

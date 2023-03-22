@@ -73,7 +73,7 @@ class Entity:
             raise ValueError(f"Attribute '{name}' for '{self.descriptor}' does not exist")
 
     def __getattr__(self, name):
-        return self.nbt.__getattr__(name)
+        return getattr(self.nbt, name)
         
     def __str__(self):
         if hasattr(self, "nbt") and self.nbt not in [None, "", "{}"]:
