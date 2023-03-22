@@ -3,7 +3,6 @@ from .set_block import set_block, meta_set_block
 from .set_image import set_image, meta_set_image, print_palette
 from .set_text import set_text, meta_set_text
 from .set_zone import set_zone, meta_set_zone
-from .summon import summon, meta_summon
 from .get_player_nbt import get_player_nbt, get_player_pos, meta_get_player_nbt
 from .update_entity import update, meta_update
 
@@ -16,6 +15,7 @@ from .set_gui import set_bossbar, meta_set_bossbar
 from .set_gui import show_gui, meta_show_gui
 from .set_gui import clear_gui, meta_clear_gui
 
+from .miscellaneous import summon, meta_summon
 from .miscellaneous import say, meta_say
 from .miscellaneous import ban, ban_ip, meta_ban, banlist, meta_banlist, kick, meta_kick, pardon, meta_pardon, pardon_ip, meta_pardon_ip
 from .miscellaneous import op, deop, meta_op, meta_deop

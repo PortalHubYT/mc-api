@@ -4,6 +4,7 @@ import uuid
 from typing import Union
 
 from shulker.functions.update_entity import update
+
 from .NBT import NBT
 
 path = os.path.dirname(os.path.abspath(__file__))
@@ -65,7 +66,18 @@ class Entity:
     def update(self, nbt):
         uuid = self.__getattr__("UUID")
         return update(uuid, nbt)
+    
+    def summon(self, *args):
+        from shulker.functions.miscellaneous import summon
+        if len(args) == 3:
+            coords = (args[0], args[1], args[2])
+        elif len(args) == 1:
+            coords = args[0]
+        else:
+            raise ValueError(f"summon takes 1 (tuple, list, Coordinates...) or 3 (x, y, z) arguments, not {len(args)}")
         
+        return summon(self, coords)
+    
     def __setattr__(self, name, value):
         if name in self.attributes:
             self.nbt.__setattr__(name, value)

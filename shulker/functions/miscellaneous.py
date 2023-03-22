@@ -1,7 +1,34 @@
+import re
 from typing import Union
+
 from shulker.functions.base_functions import *
 from shulker.components.Coordinates import Coordinates
-import re
+from shulker.components.BlockCoordinates import BlockCoordinates
+from shulker.components.Entity import Entity
+
+############ SUMMON ############
+
+def meta_summon(entity: str, coords: BlockCoordinates) -> str:
+    return f"summon {entity.descriptor} {coords} {entity.nbt}"
+
+
+def summon(
+    entity: Union[Entity, str],
+    coords: Union[BlockCoordinates, Coordinates, tuple],
+) -> str:
+    """Summons an entity at coords, can be provided nbt_data"""
+
+    check_output_channel()
+      
+    entity = format_arg(entity, Entity)
+    coords = format_arg(coords, Coordinates)
+        
+    cmd = meta_summon(entity, coords)
+
+    status = post(cmd)
+    
+    return status
+
 
 ############ SAY ############
 
