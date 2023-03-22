@@ -1,7 +1,7 @@
 import unittest
 
 from shulker.components.BlockCoordinates import BlockCoordinates
-from shulker.components.BlockZone import BlockZone, ZoneWrongCoordsType
+from shulker.components.BlockZone import BlockZone, BlockZoneWrongCoordsType
 
 
 class TestCoordinates(unittest.TestCase):
@@ -38,7 +38,7 @@ class TestCoordinates(unittest.TestCase):
     def test_zone_wrong_args(self):
         """Test if BlockZone raises ZoneWrongCoordsType when provided with invalid arguments."""
         zone = BlockZone("hello", 1)
-        with self.assertRaises(ZoneWrongCoordsType):
+        with self.assertRaises(BlockZoneWrongCoordsType):
             str(zone)
 
     def test_zone_with_negative_coords(self):
