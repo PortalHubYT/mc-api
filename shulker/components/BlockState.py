@@ -3,11 +3,12 @@ class BlockState:
 
         if isinstance(properties, dict):
             for key in properties:
+                if not isinstance(key, str):
+                    raise ValueError("BlockState dictionary keys must be strings")
                 setattr(self, key, properties[key])
-
         elif properties is not None:
             raise ValueError("BlockState arg must be a dictionnary")
-
+        
     def flatten(self, arg):
 
         if isinstance(arg, bool):
