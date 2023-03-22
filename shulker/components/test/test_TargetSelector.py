@@ -9,80 +9,54 @@ from shulker.components.TargetSelector import (
 
 
 class TestBlock(unittest.TestCase):
-    def test_targetselector_p_option(self):
-        ts = TargetSelector("p")
+    def test_valid_identifier(self):
+        """Test if valid identifiers are correctly processed."""
+        ts = TargetSelector('p')
+        self.assertEqual(str(ts), '@p[]')
+        ts = TargetSelector('a')
+        self.assertEqual(str(ts), '@a[]')
+        ts = TargetSelector('r')
+        self.assertEqual(str(ts), '@r[]')
+        ts = TargetSelector('s')
+        self.assertEqual(str(ts), '@s[]')
+        ts = TargetSelector('e')
+        self.assertEqual(str(ts), '@e[]')
 
-        diff = str(ts)
-        test = "@p[]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_a_option(self):
-        ts = TargetSelector("a")
-
-        diff = str(ts)
-        test = "@a[]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_r_option(self):
-        ts = TargetSelector("r")
-
-        diff = str(ts)
-        test = "@r[]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_s_option(self):
-        ts = TargetSelector("s")
-
-        diff = str(ts)
-        test = "@s[]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_e_option(self):
-        ts = TargetSelector("e")
-
-        diff = str(ts)
-        test = "@e[]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_invalid_option(self):
+    def test_invalid_identifier(self):
+        """Test if invalid identifiers raise the proper exception."""
         with self.assertRaises(IncorrectTargetSelectorIdentifier):
-            TargetSelector("f")
+            TargetSelector('invalid')
 
-    def test_targetselector_with_no_arguments(self):
-        ts = TargetSelector("p", {})
+    def test_valid_arguments(self):
+        """Test if valid arguments are correctly processed."""
+        ts = TargetSelector('e', {'type': 'cow', 'limit': 1})
+        self.assertEqual(str(ts), '@e[type=cow,limit=1]')
 
-        diff = str(ts)
-        test = "@p[]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_with_argument(self):
-        ts = TargetSelector("p", {"team": "french"})
-
-        diff = str(ts)
-        test = "@p[team=french]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_with_arguments(self):
-        ts = TargetSelector("p", {"team": "french", "tag": "baguette"})
-
-        diff = str(ts)
-        test = "@p[team=french,tag=baguette]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_with_arguments_listed(self):
-        ts = TargetSelector("p", {"team": "french", "tag": ["baguette", "farine"]})
-
-        diff = str(ts)
-        test = "@p[team=french,tag=baguette,tag=farine]"
-        self.assertEqual(diff, test)
-
-    def test_targetselector_with_invalid_arguments(self):
-        with self.assertRaises(InvalidTargetSelectorArgumentKey):
-            str(TargetSelector("p", {"totem": 5, "tag": "baguette"}))
-
-    def test_targetselector_with_invalid_argument_type(self):
+    def test_invalid_argument_type(self):
+        """Test if invalid argument types raise the proper exception."""
         with self.assertRaises(IncorrectTargetSelectorArgumentsType):
-            str(TargetSelector("p", ["totem", "tag", 5]))
+            TargetSelector('e', "type=cow,limit=1")
+
+    def test_invalid_argument_key(self):
+        """Test if invalid argument keys raise the proper exception."""
+        with self.assertRaises(InvalidTargetSelectorArgumentKey):
+            ts = TargetSelector('e', {'invalid_key': 'value'})
+            str(ts)
+
+    def test_list_arguments(self):
+        """Test if list arguments are correctly processed."""
+        ts = TargetSelector('a', {'tag': ['has_tag', '!hasnt_tag']})
+        self.assertEqual(str(ts), '@a[tag=has_tag,tag=!hasnt_tag]')
+
+    def test_empty_arguments(self):
+        """Test if empty arguments are correctly processed."""
+        ts = TargetSelector('s')
+        self.assertEqual(str(ts), '@s[]')
+
+    def test_no_arguments(self):
+        """Test if None arguments are correctly processed."""
+        ts = TargetSelector('r', None)
+        self.assertEqual(str(ts), '@r[]')
 
 
 if __name__ == "__main__":
