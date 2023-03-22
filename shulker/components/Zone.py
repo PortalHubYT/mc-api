@@ -1,6 +1,7 @@
 from typing import Union
 
 from .Coordinates import Coordinates
+from .BlockCoordinates import BlockCoordinates
 
 class Zone:
     """
@@ -38,7 +39,13 @@ class Zone:
         max_z = max(self.pos1.z, self.pos2.z)
 
         return (min_x <= coord.x <= max_x) and (min_y <= coord.y <= max_y) and (min_z <= coord.z <= max_z)
-
+    
+    def offset(self, x=0, y=0, z=0):
+        """
+        Offsets the coordinates by the given tuple and returns a new Zone object.
+        """
+        return Zone(self.pos1.offset(x, y, z), self.pos2.offset(x, y, z))
+        
     def __str__(self):
         if not isinstance(self.pos1, Coordinates) or not isinstance(
             self.pos2, Coordinates
