@@ -5,8 +5,7 @@ from .BlockCoordinates import BlockCoordinates
 
 class Zone:
     """
-    Custom component that is a set of two BlockCoordinates(), representing
-    a rectangular area
+    Custom component that is a set of two BlockCoordinates(), representing an area
     """
 
     def __init__(
