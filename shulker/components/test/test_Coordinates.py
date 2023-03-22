@@ -204,6 +204,60 @@ class TestCoordinates(unittest.TestCase):
         
         coords = Coordinates("1", 2.5, 3)
         self.assertEqual(str(coords), "1 2.5 3")
+    
+    def test_init_with_negative_values(self):
+        """
+        This test checks if the Coordinates class initializes correctly when
+        x, y, z, yaw, and pitch values are provided as negative numbers.
+        It ensures that all the values are assigned correctly.
+        """
         
-    if __name__ == "__main__":
-        unittest.main()
+        coords = Coordinates(-1, -2, -3, -90, -45)
+        self.assertEqual(coords.x, -1)
+        self.assertEqual(coords.y, -2)
+        self.assertEqual(coords.z, -3)
+        self.assertEqual(coords.yaw, -90)
+        self.assertEqual(coords.pitch, -45)
+
+    def test_offset_with_negative_values(self):
+        """
+        This test checks if the offset() method correctly offsets the
+        x, y, and z values when the offset values are negative.
+        It ensures that the resulting object has the correct updated
+        values for x, y, and z.
+        """
+        
+        coords = Coordinates(1, 2, 3)
+        new_coords = coords.offset(-1, -1, -1)
+        self.assertEqual(new_coords.x, 0)
+        self.assertEqual(new_coords.y, 1)
+        self.assertEqual(new_coords.z, 2)
+
+    def test_init_with_float_yaw_and_pitch(self):
+        """
+        This test checks if the Coordinates class initializes correctly
+        when yaw and pitch values are provided as floats.
+        It ensures that the yaw and pitch values are assigned correctly.
+        """
+        
+        coords = Coordinates(1, 2, 3, 90.5, 45.5)
+        self.assertEqual(coords.x, 1)
+        self.assertEqual(coords.y, 2)
+        self.assertEqual(coords.z, 3)
+        self.assertEqual(coords.yaw, 90.5)
+        self.assertEqual(coords.pitch, 45.5)
+
+    def test_init_with_string_yaw_and_pitch(self):
+        """
+        This test checks if the Coordinates class initializes correctly
+        when yaw and pitch values are provided as strings.
+        It ensures that the yaw and pitch values are assigned correctly.
+        """
+        
+        coords = Coordinates(1, 2, 3, "90", "45")
+        self.assertEqual(coords.x, 1)
+        self.assertEqual(coords.y, 2)
+        self.assertEqual(coords.z, 3)
+        self.assertEqual(coords.yaw, "90")
+        self.assertEqual(coords.pitch, "45")
+
