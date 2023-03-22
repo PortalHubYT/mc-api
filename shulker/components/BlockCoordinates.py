@@ -14,11 +14,11 @@ class BlockCoordinates(Coordinates):
     down, which is called the block position of the coordinate.
     """
 
-    def floor(self, coord):
+    def round_coord(self, coord):
         if isinstance(coord, str) and "." in coord:
-            coord = re.sub(r"([\^~])(\d+\.\d+)", lambda m: m.group(1) + str(math.floor(float(m.group(2)))), coord)
+            coord = re.sub(r"([\^~])(\d+\.\d+)", lambda m: m.group(1) + str(round(float(m.group(2)))), coord)
         elif isinstance(coord, float):
-            coord = math.floor(coord)
+            coord = round(coord)
         return coord
 
     def offset(self, x=0, y=0, z=0) -> "BlockCoordinates":
@@ -32,8 +32,8 @@ class BlockCoordinates(Coordinates):
 
         self.check_carets()
 
-        self.x = self.floor(self.x)
-        self.y = self.floor(self.y)
-        self.z = self.floor(self.z)
+        self.x = self.round_coord(self.x)
+        self.y = self.round_coord(self.y)
+        self.z = self.round_coord(self.z)
 
         return f"{self.x} {self.y} {self.z}"

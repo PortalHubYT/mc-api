@@ -1,6 +1,6 @@
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.Block import Block
-from shulker.components.Zone import Zone
+from shulker.components.BlockZone import BlockZone
 from shulker.components.Entity import Entity
 from shulker.server.singleton import singleton
 import json
@@ -44,8 +44,7 @@ def post(cmd: str):
 
 def nesting_process(commands: list, base_coords: BlockCoordinates, set_plane: bool):
 
-    from shulker.functions.set_block import meta_set_block
-    from shulker.functions.summon import meta_summon
+    from shulker.functions.default import meta_set_block, meta_summon
 
     # The activator rail, first passenger, that will get powered
     # once its host the redstone block, has settled on the ground
@@ -68,7 +67,7 @@ def nesting_process(commands: list, base_coords: BlockCoordinates, set_plane: bo
     # part of the nesting, the commands that will kill the contraption
 
     # This part is the command block that deletes the blocks
-    zone = Zone(base_coords, base_coords.offset(0, -2 if not set_plane else -3, 0))
+    zone = BlockZone(base_coords, base_coords.offset(0, -2 if not set_plane else -3, 0))
     block = Block('command_block')
     block.nbt = {'auto':1, 'Command':f'fill {zone} air'}
 
@@ -159,7 +158,7 @@ def place_nests(nests: list, base_coords: BlockCoordinates, set_plane, plane_blo
   
   if set_plane:
     wideness = round(len(nests) / 16)
-    zone = Zone(base_coords.offset(0, -3, 0), base_coords.offset(0 + wideness, -3, len(nests) - 1 % 16))
+    zone = BlockZone(base_coords.offset(0, -3, 0), base_coords.offset(0 + wideness, -3, len(nests) - 1 % 16))
     cmd = meta_set_zone(zone, plane_block, "replace")
     cmds.append(cmd)
   

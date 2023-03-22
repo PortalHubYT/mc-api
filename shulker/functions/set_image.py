@@ -13,7 +13,7 @@ import random
 
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockHandler import BlockHandler
-from shulker.components.Zone import Zone
+from shulker.components.BlockZone import BlockZone
 
 from shulker.functions.base_functions import *
 from shulker.functions.default import meta_set_block, set_block
@@ -58,7 +58,7 @@ def generate_instructions(pixels, palette, coords, orientation, display_mode = "
             instructions["cmds"].append(cmd)
             z += 1
     else:
-        instructions["zone"] = Zone(
+        instructions["zone"] = BlockZone(
             coords, BlockCoordinates(coords.x + x, coords.y, coords.z + z)
         )
         
@@ -113,7 +113,7 @@ def generate_instructions_spiral(pixels, palette, coords, orientation, display_m
         for _ in range(1, side):
             cursor = (cursor[0] + 1 * mult, cursor[1])
             add_instruction(cursor[0], cursor[1])
-        instructions["zone"] = Zone(
+        instructions["zone"] = BlockZone(
             coords, BlockCoordinates(coords.x + width, coords.y, coords.z + height)
         )
 
@@ -157,7 +157,7 @@ def set_image(
     resize = None,
     display_mode: str = "vertical",
     display_order: str = "normal",
-) -> Zone:
+) -> BlockZone:
     """
     This function takes the path to an image or an URL
     (in which case, url must be passed as True), downloads it,

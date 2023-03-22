@@ -6,5 +6,4 @@ from .Coordinates import Coordinates
 from .Entity import Entity
 from .NBT import NBT
 from .TargetSelector import TargetSelector
-
-from .Zone import Zone
+from .BlockZone import BlockZone

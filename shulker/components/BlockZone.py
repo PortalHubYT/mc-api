@@ -3,7 +3,7 @@ from typing import Union
 from .BlockCoordinates import BlockCoordinates
 
 
-class Zone:
+class BlockZone:
     """
     Custom component that is a set of two BlockCoordinates(), representing an area
     """

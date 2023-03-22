@@ -1,14 +1,14 @@
 from typing import Union
 
 from shulker.components.Block import Block
-from shulker.components.Zone import Zone
+from shulker.components.BlockZone import BlockZone
 from shulker.components.BlockHandler import BlockHandler
 
 from shulker.functions.base_functions import *
 
 
 def meta_set_zone(
-    zone: Zone, block: Block, handler: BlockHandler, filter: Union[Block, None] = None
+    zone: BlockZone, block: Block, handler: BlockHandler, filter: Union[Block, None] = None
 ) -> str:
 
     if str(handler) == "replace" and filter:
@@ -18,7 +18,7 @@ def meta_set_zone(
 
 
 def set_zone(
-    zone: Union[Zone, list],
+    zone: Union[BlockZone, list],
     block: Union[Block, str],
     handler: Union[BlockHandler, str] = "replace",
     filter: Union[Block, str] = "",
@@ -45,7 +45,7 @@ def set_zone(
 
     check_output_channel()
 
-    zone = format_arg(zone, Zone)
+    zone = format_arg(zone, BlockZone)
     block = format_arg(block, Block)
     handler = format_arg(handler, BlockHandler)
 

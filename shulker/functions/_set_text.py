@@ -4,10 +4,10 @@ from shulker.components.Block import Block
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockState import BlockState
 from shulker.components.BlockHandler import BlockHandler
-from shulker.components.Zone import Zone
+from shulker.components.BlockZone import BlockZone
 
 from shulker.functions.base_functions import *
-from shulker.functions.set_block import meta_set_block
+from shulker.functions.default import meta_set_block
 from shulker.functions.set_zone import meta_set_zone
 
 # TODO: Make clear zone works with scaling
@@ -158,7 +158,7 @@ def meta_set_text(
             new_coords = BlockCoordinates(coords.x, coords.y, coords.z)
 
     new_coords.y += y
-    instructions["zone"] = Zone(coords, new_coords)
+    instructions["zone"] = BlockZone(coords, new_coords)
 
     # The functions returns the "instructions" dictionary
     # containing all the commands to .post() as well
@@ -180,7 +180,7 @@ def set_text(
 ) -> dict:
 
     """
-    Returns a Zone representing the area used by the text
+    Returns a BlockZone representing the area used by the text
     to be represented
 
     The given coords should represent the block that is
@@ -253,7 +253,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
             coords.x + scale, coords.y + scale, coords.z + scale
         )
 
-        zones.append({"coords": Zone(new_coords1, new_coords2), "filler": "block"})
+        zones.append({"coords": BlockZone(new_coords1, new_coords2), "filler": "block"})
 
     elif digit in ["2", "3"]:
 
@@ -264,7 +264,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block" if digit == "2" else "air",
             }
         )
@@ -276,7 +276,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block" if digit == "3" else "air",
             }
         )
@@ -290,7 +290,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block",
             }
         )
@@ -304,7 +304,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block" if digit == "4" else "air",
             }
         )
@@ -316,7 +316,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block" if digit == "5" else "air",
             }
         )
@@ -330,7 +330,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block",
             }
         )
@@ -342,7 +342,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block" if digit == "6" else "air",
             }
         )
@@ -354,7 +354,7 @@ def construct_zones(coords: BlockCoordinates, digit: str, scale: int) -> list:
 
         zones.append(
             {
-                "coords": Zone(new_coords1, new_coords2),
+                "coords": BlockZone(new_coords1, new_coords2),
                 "filler": "block" if digit == "7" else "air",
             }
         )

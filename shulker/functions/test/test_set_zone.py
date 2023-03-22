@@ -1,7 +1,7 @@
 import unittest
 
 from shulker.components.Block import Block
-from shulker.components.Zone import Zone
+from shulker.components.BlockZone import BlockZone
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockHandler import BlockHandler
 
@@ -12,7 +12,7 @@ class TestBlock(unittest.TestCase):
     def test_set_zone(self):
         coords = BlockCoordinates(0, 0, 0)
         coords2 = BlockCoordinates(10, 10, 10)
-        zone = Zone(coords, coords2)
+        zone = BlockZone(coords, coords2)
         block = Block("bedrock")
         filter = Block("sponge")
         handler = BlockHandler("hollow")
@@ -24,7 +24,7 @@ class TestBlock(unittest.TestCase):
     def test_set_zone_replace(self):
         coords = BlockCoordinates(0, 0, 0)
         coords2 = BlockCoordinates(10, 10, 10)
-        zone = Zone(coords, coords2)
+        zone = BlockZone(coords, coords2)
         block = Block("bedrock")
         filter = Block("sponge")
         handler = BlockHandler("replace")
@@ -36,7 +36,7 @@ class TestBlock(unittest.TestCase):
     def test_set_zone_no_handler(self):
         coords = BlockCoordinates(0, 0, 0)
         coords2 = BlockCoordinates(10, 10, 10)
-        zone = Zone(coords, coords2)
+        zone = BlockZone(coords, coords2)
         block = Block("bedrock")
         handler = BlockHandler()
 

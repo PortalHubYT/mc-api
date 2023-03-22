@@ -57,7 +57,7 @@ class TestCoordinates(unittest.TestCase):
         coords = BlockCoordinates(1.5, "~0.1", 1)
 
         diff = str(coords)
-        test = "1 ~0 1"
+        test = "2 ~0 1"
         self.assertEqual(diff, test)
 
     def test_blockcoords_offset(self):
