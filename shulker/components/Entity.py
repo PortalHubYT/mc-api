@@ -68,7 +68,7 @@ class Entity:
         return update(uuid, nbt)
     
     def summon(self, *args):
-        from shulker.functions.miscellaneous import summon
+        from shulker.functions.default import summon
         if len(args) == 3:
             coords = (args[0], args[1], args[2])
         elif len(args) == 1:

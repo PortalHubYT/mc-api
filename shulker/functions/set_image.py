@@ -16,7 +16,7 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.components.Zone import Zone
 
 from shulker.functions.base_functions import *
-from shulker.functions.set_block import meta_set_block, set_block
+from shulker.functions.default import meta_set_block, set_block
 
 # TODO: Minecart method? -> https://www.youtube.com/watch?v=MEawKJm-t28
 

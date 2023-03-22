@@ -4,7 +4,41 @@ from typing import Union
 from shulker.functions.base_functions import *
 from shulker.components.Coordinates import Coordinates
 from shulker.components.BlockCoordinates import BlockCoordinates
+from shulker.components.Block import Block
+from shulker.components.BlockHandler import BlockHandler
 from shulker.components.Entity import Entity
+
+############ SETBLOCK ############
+
+def meta_set_block(coords: BlockCoordinates, block: Block, handler: Union[BlockHandler, None]) -> str:
+    return f"setblock {coords} {block}{(' ' + str(handler)) if handler else ''}"
+
+
+def set_block(
+    coords: Union[BlockCoordinates, tuple],
+    block: Union[Block, str],
+    handler: Union[BlockHandler, str] = "replace",
+) -> str:
+    """
+    Available handlers:
+        'replace' — The old block drops neither itself nor any contents. Plays no sound.
+        'destroy' — The old block drops both itself and its contents (as if destroyed by a player). Plays the appropriate block breaking noise.
+        'keep' — Only air blocks are changed (non-air blocks are unchanged).
+
+    Defaults to 'replace'
+    """
+
+    check_output_channel()
+
+    coords = format_arg(coords, BlockCoordinates)
+    block = format_arg(block, Block)
+    handler = format_arg(handler, BlockHandler)
+
+    cmd = meta_set_block(coords, block, handler)
+
+    status = post(cmd)
+
+    return status
 
 ############ SUMMON ############
 
