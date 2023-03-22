@@ -1,4 +1,5 @@
 import math
+import re
 
 from .Coordinates import Coordinates
 
@@ -14,29 +15,10 @@ class BlockCoordinates(Coordinates):
     """
 
     def floor(self, coord):
-        # Below is the worst bricolage in the history of bricolage
-        # '^1.1' becomes '^1'
-
         if isinstance(coord, str) and "." in coord:
-
-            if coord.startswith("^"):
-                value = coord.split("^")[1]
-                value = float(value)
-                value = math.floor(value)
-                coord = "^" + str(value)
-
-            elif coord.startswith("~"):
-                value = coord.split("~")[1]
-                value = float(value)
-                value = math.floor(value)
-                coord = "~" + str(value)
-
-            else:
-                coord = math.floor(float(coord))
-
+            coord = re.sub(r"([\^~])(\d+\.\d+)", lambda m: m.group(1) + str(math.floor(float(m.group(2)))), coord)
         elif isinstance(coord, float):
             coord = math.floor(coord)
-
         return coord
 
     def offset(self, x=0, y=0, z=0) -> "BlockCoordinates":
