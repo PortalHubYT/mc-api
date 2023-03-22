@@ -72,6 +72,7 @@ class NBT:
     
     def __getattr__(self, name):
         if name in self.__dict__:
+            print(self.flatten(self.__dict__[name]))
             return self.flatten(self.__dict__[name])
         else:
             raise AttributeError(f"Attribute '{name}' does not exist")

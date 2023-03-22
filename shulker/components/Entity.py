@@ -3,6 +3,7 @@ import json
 import uuid
 from typing import Union
 
+from shulker.functions.update_entity import update
 from .NBT import NBT
 
 path = os.path.dirname(os.path.abspath(__file__))
@@ -59,6 +60,10 @@ class Entity:
     def attributes(self):
         return entities_nbt[self.descriptor]
     
+    def update(self, nbt):
+        uuid = self.__getattr__("UUID")
+        return update(uuid, nbt)
+        
     def __setattr__(self, name, value):
         if name in self.attributes:
             self.nbt.__setattr__(name, value)

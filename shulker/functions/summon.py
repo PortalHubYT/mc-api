@@ -1,6 +1,3 @@
-import json
-import os
-
 from typing import Union
 
 from shulker.components.BlockCoordinates import BlockCoordinates
@@ -28,6 +25,16 @@ def summon(
         
     if type(entity) is str:
       entity = Entity(entity)
+      
+    if nbt_data:
+        if type(nbt_data) is dict:
+            nbt_data = NBT(nbt_data)
+        elif type(nbt_data) is str:
+            nbt_data = NBT(nbt_data)
+        elif type(nbt_data) is not NBT:
+            raise ValueError(f"nbt_data must be of type NBT, dict, or str, not {type(nbt_data)}")
+        
+        entity.nbt = nbt_data
 
     coords = format_arg(coords, Coordinates)
         

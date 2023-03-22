@@ -5,6 +5,7 @@ from .set_text import set_text, meta_set_text
 from .set_zone import set_zone, meta_set_zone
 from .summon import summon, meta_summon
 from .get_player_nbt import get_player_nbt, get_player_pos, meta_get_player_nbt
+from .update_entity import update, meta_update
 
 from .set_gui import create_bossbar, meta_create_bossbar
 from .set_gui import add_bossbar, meta_add_bossbar

@@ -21,7 +21,7 @@ class TargetSelector:
             _____________________________________________________
 
             x, y, z	     |  coordinate           |  (float, int) 7, +12.34, -0.1
-            distance‌     |  distance	          |  (int, str) 8, 16, "8..16" (from 8 to 16)
+            distance     |  distance	          |  (int, str) 8, 16, "8..16" (from 8 to 16)
             dx, dy, dz	 |  volume dimensions    |  (int) 1, 2, 0
 
         Selection by Scoreboard Values:
@@ -36,15 +36,15 @@ class TargetSelector:
             Argument(s)	 |  Selection criteria   |  Example value
             _____________________________________________________
 
-            limit,sort‌   |  limit                |  (str and int) sort=(nearest|furthest|random|arbitrary) limit= (int)
-            level‌        |  experience level     |  (int, str) 8, 16, "8..16" (from 8 to 16)
-            gamemode‌     |  game mode            |  (str) gamemode=(spectator‌|adventure|creative|survival), !survival
+            limit,sort   |  limit                |  (str and int) sort=(nearest|furthest|random|arbitrary) limit= (int)
+            level        |  experience level     |  (int, str) 8, 16, "8..16" (from 8 to 16)
+            gamemode     |  game mode            |  (str) gamemode=(spectator‌|adventure|creative|survival), !survival
             name	     |  entity name          |  (str) Johnson, !Johnson
             x_rotation   |  vertical rotation    |  (int, str) 8, 16, "8..16" (from 8 to 16)
             y_rotation   |  horizontal rotation  |  (int, str) 8, 16, "8..16" (from 8 to 16)
             type	     |  entity type          |  (str) pig, mod:modded_mob, !pig
-            nbt‌          |  nbt                  |  (dict, object) {OnGround:true}, [class] NBT()
-            advancements‌ |  advancements         |  (dict) {story/follow_ender_eye=true}
+            nbt          |  nbt                  |  (dict, object) {OnGround:true}, [class] NBT()
+            advancements |  advancements         |  (dict) {story/follow_ender_eye=true}
             predicate    |  predicate            |  (str) example:test_predicate
 
     *can be a list of the value
@@ -65,15 +65,15 @@ class TargetSelector:
         "tag",
         "team",
         "limit",
-        "sort‌",
-        "level‌",
-        "gamemode‌",
+        "sort",
+        "level",
+        "gamemode",
         "name",
         "x_rotation",
         "y_rotation",
         "type",
-        "nbt‌",
-        "advancements‌",
+        "nbt",
+        "advancements",
         "predicate",
     ]
 
