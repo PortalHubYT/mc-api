@@ -55,6 +55,4 @@ class NBT:
         for list_of_int in is_list_of_int:
             serialized = serialized.replace(f"{list_of_int}:[", f"{list_of_int}:[I;")
         
-        print(serialized)
-        
         return serialized
