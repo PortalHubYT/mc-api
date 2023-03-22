@@ -3,7 +3,6 @@ import re
 
 from .Coordinates import Coordinates
 
-
 class BlockCoordinates(Coordinates):
     """
     The position of a block is actually the coordinates of the point at the lower northwest corner
@@ -27,6 +26,17 @@ class BlockCoordinates(Coordinates):
         """
         
         return BlockCoordinates(self.x + x, self.y + y, self.z + z)
+    
+    def set(self, block, handler=None):
+        from shulker.functions.default import set_block
+        from .Block import Block
+        
+        self.__dict__['block'] = Block(block)
+        
+        if handler:
+            return set_block(self, self.__dict__['block'], handler)
+        else:
+            return set_block(self, self.__dict__['block'])
         
     def __str__(self):
 
