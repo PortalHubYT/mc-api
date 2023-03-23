@@ -61,8 +61,7 @@ class BlockZone:
         self.pos1 = new_zone.pos1
         self.pos2 = new_zone.pos2
         
-        ret = set_zone(old_zone, replace_by, handler, filter)
-        print(ret)
+        set_zone(old_zone, replace_by, handler, filter)
         set_zone(self, self.__dict__['block'], handler, filter)
     
     def offset_place(self, x=0, y=0, z=0, handler='replace', filter="", replace_by="air"):
