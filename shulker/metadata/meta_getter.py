@@ -7,7 +7,7 @@ def print_registries():
         print("--->", key.replace("minecraft:", ""))
 
 def get_registries():
-    with open('../functions/mc_data/registries.json') as f:
+    with open('./data/registries.json') as f:
         registries = json.load(f)
         
     return registries
@@ -27,7 +27,7 @@ def print_registry_keys(registry: str):
         print("--->", key.replace("minecraft:", ""))
         
 def get_commands():
-    with open('../functions/mc_data/commands.json') as f:
+    with open('data/commands.json') as f:
         commands = json.load(f)
     return commands
 
