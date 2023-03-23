@@ -6,14 +6,14 @@ with open('requirements.txt') as f:
 
 setup(
     name='shulker',
-    version='0.5.1',
+    version='0.5.2',
     author='PortalHubYT',
     author_email='portalhub.business@gmail.com',
     description='A minecraft interface using RCON',
     url='https://github.com/PortalHubYT/shulker',
     packages=find_packages(),
     package_data={
-        'shulker': ['functions/*.json', 'components/*.json', 'server/*.json', 'functions/mc_data/*.json', "metdata/data/*.json"]
+        'shulker': ['functions/*.json', 'components/*.json', 'server/*.json', 'functions/mc_data/*.json', "metadata/data/*.json"]
     },
     # install requires should pull the list from requirements.txt
     install_requires=requirements
