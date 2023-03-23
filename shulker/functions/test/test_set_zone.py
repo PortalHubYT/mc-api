@@ -5,7 +5,7 @@ from shulker.components.BlockZone import BlockZone
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockHandler import BlockHandler
 
-from shulker.functions.set_zone import meta_set_zone
+from shulker.functions.default import meta_set_zone
 
 
 class TestBlock(unittest.TestCase):

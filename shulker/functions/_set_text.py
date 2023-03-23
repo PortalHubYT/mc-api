@@ -7,8 +7,7 @@ from shulker.components.BlockHandler import BlockHandler
 from shulker.components.BlockZone import BlockZone
 
 from shulker.functions.base_functions import *
-from shulker.functions.default import meta_set_block
-from shulker.functions.set_zone import meta_set_zone
+from shulker.functions.default import meta_set_block, meta_set_zone
 
 # TODO: Make clear zone works with scaling
 # TODO: orientation

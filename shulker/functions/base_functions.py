@@ -149,7 +149,7 @@ def nest_commands(commands: list, base_coords: BlockCoordinates, set_plane):
 
 def place_nests(nests: list, base_coords: BlockCoordinates, set_plane, plane_block):
   
-  from shulker.functions.set_zone import meta_set_zone
+  from shulker.functions.default import meta_set_zone
 
   # If set_plane is set to true, we fill a zone with a plane that will
   # be used to place the nests on top of it
