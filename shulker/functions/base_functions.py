@@ -3,33 +3,14 @@ from shulker.components.Block import Block
 from shulker.components.BlockZone import BlockZone
 from shulker.components.Entity import Entity
 from shulker.server.singleton import singleton
-import json
-import os
 import sys
 
 __all__ = [
     "check_output_channel",
     "post",
-    "default_check",
-    "execute_check",
-    "unexpected_status",
     "format_arg",
     "nest",
-    "entity_list"
 ]
-
-
-def entity_list():
-    path = os.path.dirname(os.path.abspath(__file__))
-    with open(f"{path}/mc_data/registries.json") as f:
-        registries = json.load(f)
-    
-    entities = []
-    for entity in registries["minecraft:entity_type"]["entries"].keys():
-        entities.append(entity.replace("minecraft:", ""))
-        
-    return entities
-
 
 def check_output_channel():
     if singleton.check_status():
@@ -179,28 +160,6 @@ def nest(commands: list, base_coords: BlockCoordinates, set_plane=True, plane_bl
   else:
     for cmd in cmds:
       post(cmd)
-
-
-def default_check(response):
-    if response == "":
-        return True
-    else:
-        return response
-
-
-def execute_check(response):
-    if response == "Test passed":
-        return True
-    elif response == "Test failed":
-        return False
-    else:
-        return response
-
-
-def unexpected_status(file_name, status):
-    raise UnexpectedReturn(
-        f'The say command in {file_name.split("/")[-1]} didn\'t properly function and returned: "{status}"'
-    )
 
 
 def format_arg(argument, component):
