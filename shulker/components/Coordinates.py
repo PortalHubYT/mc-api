@@ -43,7 +43,7 @@ class Coordinates:
     def __str__(self):
         self.check_carets()
         
-        if self.yaw and self.pitch:
+        if self.yaw is not None and self.pitch is not None:
           return f"{self.x} {self.y} {self.z} {self.yaw} {self.pitch}"
         
         return f"{self.x} {self.y} {self.z}"
