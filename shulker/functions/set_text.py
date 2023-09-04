@@ -377,36 +377,43 @@ def fetch_block(digit: str, orientation: str, palette: str, filler: Block) -> Bl
     counter_orientation = "west" if orientation == "east" else "south"
 
     if digit == "1":
-        block = block_palette[palette]["block"]
+        block_name = block_palette[palette]["block"]
+        block = Block(block_name)
 
     elif digit == "2":
-        block = block_palette[palette]["slab"]
+        block_name = block_palette[palette]["slab"]
+        block = Block(block_name)
         block.blockstate = BlockState({"type": "top"})
 
     elif digit == "3":
-        block = block_palette[palette]["slab"]
+        block_name = block_palette[palette]["slab"]
+        block = Block(block_name)
         block.blockstate = BlockState({"type": "bottom"})
 
     elif digit == "4":
-        block = block_palette[palette]["stairs"]
+        block_name = block_palette[palette]["stairs"]
+        block = Block(block_name)
         block.blockstate = BlockState(
             {"facing": orientation, "shape": "straight", "half": "bottom"}
         )
 
     elif digit == "5":
-        block = block_palette[palette]["stairs"]
+        block_name = block_palette[palette]["stairs"]
+        block = Block(block_name)
         block.blockstate = BlockState(
             {"facing": counter_orientation, "shape": "straight", "half": "bottom"}
         )
 
     elif digit == "6":
-        block = block_palette[palette]["stairs"]
+        block_name = block_palette[palette]["stairs"]
+        block = Block(block_name)
         block.blockstate = BlockState(
             {"facing": orientation, "shape": "straight", "half": "top"}
         )
 
     elif digit == "7":
-        block = block_palette[palette]["stairs"]
+        block_name = block_palette[palette]["stairs"]
+        block = Block(block_name)
         block.blockstate = BlockState(
             {"facing": counter_orientation, "shape": "straight", "half": "top"}
         )
