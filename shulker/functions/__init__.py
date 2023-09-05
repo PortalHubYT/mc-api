@@ -1,4 +1,4 @@
-from .set_image import set_image, meta_set_image, print_palette
+from .set_image import set_image, meta_set_image, print_palette, color_picker, get_palette
 from .set_text import set_text, meta_set_text
 
 from .get_player_nbt import get_player_nbt, get_player_pos, meta_get_player_nbt
