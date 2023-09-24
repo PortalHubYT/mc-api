@@ -1,11 +1,10 @@
 .vscode
 *__pycache__
-draft*
 server.jar
 generated
 logs
 dist
 build
 *.egg-info
-test.py
-draft.py
+testing/
+venv_shulker/
