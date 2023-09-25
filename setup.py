@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 # install requires should pull the list from requirements.txt
 with open('requirements.txt') as f:
@@ -6,7 +6,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='shulker',
-    version='0.6.2',
+    version='0.6.3',
     author='PortalHubYT',
     author_email='portalhub.business@gmail.com',
     description='A minecraft interface using RCON',

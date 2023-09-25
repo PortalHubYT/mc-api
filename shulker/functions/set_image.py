@@ -9,13 +9,13 @@ from typing import Union
 import PIL
 import requests
 import urllib3
-from color_picker import block_from_rgb
 from PIL import Image
 
 from shulker.components.BlockCoordinates import BlockCoordinates
 from shulker.components.BlockHandler import BlockHandler
 from shulker.components.BlockZone import BlockZone
 from shulker.functions.base_functions import *
+from shulker.functions.color_picker import block_from_rgb
 from shulker.functions.default import meta_set_block, set_block
 
 # TODO: Minecart method? -> https://www.youtube.com/watch?v=MEawKJm-t28
